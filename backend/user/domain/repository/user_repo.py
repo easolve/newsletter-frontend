@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from backend.domain.user import User
+from backend.user.domain.user import User
 from typing import List
 
 class IUserRepository(metaclass=ABCMeta):
