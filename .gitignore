@@ -238,3 +238,5 @@ pyrightconfig.json
 
 # and uncomment the following lines
 # .pnp.*
+
+*.pem
