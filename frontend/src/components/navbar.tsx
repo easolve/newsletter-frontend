@@ -26,7 +26,7 @@ interface MenuItems {
 const menuItems: MenuItems[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Create", href: "/create" },
+  { label: "Create", href: "/create-newsletter" },
   { label: "Showcase", href: "/showcase", disabled: true },
   { label: "Pricing", href: "/pricing", disabled: true },
 ];
@@ -89,7 +89,9 @@ const NavBar: FC<NavbarProps> = memo(() => {
 
       <NavbarContent className="flex w-full gap-2 sm:hidden" justify="end">
         <Button color="primary" size="sm">
-          Login
+          <NextLink color="foreground" href="/login">
+            Login
+          </NextLink>
         </Button>
         <NavbarItem className="flex h-full items-center">
           <ThemeSwitch />
@@ -108,7 +110,9 @@ const NavBar: FC<NavbarProps> = memo(() => {
       >
         <NavbarItem className="flex h-full items-center">
           <Button color="primary" size="sm">
-            Login
+            <NextLink color="foreground" href="/login">
+              Login
+            </NextLink>
           </Button>
         </NavbarItem>
         <NavbarItem className="hidden sm:flex">
