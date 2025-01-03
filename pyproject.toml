@@ -10,6 +10,14 @@ package-mode = false
 python = "^3.11"
 fastapi = "^0.115.6"
 uvicorn = {extras = ["standard"], version = "^0.34.0"}
+py-ulid = "^1.0.3"
+dependency-injector = "^4.44.0"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+sqlalchemy = "^2.0.36"
+mysqlclient = "^2.2.6"
+alembic = "^1.14.0"
+paramiko = "^3.5.0"
+sshtunnel = "^0.4.0"
 
 
 [build-system]
