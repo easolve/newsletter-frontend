@@ -6,10 +6,12 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field, EmailStr
 from dependency_injector.wiring import inject, Provide
-from backend.user.application.user_service import UserService
+from user.application.user_service import UserService
 from containers import Container
+from sqlalchemy import Connection
+from database import context_get_conn
 
-router = APIRouter(prefix="/users")
+router = APIRouter(prefix="/api/users")
 
 class CreateUserBody(BaseModel):
 	email: EmailStr = Field(max_length=64)
@@ -21,14 +23,16 @@ class UserResponse(BaseModel):
 	created_at: str
 	updated_at: str
 
-@router.post("", response_model=UserResponse)
+@router.post("/register", status_code=201, response_model=UserResponse)
 @inject
-def create_user(
+async def create_user(
 	user: CreateUserBody,
-	user_service: UserService = Depends(Provide[Container.user_service])
+	user_service: UserService = Depends(Provide[Container.user_service]),
+	conn: Connection = Depends(context_get_conn),
 ):
-	created_user = user_service.create_user(
+	created_user = await user_service.create_user(
 		email=user.email,
 		password=user.password,
+		conn=conn,
 	)
 	return created_user
