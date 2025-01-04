@@ -13,9 +13,9 @@ const NewsletterSource: React.FC<NewsletterSourceProps> = () => {
   };
 
   return (
-    <div className="container mx-auto flex max-w-7xl flex-grow flex-col px-6">
+    <div className="container mx-auto flex max-w-7xl flex-grow flex-col">
       <CheckboxGroup
-        label="Select sources"
+        // label="Select sources"
         value={sources}
         onValueChange={handleChange}
       >

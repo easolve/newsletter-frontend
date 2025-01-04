@@ -15,7 +15,7 @@ const NewsletterSample: React.FC<NewsletterSampleProps> = () => {
   //   setSample(sample);
   // };
   return (
-    <div className="container mx-auto flex max-w-7xl gap-6 px-6">
+    <div className="container mx-auto my-4 flex max-w-7xl gap-6">
       <Card className="max-w-[400px]">
         <CardHeader className="flex gap-3">
           <div className="flex flex-col">

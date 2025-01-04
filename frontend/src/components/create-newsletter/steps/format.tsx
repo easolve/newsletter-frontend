@@ -13,7 +13,7 @@ const NewsletterFormat: React.FC<NewsletterFormatProps> = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-7xl flex-grow px-6">
+    <div className="container mx-auto max-w-7xl flex-grow">
       <CheckboxGroup
         label="Select format"
         value={format}
