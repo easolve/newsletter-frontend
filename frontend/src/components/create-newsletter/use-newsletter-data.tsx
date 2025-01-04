@@ -17,6 +17,12 @@ interface CreateNewsletterData {
 
   frequency: string;
   setFrequency: React.Dispatch<React.SetStateAction<string>>;
+
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+
+  description: string;
+  setDescription: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const NewsletterDataContext = createContext<CreateNewsletterData | undefined>(
@@ -31,6 +37,8 @@ export const NewsletterDataProvider: React.FC<{
   const [format, setFormat] = useState<string[]>([]);
   const [sample, setSample] = useState<string[]>([]);
   const [frequency, setFrequency] = useState<string>("weekly");
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const value: CreateNewsletterData = useMemo(
     () => ({
@@ -44,8 +52,12 @@ export const NewsletterDataProvider: React.FC<{
       setSample,
       frequency,
       setFrequency,
+      name,
+      setName,
+      description,
+      setDescription,
     }),
-    [topics, sources, format, frequency],
+    [topics, sources, format, frequency, sample, name, description],
   );
 
   return (
