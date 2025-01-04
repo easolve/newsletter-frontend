@@ -17,7 +17,7 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
           }}
         >
           <CardBody className="gap-4">
-            <Input label="ID" placeholder="Enter your ID" type="text" />
+            <Input label="Email" placeholder="Enter your email" type="email" />
             <Input
               label="Password"
               placeholder="Enter your password"
@@ -36,11 +36,15 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
           }}
         >
           <CardBody className="gap-4">
-            <Input label="ID" placeholder="Enter your ID" type="text" />
             <Input label="Email" placeholder="Enter your email" type="email" />
             <Input
               label="Password"
               placeholder="Enter your password"
+              type="password"
+            />
+            <Input
+              label="Confirm Password"
+              placeholder="Enter your password to confirm"
               type="password"
             />
             <Button color="primary" size="md">
