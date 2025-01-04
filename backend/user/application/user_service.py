@@ -6,6 +6,7 @@ from dependency_injector.wiring import inject
 from fastapi import HTTPException, status
 from utils.crypto import Crypto
 from sqlalchemy import Connection
+from common.auth import create_access_token, Role
 
 #TODO: 비밀번호 변경, 회원탈퇴 등
 class UserService:
@@ -44,8 +45,12 @@ class UserService:
 		return user
 
 
-	def login(self, email: str, password: str):
-		user = self.user_repo.find_by_email(email)
-		if not self.crypto.verify(password, user.password):
+	async def login(self, email: str, password: str):
+		user: User = await self.user_repo.find_by_email(email)
+		if not self.crypto.verify(password, user.password_hash):
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-		#TODO: JWT 토큰 발급
+		access_token = create_access_token(
+			payload={"user_id": user.id},
+			role=Role.USER,
+		)
+		return access_token
