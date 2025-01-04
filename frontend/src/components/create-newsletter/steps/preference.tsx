@@ -1,17 +1,18 @@
 "use client";
 
+import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import { SharedSelection } from "@nextui-org/system";
 import { useNewsletterData } from "../use-newsletter-data";
 
-interface NewsletterFrequencyProps {}
+interface NewsletterPreferenceProps {}
 
-interface NewsletterFrequency {
+interface NewsletterPreference {
   key: string;
   label: string;
 }
 
-const frequencies: NewsletterFrequency[] = [
+const frequencies: NewsletterPreference[] = [
   {
     key: "daily",
     label: "Daily",
@@ -30,18 +31,41 @@ const frequencies: NewsletterFrequency[] = [
   },
 ];
 
-const NewsletterFrequency: React.FC<NewsletterFrequencyProps> = () => {
-  const { frequency, setFrequency } = useNewsletterData();
+const NewsletterPreference: React.FC<NewsletterPreferenceProps> = () => {
+  const {
+    frequency,
+    setFrequency,
+    name,
+    setName,
+    description,
+    setDescription,
+  } = useNewsletterData();
 
   const handleChange = (keys: SharedSelection) => {
     const frequency = Array.from(keys)[0] as string;
     setFrequency(frequency);
   };
   return (
-    <div className="container mx-auto max-w-7xl flex-grow px-6">
+    <div className="mx-auto flex max-w-7xl flex-grow flex-col gap-4">
+      <Input
+        className="max-w-xs"
+        label="Name"
+        placeholder="Name"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <Input
+        className="max-w-xs"
+        label="Description"
+        placeholder="Description"
+        type="text"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
       <Select
         className="max-w-xs"
-        label="Newsletter frequency"
+        label="Frequency"
         placeholder="Select frequency"
         defaultSelectedKeys={[frequency]}
         onSelectionChange={handleChange}
@@ -54,4 +78,4 @@ const NewsletterFrequency: React.FC<NewsletterFrequencyProps> = () => {
   );
 };
 
-export default NewsletterFrequency;
+export default NewsletterPreference;
