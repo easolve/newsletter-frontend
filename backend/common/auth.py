@@ -9,7 +9,7 @@ from config import get_settings
 
 # config 모듈을 이용해 환경변수로부터 설정 값들을 가져옴
 settings = get_settings()
-SECRET_KEY = "THIS_IS_SUPER_SECRET_KEY"
+SECRET_KEY = settings.jwt_secret
 ALGORITHM = "HS256"
 
 class Role(StrEnum):
