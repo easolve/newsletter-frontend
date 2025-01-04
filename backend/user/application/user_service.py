@@ -1,11 +1,12 @@
 from ulid import ULID
 from datetime import datetime
-from backend.user.domain.user import User
-from backend.user.domain.repository.user_repo import IUserRepository
-# from backend.user.infra.user_repo import UserRepository
+from user.domain.user import User
+from user.domain.repository.user_repo import IUserRepository
 from dependency_injector.wiring import inject
 from fastapi import HTTPException, status
 from utils.crypto import Crypto
+from sqlalchemy import Connection
+from common.auth import create_access_token, Role
 
 #TODO: 비밀번호 변경, 회원탈퇴 등
 class UserService:
@@ -13,21 +14,19 @@ class UserService:
 	def __init__(
 		self,
 		user_repo: IUserRepository,
-		ulid: ULID,
-		crypto: Crypto,
 	):
 		self.user_repo = user_repo
-		self.ulid = ulid
-		self.crypto = crypto
+		self.ulid = ULID()
+		self.crypto = Crypto()
 
-	def create_user(
+	async def create_user(
 		self,
 		email: str,
 		password: str,
 	):
 		_user = None
 		try:
-			_user = self.user_repo.find_by_email(email)
+			_user = await self.user_repo.find_by_email(email)
 		except HTTPException as e:
 			if e.status_code != 422:
 				raise e
@@ -38,17 +37,20 @@ class UserService:
 		user: User = User(
 			id=self.ulid.generate(),
 			email=email,
-			password=self.crypto.encrypt(password),
+			password_hash=self.crypto.encrypt(password),
 			created_at=now,
 			updated_at=now,
 		)
-		self.user_repo.save(user)
+		await self.user_repo.save(user)
 		return user
 
 
-	def login(self, email: str, password: str):
-		user = self.user_repo.find_by_email(email)
-		if not self.crypto.verify(password, user.password):
+	async def login(self, email: str, password: str):
+		user: User = await self.user_repo.find_by_email(email)
+		if not self.crypto.verify(password, user.password_hash):
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-
-		#TODO: JWT 토큰 발급
+		access_token = create_access_token(
+			payload={"user_id": user.id},
+			role=Role.USER,
+		)
+		return access_token
