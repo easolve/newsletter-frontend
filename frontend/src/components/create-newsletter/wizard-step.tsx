@@ -3,7 +3,7 @@
 import { Button } from "@nextui-org/button";
 import { Progress } from "@nextui-org/progress";
 import React from "react";
-import { title } from "@/styles/primitives";
+import { subtitle, title } from "@/styles/primitives";
 
 /**
  * @description 뉴스레터 생성에 필요한 단계 (스탭) 를 위한 인터페이스
@@ -11,6 +11,7 @@ import { title } from "@/styles/primitives";
  * @property {number} step - 현재 단계 인덱스 (e.g., 0..n-1)
  * @property {number} totalSteps - 전체 단계 수
  * @property {string} label - 매 단계를 나타내는 레이블 (제목)
+ * @property {string} description - 해당 단계에 대한 설명
  * @property {number} progress - 진행률 값 (0..100)
  * @property {() => void} onPrev - "이전" 버튼을 위한 콜백
  * @property {() => void} onNext - "다음" 버튼을 위한 콜백
@@ -22,6 +23,7 @@ interface WizardStepProps {
   step: number;
   totalSteps: number;
   label: string;
+  description?: string;
   progress?: number;
   onPrev: () => void;
   onNext: () => void;
@@ -34,6 +36,7 @@ const WizardStep: React.FC<WizardStepProps> = ({
   step,
   totalSteps,
   label,
+  description,
   progress,
   onPrev,
   onNext,
@@ -45,22 +48,25 @@ const WizardStep: React.FC<WizardStepProps> = ({
 
   return (
     <div className="flex h-full w-full flex-col justify-between space-y-6 rounded-lg p-6">
-      <div className="flex h-full w-full flex-col gap-10">
-        <h1
-          className={title({
-            size: "sm",
-          })}
-        >
-          {label}
-        </h1>
-        <Progress
-          aria-label="Progress bar"
-          classNames={{
-            base: "max-w-[300px]",
-          }}
-          value={progressValue}
-          showValueLabel={true}
-        />
+      <div className="flex h-full w-full flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <h1
+            className={title({
+              size: "sm",
+            })}
+          >
+            {label}
+          </h1>
+          <Progress
+            aria-label="Progress bar"
+            classNames={{
+              base: "max-w-[300px]",
+            }}
+            value={progressValue}
+            showValueLabel={true}
+          />
+          {description && <p className={subtitle()}>{description}</p>}
+        </div>
 
         <div>{children}</div>
       </div>
