@@ -13,22 +13,19 @@ class UserService:
 	def __init__(
 		self,
 		user_repo: IUserRepository,
-		ulid: ULID,
-		crypto: Crypto,
 	):
 		self.user_repo = user_repo
-		self.ulid = ulid
-		self.crypto = crypto
+		self.ulid = ULID()
+		self.crypto = Crypto()
 
 	async def create_user(
 		self,
 		email: str,
 		password: str,
-		conn: Connection,
 	):
 		_user = None
 		try:
-			_user = await self.user_repo.find_by_email(email, conn)
+			_user = await self.user_repo.find_by_email(email)
 		except HTTPException as e:
 			if e.status_code != 422:
 				raise e
@@ -39,11 +36,11 @@ class UserService:
 		user: User = User(
 			id=self.ulid.generate(),
 			email=email,
-			password=self.crypto.encrypt(password),
+			password_hash=self.crypto.encrypt(password),
 			created_at=now,
 			updated_at=now,
 		)
-		await self.user_repo.save(user, conn)
+		await self.user_repo.save(user)
 		return user
 
 
@@ -51,5 +48,4 @@ class UserService:
 		user = self.user_repo.find_by_email(email)
 		if not self.crypto.verify(password, user.password):
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-
 		#TODO: JWT 토큰 발급

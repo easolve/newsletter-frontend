@@ -9,7 +9,7 @@ from dependency_injector.wiring import inject, Provide
 from user.application.user_service import UserService
 from containers import Container
 from sqlalchemy import Connection
-from database import context_get_conn
+from datetime import datetime
 
 router = APIRouter(prefix="/api/users")
 
@@ -20,19 +20,17 @@ class CreateUserBody(BaseModel):
 class UserResponse(BaseModel):
 	id: str
 	email: str
-	created_at: str
-	updated_at: str
+	created_at: datetime
+	updated_at: datetime
 
 @router.post("/register", status_code=201, response_model=UserResponse)
 @inject
 async def create_user(
 	user: CreateUserBody,
-	user_service: UserService = Depends(Provide[Container.user_service]),
-	conn: Connection = Depends(context_get_conn),
+	user_service: UserService = Depends(Provide[Container.user_service])
 ):
 	created_user = await user_service.create_user(
 		email=user.email,
 		password=user.password,
-		conn=conn,
 	)
 	return created_user

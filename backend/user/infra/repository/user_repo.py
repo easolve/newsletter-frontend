@@ -4,40 +4,41 @@
 
 from user.domain.repository.user_repo import IUserRepository
 from user.domain.user import User
+from user.infra.db_models.users import Users
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import text, Connection
 from fastapi.exceptions import HTTPException
 from fastapi import status
+from database import SessionLocal
+from user.domain.user import User as UserVO
+from utils.db_utils import row_to_dict
+from sqlalchemy.future import select
 
 class UserRepository(IUserRepository):
-	async def find_by_email(self, email: str, conn: Connection):
-		try:
-			query = f"""
-			SELECT *
-			FROM users
-			WHERE email = '{email}'
-			"""
-			result = await conn.execute(text(query))
-			user = await result.fetchone()
-			return user
-		except SQLAlchemyError as e:
-			raise HTTPException(
-				status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-				detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.",
-			)
+	async def find_by_email(self, email: str) -> User:
+		async with SessionLocal() as db:
+			result = await db.execute(select(Users).where(Users.email == email))
+			user = result.scalars().one_or_none()
+			if not user:
+				raise HTTPException(status_code=422, detail="User not found")
+			return UserVO(**row_to_dict(user))
 
-	async def save(self, user: User, conn: Connection):
-		try:
-			query = f"""
-			INSERT INTO users (email, password_hash, created_at, updated_at)
-			VALUES ('{user.email}', '{user.password_hash}', '{user.created_at}', '{user.updated_at}')
-			"""
-			await conn.execute(text(query))
-			await conn.commit()
-
-		except SQLAlchemyError as e:
-			await conn.rollback()
-			raise HTTPException(
-				status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-				detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.",
-			)
+	async def save(self, user: User):
+		new_user = Users(
+			id=user.id,
+			email=user.email,
+			password_hash=user.password_hash,
+			created_at=user.created_at,
+			updated_at=user.updated_at
+		)
+		async with SessionLocal() as db:
+			try:
+				db.add(new_user)
+				await db.commit()
+			except SQLAlchemyError as e:
+				await db.rollback()
+				raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+			except Exception as e:
+				await db.rollback()
+				raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+			finally:
+				await db.close()
