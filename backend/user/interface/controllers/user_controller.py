@@ -31,7 +31,7 @@ class UserResponse(BaseModel):
 class NewsItem(BaseModel):
 	name: str
 	description: str
-	frequency: str
+	send_frequency: str
 
 class NewsResponse(BaseModel):
 	news: List[NewsItem]
@@ -61,6 +61,7 @@ async def login(
 	return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/news", response_model=NewsResponse)
+@inject
 async def get_news(
 	current_user: Annotated[CurrentUser, Depends(get_current_user)],
 	news_service: NewsService = Depends(Provide[Container.news_service])

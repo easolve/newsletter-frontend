@@ -1,13 +1,17 @@
 from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, Table, Column, Text
 from sqlalchemy.orm import Mapped, mapped_column
-from database import Base
+# from database import Base
 # from user.infra.db_models.users import Users
 from sqlalchemy.orm import relationship
 from typing import List
 from typing import Optional
 from sqlalchemy.types import Boolean
+from sqlalchemy.ext.asyncio import AsyncAttrs
+from sqlalchemy.orm import DeclarativeBase
 
+class Base(AsyncAttrs, DeclarativeBase):
+    pass
 
 newsletter_topic = Table(
 	"newsletter_topic",
@@ -39,14 +43,16 @@ class Newsletters(Base):
 	updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 
 	formats: Mapped[Optional["Formats"]] = relationship(back_populates="newsletters")
-	newsletter_sent: Mapped[List["NewslettersSent"]] = relationship(back_populates="newsletters")
+	newsletter_sent: Mapped[List["NewslettersSent"]] = relationship(back_populates="newsletters", lazy="selectin")
 	topics: Mapped[List["Topics"]] = relationship(
 		secondary=newsletter_topic,
-		back_populates="newsletters"
+		back_populates="newsletters",
+		lazy="selectin"
 	)
 	sources: Mapped[List["Sources"]] = relationship(
 		secondary=newsletter_source,
-		back_populates="newsletters"
+		back_populates="newsletters",
+		lazy="selectin"
 	)
 
 class NewslettersSent(Base):

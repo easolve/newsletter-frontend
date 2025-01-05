@@ -14,8 +14,8 @@ SessionLocal = async_sessionmaker(
 	class_=AsyncSession,
 	autocommit=False,
 	autoflush=False,
-	bind=engine,
-	expire_on_commit=False
+	expire_on_commit=False,
+	bind=engine
 )
 
 # 선언형 클래스를 정의하기 위한 기본 클래스를 생성
