@@ -2,10 +2,12 @@ from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, Table, Column, Text
 from sqlalchemy.orm import Mapped, mapped_column
 from database import Base
-from user.infra.db_models.users import Users
+# from user.infra.db_models.users import Users
 from sqlalchemy.orm import relationship
 from typing import List
 from typing import Optional
+from sqlalchemy.types import Boolean
+
 
 newsletter_topic = Table(
 	"newsletter_topic",
@@ -26,13 +28,16 @@ class Newsletters(Base):
 	__tablename__ = "newsletters"
 
 	id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-	user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), nullable=False),
+	user_id: Mapped[str] = mapped_column(String(32), nullable=False)
 	format_id: Mapped[Optional[int]] = mapped_column(ForeignKey("formats.id"))
-	email: Mapped[str] = mapped_column(String(64), nullable=False)
+	name: Mapped[str] = mapped_column(String(256), nullable=False)
+	description: Mapped[Optional[str]] = mapped_column(Text)
+	custom_prompt: Mapped[Optional[str]] = mapped_column(Text)
+	send_frequency: Mapped[str] = mapped_column(String(256), nullable=False)
+	is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
 	created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 	updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 
-	users: Mapped["Users"] = relationship(back_populates="newsletters")
 	formats: Mapped[Optional["Formats"]] = relationship(back_populates="newsletters")
 	newsletter_sent: Mapped[List["NewslettersSent"]] = relationship(back_populates="newsletters")
 	topics: Mapped[List["Topics"]] = relationship(
@@ -54,7 +59,8 @@ class NewslettersSent(Base):
 	sent_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 	created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 	updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-	newsletters: Mapped["Newsletters"] = relationship(back_populates="newsletters_sent")
+
+	newsletters: Mapped["Newsletters"] = relationship(back_populates="newsletter_sent")
 
 
 class Sources(Base):

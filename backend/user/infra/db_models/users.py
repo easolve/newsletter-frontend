@@ -4,6 +4,8 @@ from sqlalchemy import String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from database import Base
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.ext.asyncio import AsyncAttrs
 
 class Users(Base):
 	__tablename__ = "users"
@@ -13,5 +15,4 @@ class Users(Base):
 	password_hash: Mapped[str] = mapped_column(String(64), nullable=False)
 	created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 	updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-	# circular import issue 때문에 옛 방식으로 테이블 관계 정의
-	newsletters = relationship("Newsletters", back_populates="users")
+

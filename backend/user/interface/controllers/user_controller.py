@@ -12,6 +12,9 @@ from sqlalchemy import Connection
 from datetime import datetime
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
+from typing import List
+from common.auth import CurrentUser, get_current_user
+from news.application.news_service import NewsService
 
 router = APIRouter(prefix="/api/users")
 
@@ -24,6 +27,14 @@ class UserResponse(BaseModel):
 	email: str
 	created_at: datetime
 	updated_at: datetime
+
+class NewsItem(BaseModel):
+	name: str
+	description: str
+	frequency: str
+
+class NewsResponse(BaseModel):
+	news: List[NewsItem]
 
 @router.post("/register", status_code=201, response_model=UserResponse)
 @inject
@@ -48,3 +59,11 @@ async def login(
 		password=form_data.password,
 	)
 	return {"access_token": access_token, "token_type": "bearer"}
+
+@router.get("/news", response_model=NewsResponse)
+async def get_news(
+	current_user: Annotated[CurrentUser, Depends(get_current_user)],
+	news_service: NewsService = Depends(Provide[Container.news_service])
+):
+	news = await news_service.get_news(current_user.id)
+	return {"news": news}
