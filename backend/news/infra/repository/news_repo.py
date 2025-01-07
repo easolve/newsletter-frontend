@@ -46,7 +46,7 @@ class NewsRepository(INewsRepository):
 
 				sources: list[Sources] = []
 				for source in news.sources:
-					existing_source_result = await db.execute(select(Sources).where(Sources.name == source.name))
+					existing_source_result = await db.execute(select(Sources).where(Sources.source_url == source.source_url))
 					existing_source = existing_source_result.scalar_one_or_none()
 					if not existing_source:
 						source = Sources(
