@@ -1,5 +1,4 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from config import get_settings
 from sqlalchemy.ext.asyncio import AsyncAttrs
@@ -9,7 +8,7 @@ settings = get_settings()
 SQLALCHEMY_DATABASE_URL = (
 	"mysql+aiomysql://"
 	f"{settings.database_username}:{settings.database_password}"
-	f"@127.0.0.1:{settings.database_port}/newsletter_schema"
+	f"@db:{settings.database_port}/newsletter_schema"
 )
 engine: AsyncEngine = create_async_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = async_sessionmaker(
