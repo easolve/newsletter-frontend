@@ -1,8 +1,3 @@
-# 인프라 계층의 시스템과 애플리케이션 및 도메인 계층을 연결하는 역할
-# 1. 외부와 내부 사이의 데이터 변환
-# 2. 인터페이스 구현
-# 3. 외부 종속성과 분리
-
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field, EmailStr
 from dependency_injector.wiring import inject, Provide
