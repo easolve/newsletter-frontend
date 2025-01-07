@@ -1,24 +1,27 @@
 from dataclasses import dataclass
 from datetime import datetime
-
-# @dataclass
-# class Newsletter:
-# 	id: int
-# 	user_id: str
-# 	name: str
-# 	description: str
-# 	send_frequency: str
-# 	is_active: bool
-# 	created_at: datetime
-# 	updated_at: datetime
-
 from pydantic import BaseModel
 
+class Topic(BaseModel):
+    name: str
+    created_at: datetime
+    updated_at: datetime
+
+class Source(BaseModel):
+    source_url: str
+    created_at: datetime
+    updated_at: datetime
+
 class Newsletter(BaseModel):
-    id: int
     user_id: str
     name: str
     description: str
+    custom_prompt: str | None
     send_frequency: str
+    is_active: bool
+    topics: list[Topic]
+    sources: list[Source]
     created_at: datetime
     updated_at: datetime
+
+

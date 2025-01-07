@@ -2,6 +2,8 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from config import get_settings
+from sqlalchemy.ext.asyncio import AsyncAttrs
+from sqlalchemy.orm import DeclarativeBase
 
 settings = get_settings()
 SQLALCHEMY_DATABASE_URL = (
@@ -18,6 +20,7 @@ SessionLocal = async_sessionmaker(
 	bind=engine
 )
 
-# 선언형 클래스를 정의하기 위한 기본 클래스를 생성
-Base = declarative_base()
+
+class Base(AsyncAttrs, DeclarativeBase):
+    pass
 

@@ -3,9 +3,6 @@ from typing import List
 from sqlalchemy import String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from database import Base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.ext.asyncio import AsyncAttrs
 
 class Users(Base):
 	__tablename__ = "users"

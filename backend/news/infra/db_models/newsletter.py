@@ -7,11 +7,8 @@ from sqlalchemy.orm import relationship
 from typing import List
 from typing import Optional
 from sqlalchemy.types import Boolean
-from sqlalchemy.ext.asyncio import AsyncAttrs
-from sqlalchemy.orm import DeclarativeBase
+from database import Base
 
-class Base(AsyncAttrs, DeclarativeBase):
-    pass
 
 newsletter_topic = Table(
 	"newsletter_topic",
@@ -73,11 +70,9 @@ class Sources(Base):
 	__tablename__ = "sources"
 
 	id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-	name: Mapped[str] = mapped_column(String(256), nullable=False)
 	source_url: Mapped[str] = mapped_column(String(256), nullable=False)
 	created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 	updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
-
 	newsletters: Mapped[List["Newsletters"]] = relationship(
 		secondary=newsletter_source,
 		back_populates="sources"
