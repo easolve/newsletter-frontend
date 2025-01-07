@@ -8,7 +8,6 @@ class Topic(BaseModel):
     updated_at: datetime
 
 class Source(BaseModel):
-    name: str
     source_url: str
     created_at: datetime
     updated_at: datetime

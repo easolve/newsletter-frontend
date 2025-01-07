@@ -47,7 +47,6 @@ class NewsService:
 
 		sources = [
 			Source(
-				name="이건 언제 정하지?",
 				source_url=source_url,
 				created_at=now,
 				updated_at=now,

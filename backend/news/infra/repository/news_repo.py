@@ -8,8 +8,6 @@ from typing import List
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi.exceptions import HTTPException
 from fastapi import status
-from news.domain.news import Topic as TopicVO
-from news.domain.news import Source as SourceVO
 from news.infra.db_models.newsletter import Topics
 from news.infra.db_models.newsletter import Sources
 
@@ -50,7 +48,6 @@ class NewsRepository(INewsRepository):
 					existing_source = existing_source_result.scalar_one_or_none()
 					if not existing_source:
 						source = Sources(
-							name=source.name,
 							source_url=source.source_url,
 							created_at=source.created_at,
 							updated_at=source.updated_at,
@@ -74,7 +71,6 @@ class NewsRepository(INewsRepository):
 				)
 				db.add(newsletter)
 				await db.commit()
-				print("뉴스레터가 성공적으로 생성되었습니다.")
 		except SQLAlchemyError as e:
 			raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 		except Exception as e:
