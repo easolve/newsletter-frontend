@@ -14,7 +14,7 @@ from news.application.news_service import NewsService
 router = APIRouter(prefix="/api/user")
 
 class UserBody(BaseModel):
-	email: EmailStr = Field(max_length=64)
+	username: EmailStr = Field(max_length=64)
 	password: str = Field(min_length=8, max_length=64)
 
 class UserResponse(BaseModel):
@@ -38,7 +38,7 @@ async def create_user(
 	user_service: UserService = Depends(Provide[Container.user_service])
 ):
 	created_user = await user_service.create_user(
-		email=user.email,
+		email=user.username,
 		password=user.password,
 	)
 	return created_user

@@ -13,6 +13,7 @@ app.add_middleware(
 	allow_origins=["http://localhost:3000"],
 	allow_credentials=True,
 	allow_methods=["GET", "POST"],
+	#TODO: 필요한 헤더만 넣어야 함
 	allow_headers=["*"],
 )
 
