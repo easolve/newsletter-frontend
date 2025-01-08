@@ -11,7 +11,7 @@ from typing import List
 from common.auth import CurrentUser, get_current_user
 from news.application.news_service import NewsService
 
-router = APIRouter(prefix="/api/users")
+router = APIRouter(prefix="/api/user")
 
 class UserBody(BaseModel):
 	email: EmailStr = Field(max_length=64)
