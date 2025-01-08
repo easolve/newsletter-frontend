@@ -7,6 +7,7 @@ from fastapi import HTTPException, status
 from utils.crypto import Crypto
 from sqlalchemy import Connection
 from common.auth import create_access_token, Role
+from jwt.application.jwt_service import JWTService
 
 #TODO: 비밀번호 변경, 회원탈퇴 등
 class UserService:
@@ -45,12 +46,23 @@ class UserService:
 		return user
 
 
-	async def login(self, email: str, password: str):
+	async def login(self, email: str, password: str, jwt_service: JWTService):
 		user: User = await self.user_repo.find_by_email(email)
 		if not self.crypto.verify(password, user.password_hash):
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-		access_token = create_access_token(
-			payload={"user_id": user.id},
-			role=Role.USER,
-		)
-		return access_token
+		data = {
+			"user_id": user.id,
+			"role": Role.USER,
+		}
+		access_token = jwt_service.create_access_token(payload=data)
+		refresh_token = jwt_service.create_refresh_token(payload=data)
+
+		# access_token = create_access_token(
+		# 	payload={"user_id": user.id},
+		# 	role=Role.USER,
+		# )
+		return {
+			"access_token": access_token,
+			"refresh_token": refresh_token,
+			"token_type": "bearer",
+		}

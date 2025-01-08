@@ -10,6 +10,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from typing import List
 from common.auth import CurrentUser, get_current_user
 from news.application.news_service import NewsService
+from jwt.application.jwt_service import JWTService
 
 router = APIRouter(prefix="/api/user")
 
@@ -31,6 +32,11 @@ class NewsItem(BaseModel):
 class NewsResponse(BaseModel):
 	news: List[NewsItem]
 
+class JWT(BaseModel):
+	access_token: str
+	refresh_token: str
+	token_type: str
+
 @router.post("/register", status_code=201, response_model=UserResponse)
 @inject
 async def create_user(
@@ -47,13 +53,20 @@ async def create_user(
 @inject
 async def login(
 	form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-	user_service: UserService = Depends(Provide[Container.user_service])
+	user_service: UserService = Depends(Provide[Container.user_service]),
+	jwt_service: JWTService = Depends(Provide[Container.jwt_service])
 ):
-	access_token = await user_service.login(
+	jwt: dict = await user_service.login(
 		email=form_data.username,
 		password=form_data.password,
+		jwt_service=jwt_service,
 	)
-	return {"access_token": access_token, "token_type": "bearer"}
+
+	return {
+		"access_token": jwt["access_token"],
+		"refresh_token": jwt["refresh_token"],
+		"token_type": jwt["token_type"],
+	}
 
 @router.get("/news", response_model=NewsResponse)
 @inject

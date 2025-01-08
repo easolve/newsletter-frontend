@@ -11,6 +11,9 @@ class Settings(BaseSettings):
 	database_password: str
 	database_port: int
 	jwt_secret: str
+	jwt_algorithm: str
+	access_token_expire_time: int
+	refresh_token_expire_time: int
 
 # LRU 알고리즘을 통한 캐싱, 다른 모듈에서 환경변수 쓸 때 사용
 @lru_cache()
