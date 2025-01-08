@@ -50,19 +50,15 @@ class UserService:
 		user: User = await self.user_repo.find_by_email(email)
 		if not self.crypto.verify(password, user.password_hash):
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-		data = {
+
+		payload = {
 			"user_id": user.id,
 			"role": Role.USER,
 		}
-		access_token = jwt_service.create_access_token(payload=data)
-		refresh_token = jwt_service.create_refresh_token(payload=data)
 
-		# access_token = create_access_token(
-		# 	payload={"user_id": user.id},
-		# 	role=Role.USER,
-		# )
+		access_token = jwt_service.create_access_token(payload=payload)
+		refresh_token = jwt_service.create_refresh_token(payload=payload)
 		return {
 			"access_token": access_token,
-			"refresh_token": refresh_token,
-			"token_type": "bearer",
+			"refresh_token": refresh_token
 		}

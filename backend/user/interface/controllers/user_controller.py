@@ -32,10 +32,10 @@ class NewsItem(BaseModel):
 class NewsResponse(BaseModel):
 	news: List[NewsItem]
 
-class JWT(BaseModel):
+class LoginResponse(BaseModel):
 	access_token: str
 	refresh_token: str
-	token_type: str
+	token_type: str = "bearer"
 
 @router.post("/register", status_code=201, response_model=UserResponse)
 @inject
@@ -49,7 +49,7 @@ async def create_user(
 	)
 	return created_user
 
-@router.post("/login")
+@router.post("/login", response_model=LoginResponse)
 @inject
 async def login(
 	form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
@@ -62,11 +62,7 @@ async def login(
 		jwt_service=jwt_service,
 	)
 
-	return {
-		"access_token": jwt["access_token"],
-		"refresh_token": jwt["refresh_token"],
-		"token_type": jwt["token_type"],
-	}
+	return LoginResponse(**jwt)
 
 @router.get("/news", response_model=NewsResponse)
 @inject
@@ -75,4 +71,5 @@ async def get_news(
 	news_service: NewsService = Depends(Provide[Container.news_service])
 ):
 	news = await news_service.get_news(current_user.id)
-	return {"news": news}
+	reduced_news = [NewsItem(name=n.name, description=n.description, send_frequency=n.send_frequency) for n in news]
+	return {"news": reduced_news}

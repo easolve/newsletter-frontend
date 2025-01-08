@@ -27,7 +27,6 @@ class JWTService:
 		"""
 		access token 생성
 		"""
-		print(payload)
 		return self._create_token(payload, self.access_token_expire_time)
 
 	def create_refresh_token(self, payload: dict) -> str:
