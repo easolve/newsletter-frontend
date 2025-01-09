@@ -240,3 +240,8 @@ pyrightconfig.json
 # .pnp.*
 
 *.pem
+# My specific files
+output/
+workflow.png
+*.patch
+*.log
