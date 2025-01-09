@@ -11,8 +11,10 @@ import {
   Navbar as NextUINavBar,
 } from "@nextui-org/navbar";
 import { link } from "@nextui-org/theme";
+import { User } from "@nextui-org/user";
+import { getCookie } from "cookies-next/client";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FC, memo, useEffect, useState } from "react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { clsx } from "@/utils/clsx";
@@ -40,13 +42,43 @@ export interface NavbarProps {}
 
 const NavBar: FC<NavbarProps> = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean | undefined>(false);
+  const [email, setEmail] = useState<string | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = getCookie("accessToken");
+    if (token) {
+      fetchUserProfile(token as string);
+    }
+  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
   }, [pathname]);
+
+  const fetchUserProfile = async (accessToken: string) => {
+    try {
+      const response = await fetch("http://localhost:8000/api/user/profile", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (!response.ok) {
+        // TODO: handle error
+        // e.g., 401 if invalid token
+        setEmail(null);
+        return;
+      }
+      const data = await response.json(); // data = { "id": "...", "email": "..." }
+      setEmail(data.email);
+    } catch (err) {
+      console.error("Error fetching user profile:", err);
+      setEmail(null);
+    }
+  };
 
   return (
     <NextUINavBar
@@ -88,11 +120,25 @@ const NavBar: FC<NavbarProps> = memo(() => {
       </NavbarContent>
 
       <NavbarContent className="flex w-full gap-2 sm:hidden" justify="end">
-        <Button color="primary" size="sm">
-          <NextLink color="foreground" href="/login">
-            Login
-          </NextLink>
-        </Button>
+        {email === null ? (
+          <NavbarItem className="flex h-full items-center">
+            <Button color="primary" size="sm">
+              <NextLink color="foreground" href="/login">
+                Login
+              </NextLink>
+            </Button>
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="flex h-full items-center">
+            <User
+              avatarProps={{
+                name: email,
+              }}
+              name={email}
+              onClick={() => router.push("/profile")}
+            />
+          </NavbarItem>
+        )}
         <NavbarItem className="flex h-full items-center">
           <ThemeSwitch />
         </NavbarItem>
@@ -108,13 +154,25 @@ const NavBar: FC<NavbarProps> = memo(() => {
         className="hidden basis-1/5 sm:flex sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="flex h-full items-center">
-          <Button color="primary" size="sm">
-            <NextLink color="foreground" href="/login">
-              Login
-            </NextLink>
-          </Button>
-        </NavbarItem>
+        {email === null ? (
+          <NavbarItem className="flex h-full items-center">
+            <Button color="primary" size="sm">
+              <NextLink color="foreground" href="/login">
+                Login
+              </NextLink>
+            </Button>
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="flex h-full items-center">
+            <User
+              avatarProps={{
+                name: email,
+              }}
+              name={email}
+              onClick={() => router.push("/profile")}
+            />
+          </NavbarItem>
+        )}
         <NavbarItem className="hidden sm:flex">
           <ThemeSwitch />
         </NavbarItem>
