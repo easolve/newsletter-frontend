@@ -25,6 +25,7 @@
     "@nextui-org/tabs": "^2.2.6",
     "@nextui-org/theme": "^2.4.4",
     "@nextui-org/use-is-mobile": "^2.2.2",
+    "@nextui-org/user": "^2.2.6",
     "@react-aria/listbox": "^3.13.6",
     "@react-types/menu": "^3.9.13",
     "@trivago/prettier-plugin-sort-imports": "^5.2.0",
