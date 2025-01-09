@@ -15,6 +15,14 @@ from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 class UserRepository(IUserRepository):
+	async def find_by_id(self, id: str):
+		async with SessionLocal() as db:
+			result = await db.execute(select(Users).where(Users.id == id))
+			user = result.scalar_one_or_none()
+			if not user:
+				raise HTTPException(status_code=422, detail="User not found")
+			return UserVO(**row_to_dict(user))
+
 	async def find_by_email(self, email: str) -> User:
 		async with SessionLocal() as db:
 			result = await db.execute(select(Users).where(Users.email == email))
@@ -44,3 +52,4 @@ class UserRepository(IUserRepository):
 				raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 			finally:
 				await db.close()
+

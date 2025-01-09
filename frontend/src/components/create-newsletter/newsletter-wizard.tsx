@@ -29,35 +29,35 @@ export interface NewsletterStep {
 
 const steps: NewsletterStep[] = [
   {
+    label: "Preference",
+    description: "First, enter the details of your newsletter.",
+    progress: 0,
+    component: NewsletterPreference,
+    validator: (data) =>
+      data.frequency.length > 0 &&
+      data.name.length > 0 &&
+      data.description.length > 0,
+  },
+  {
     label: "Topic",
     description: "Select topics you are interested in.",
-    progress: 0,
+    progress: 25,
     component: NewsletterTopic,
     validator: (data) => data.topics.length > 0,
   },
   {
     label: "Source",
     description: "Select sources you want to receive news from.",
-    progress: 25,
+    progress: 50,
     component: NewsletterSource,
     validator: (data) => data.sources.length > 0,
   },
   {
     label: "Format",
     description: "Select the format / style of the newsletter.",
-    progress: 50,
+    progress: 75,
     component: NewsletterFormat,
     validator: (data) => data.format.length > 0,
-  },
-  {
-    label: "Preference",
-    description: "Lastly, enter the details of your newsletter.",
-    progress: 75,
-    component: NewsletterPreference,
-    validator: (data) =>
-      data.frequency.length > 0 &&
-      data.name.length > 0 &&
-      data.description.length > 0,
   },
   {
     label: "Done!",
@@ -69,9 +69,7 @@ const steps: NewsletterStep[] = [
 
 const NewsletterWizard: React.FC = () => {
   const [step, setStep] = useState<number>(0);
-  const accessToken = getCookie("accessToken");
   const router = useRouter();
-
   const { topics, sources, format, frequency, sample, name, description } =
     useNewsletterData();
 
@@ -93,6 +91,7 @@ const NewsletterWizard: React.FC = () => {
 
   const saveNewsletter = async () => {
     const url = new URL("/api/news/save", "http://localhost:8000");
+    const accessToken = getCookie("access_token");
     try {
       const response = await fetch(url.toString(), {
         method: "POST",
@@ -110,6 +109,11 @@ const NewsletterWizard: React.FC = () => {
           source: sources,
         }),
       });
+      if (!response.ok) {
+        // TODO: handle error
+        // e.g., 401 if invalid token
+        return;
+      }
       const data = await response.json();
       console.log(data);
     } catch (error) {

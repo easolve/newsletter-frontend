@@ -34,7 +34,13 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: loginData,
+        credentials: "include",
       });
+      if (!response.ok) {
+        // TODO: handle error
+        // e.g., 401 if invalid token
+        return;
+      }
       const data = await response.json();
       console.log("Response:", data);
       router.push("/");
@@ -63,8 +69,13 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
       const response: Response = await fetch(url.toString(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username: email, password }),
       });
+      if (!response.ok) {
+        // TODO: handle error
+        // e.g., 401 if invalid token
+        return;
+      }
       const data = await response.json();
       console.log("Response:", data);
     } catch (error) {

@@ -3,6 +3,8 @@ from database import SessionLocal
 from news.infra.db_models.newsletter import Newsletters
 from sqlalchemy.future import select
 from news.domain.news import Newsletter as NewsletterVO
+from news.domain.news import Topic as TopicVO
+from news.domain.news import Source as SourceVO
 from utils.db_utils import row_to_dict
 from typing import List
 from sqlalchemy.exc import SQLAlchemyError
@@ -18,7 +20,24 @@ class NewsRepository(INewsRepository):
 			async with SessionLocal() as db:
 				result = await db.execute(select(Newsletters).where(Newsletters.user_id == user_id))
 				news = result.scalars().all()
-				return [NewsletterVO(**row_to_dict(n)) for n in news]
+				newsletter_vos = []
+				for newsletter in news:
+					topics = [TopicVO(name=topic.name, created_at=topic.created_at, updated_at=topic.updated_at) for topic in newsletter.topics]
+					sources = [SourceVO(source_url=source.source_url, created_at=source.created_at, updated_at=source.updated_at) for source in newsletter.sources]
+					newsletter_vo = NewsletterVO(
+						user_id=newsletter.user_id,
+						name=newsletter.name,
+						description=newsletter.description,
+						custom_prompt=newsletter.custom_prompt,
+						send_frequency=newsletter.send_frequency,
+						is_active=newsletter.is_active,
+						topics=topics,
+						sources=sources,
+						created_at=newsletter.created_at,
+						updated_at=newsletter.updated_at,
+					)
+					newsletter_vos.append(newsletter_vo)
+				return newsletter_vos
 		except SQLAlchemyError as e:
 			raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 		except Exception as e:
