@@ -62,7 +62,7 @@ class UserService:
 			"refresh_token": refresh_token
 		}
 
-	async def get_user(self, user_id: str):
+	async def get_user_by_id(self, user_id: str):
 		return await self.user_repo.find_by_id(user_id)
 
 

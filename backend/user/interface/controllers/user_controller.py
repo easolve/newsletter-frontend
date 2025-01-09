@@ -22,8 +22,6 @@ class UserBody(BaseModel):
 class UserResponse(BaseModel):
 	id: str
 	email: str
-	created_at: datetime
-	updated_at: datetime
 
 class NewsItem(BaseModel):
 	name: str
@@ -90,3 +88,13 @@ async def get_news(
 	news = await news_service.get_news(current_user.id)
 	reduced_news = [NewsItem(name=n.name, description=n.description, send_frequency=n.send_frequency) for n in news]
 	return {"news": reduced_news}
+
+@router.get("/me", status_code=200, response_model=UserResponse)
+@inject
+async def get_user_me(
+	current_user: Annotated[CurrentUser, Depends(get_current_user)],
+	user_service: UserService = Depends(Provide[Container.user_service])
+):
+	user = await user_service.get_user_by_id(current_user.id)
+	print(user)
+	return user
