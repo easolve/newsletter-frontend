@@ -4,6 +4,8 @@ import { Button } from "@nextui-org/button";
 import { Card, CardBody } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { Tab, Tabs } from "@nextui-org/tabs";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface LoginTabsProps {}
 
@@ -32,6 +34,7 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: loginData,
+        credentials: "include",
       });
       if (!response.ok) {
         // TODO: handle error
@@ -66,7 +69,7 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
       const response: Response = await fetch(url.toString(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username: email, password }),
       });
       if (!response.ok) {
         // TODO: handle error
@@ -90,13 +93,21 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
           }}
         >
           <CardBody className="gap-4">
-            <Input label="Email" placeholder="Enter your email" type="email" />
+            <Input
+              label="Email"
+              placeholder="Enter your email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <Input
               label="Password"
               placeholder="Enter your password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <Button color="primary" size="md">
+            <Button color="primary" size="md" onPress={handleSignIn}>
               Sign In
             </Button>
           </CardBody>
@@ -109,18 +120,28 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
           }}
         >
           <CardBody className="gap-4">
-            <Input label="Email" placeholder="Enter your email" type="email" />
+            <Input
+              label="Email"
+              placeholder="Enter your email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <Input
               label="Password"
               placeholder="Enter your password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Input
               label="Confirm Password"
               placeholder="Enter your password to confirm"
               type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <Button color="primary" size="md">
+            <Button color="primary" size="md" onPress={handleSignUp}>
               Sign Up
             </Button>
           </CardBody>

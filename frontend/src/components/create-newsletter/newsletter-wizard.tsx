@@ -1,5 +1,7 @@
 "use client";
 
+import { getCookie } from "cookies-next/client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import NewsletterDetail from "./steps/detail";
 import NewsletterFormat from "./steps/format";
@@ -90,7 +92,7 @@ const NewsletterWizard: React.FC = () => {
 
   const saveNewsletter = async () => {
     const url = new URL("/api/news/save", "http://localhost:8000");
-    const accessToken = getCookie("accessToken");
+    const accessToken = getCookie("access_token");
     try {
       const response = await fetch(url.toString(), {
         method: "POST",
