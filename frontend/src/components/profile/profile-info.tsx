@@ -1,13 +1,13 @@
 "use client";
 
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import { getCookie } from "cookies-next/client";
-import { useEffect, useState } from "react";
 import { subtitle, title } from "@/styles/primitives";
 
-interface ProfileInfoProps {}
+interface ProfileInfoProps {
+  newsArr: MyNewsDto[];
+}
 
-interface MyNewsDto {
+export interface MyNewsDto {
   name: string;
   description: string;
   send_frequency: string;
@@ -51,38 +51,7 @@ const dummyNews: MyNewsDto[] = [
   },
 ];
 
-const ProfileInfo: React.FC<ProfileInfoProps> = () => {
-  const [newsArr, setNewsArr] = useState<MyNewsDto[]>(dummyNews);
-
-  const fetchNews = async () => {
-    let url = new URL("/api/user/news", "http://localhost:8000");
-    const accessToken = getCookie("accessToken");
-
-    try {
-      const response: Response = await fetch(url.toString(), {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      if (!response.ok) {
-        // TODO: handle error
-        // e.g., 401 if invalid token
-        return;
-      }
-      const data = await response.json();
-      console.log("Response:", data);
-      // setNewsArr(data.news);
-    } catch (error) {
-      console.error("Error fetching news:", error);
-      alert("Error fetching news.");
-    }
-  };
-
-  useEffect(() => {
-    fetchNews();
-  }, []);
-
+const ProfileInfo: React.FC<ProfileInfoProps> = ({ newsArr = dummyNews }) => {
   return (
     <>
       <h1 className={title({ size: "sm", fullWidth: true })}>My News</h1>

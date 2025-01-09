@@ -12,7 +12,6 @@ import {
 } from "@nextui-org/navbar";
 import { link } from "@nextui-org/theme";
 import { User } from "@nextui-org/user";
-import { getCookie } from "cookies-next/client";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, memo, useEffect, useState } from "react";
@@ -38,47 +37,21 @@ const navLinkClasses = clsx(
   "data-[active=true]:text-primary",
 );
 
-export interface NavbarProps {}
+export interface NavbarProps {
+  email: string | null;
+}
 
-const NavBar: FC<NavbarProps> = memo(() => {
+const NavBar: FC<NavbarProps> = memo(({ email }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean | undefined>(false);
-  const [email, setEmail] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
-
-  useEffect(() => {
-    const token = getCookie("accessToken");
-    if (token) {
-      fetchUserProfile(token as string);
-    }
-  }, []);
+  const username = email?.slice(0, email.indexOf("@"));
 
   useEffect(() => {
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
   }, [pathname]);
-
-  const fetchUserProfile = async (accessToken: string) => {
-    try {
-      const response = await fetch("http://localhost:8000/api/user/profile", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      if (!response.ok) {
-        // TODO: handle error
-        // e.g., 401 if invalid token
-        setEmail(null);
-        return;
-      }
-      const data = await response.json(); // data = { "id": "...", "email": "..." }
-      setEmail(data.email);
-    } catch (err) {
-      console.error("Error fetching user profile:", err);
-      setEmail(null);
-    }
-  };
 
   return (
     <NextUINavBar
@@ -120,7 +93,7 @@ const NavBar: FC<NavbarProps> = memo(() => {
       </NavbarContent>
 
       <NavbarContent className="flex w-full gap-2 sm:hidden" justify="end">
-        {email === null ? (
+        {username === null ? (
           <NavbarItem className="flex h-full items-center">
             <Button color="primary" size="sm">
               <NextLink color="foreground" href="/login">
@@ -132,9 +105,9 @@ const NavBar: FC<NavbarProps> = memo(() => {
           <NavbarItem className="flex h-full items-center">
             <User
               avatarProps={{
-                name: email,
+                name: username,
               }}
-              name={email}
+              name={username}
               onClick={() => router.push("/profile")}
             />
           </NavbarItem>
@@ -154,7 +127,7 @@ const NavBar: FC<NavbarProps> = memo(() => {
         className="hidden basis-1/5 sm:flex sm:basis-full"
         justify="end"
       >
-        {email === null ? (
+        {username === null ? (
           <NavbarItem className="flex h-full items-center">
             <Button color="primary" size="sm">
               <NextLink color="foreground" href="/login">
@@ -166,9 +139,9 @@ const NavBar: FC<NavbarProps> = memo(() => {
           <NavbarItem className="flex h-full items-center">
             <User
               avatarProps={{
-                name: email,
+                name: username,
               }}
-              name={email}
+              name={username}
               onClick={() => router.push("/profile")}
             />
           </NavbarItem>
@@ -204,3 +177,6 @@ const NavBar: FC<NavbarProps> = memo(() => {
 });
 
 export default NavBar;
+function setEmail(email: any) {
+  throw new Error("Function not implemented.");
+}
