@@ -6,6 +6,7 @@ from typing import Annotated
 from common.auth import CurrentUser, get_current_user
 from news.application.news_service import NewsService
 from containers import Container
+from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/api/news")
 
@@ -35,4 +36,5 @@ async def create_news(
 		topic=body.topic if body.topic else [],
 		source=body.source if body.source else [],
 	)
-	return {"message": "뉴스레터가 성공적으로 생성되었습니다."}
+	response = JSONResponse(content={"message": "뉴스레터가 성공적으로 생성되었습니다."}, status_code=201)
+	return response

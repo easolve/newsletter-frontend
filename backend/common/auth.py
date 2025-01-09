@@ -1,65 +1,97 @@
-from datetime import datetime, timedelta
+from jwt.application.jwt_service import JWTService
+from jwt.infra.jwt_decoder import JWTDecoder
+from jwt.infra.jwt_encoder import JWTEncoder
+from user.domain.user import User
 from fastapi import HTTPException, status, Depends
-from jose import jwt, JWTError
+from typing import Annotated
+from fastapi.security import OAuth2PasswordBearer
+from config import get_settings
 from enum import StrEnum
 from dataclasses import dataclass
-from fastapi.security import OAuth2PasswordBearer
-from typing import Annotated
-from config import get_settings
+from fastapi import Request
+from fastapi.security.utils import get_authorization_scheme_param
 
-# config 모듈을 이용해 환경변수로부터 설정 값들을 가져옴
+# 환경변수
 settings = get_settings()
 SECRET_KEY = settings.jwt_secret
-ALGORITHM = "HS256"
+ALGORITHM = settings.jwt_algorithm
+ACCESS_TOKEN_EXPIRE_TIME = settings.access_token_expire_time
+REFRESH_TOKEN_EXPIRE_TIME = settings.refresh_token_expire_time
 
+print(ALGORITHM)
 class Role(StrEnum):
 	ADMIN = "ADMIN"
 	USER = "USER"
 
-def create_access_token(
-	payload: dict,
-	role: Role,
-	expires_delta: timedelta = timedelta(minutes=15),
-):
-	expires = datetime.utcnow() + expires_delta
-	payload.update(
-		{
-			"role": role,
-			"exp": expires
-		}
-	)
-	encoded_jwt = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
-	return encoded_jwt
-
-def decode_access_token(token: str):
-	try:
-		payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-		return payload
-	except JWTError:
-		raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
-
-# tokenUrl -> 토큰을 발급할 엔드포인트 할당
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/users/login")
-
-# 토큰의 페이로드
 @dataclass
 class CurrentUser:
 	id: str
 	role: Role
 
-def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-	payload = decode_access_token(token)
-	user_id = payload.get("user_id")
-	role = payload.get("role")
-	print(user_id, role)
-	if not user_id or not role or role != Role.USER:
-		raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
-	return CurrentUser(user_id, Role(role))
+jwt_service = JWTService(
+	encoder=JWTEncoder(),
+	decoder=JWTDecoder(),
+	secret_key=SECRET_KEY,
+	algorithms=ALGORITHM,
+	access_token_expire_time=ACCESS_TOKEN_EXPIRE_TIME,
+	refresh_token_expire_time=REFRESH_TOKEN_EXPIRE_TIME
+)
 
-def get_admin_user(token: Annotated[str, Depends(oauth2_scheme)]):
-	payload = decode_access_token(token)
+async def validate_token(request: Request) -> str | None:
+	authorization = request.headers.get("Authorization")
+	schema, param = get_authorization_scheme_param(authorization)
+	if not authorization or schema.lower() != "bearer":
+		raise HTTPException(
+			status_code=status.HTTP_401_UNAUTHORIZED,
+			detail="Token is invalid",
+			headers={"WWW-Authenticate": "Bearer"},
+		)
+	return param
 
-	role = payload.get("role")
-	if not role or role != Role.ADMIN:
-		raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
-	return CurrentUser("ADMIN_USER_ID", role)
+def get_current_user(token: Annotated[str, Depends(validate_token)]):
+	try:
+		validate_payload = jwt_service.check_token_expire(token)
+		if validate_payload:
+			user_id = validate_payload.get("user_id")
+			role = validate_payload.get("role")
+		else:
+			raise HTTPException(
+				status_code=status.HTTP_401_UNAUTHORIZED,
+				detail="Token is invalid",
+				headers={"WWW-Authenticate": "Bearer"},
+			)
+	except HTTPException as e:
+		raise e
+	else:
+		if not user_id or not role or role != Role.USER:
+			raise HTTPException(
+				status_code=status.HTTP_403_FORBIDDEN,
+				detail="User not found",
+				headers={"WWW-Authenticate": "Bearer"},
+			)
+		else:
+			return CurrentUser(user_id, role)
+
+#TODO: admin 유저 아이디 세팅하기
+def get_admin_user(token: Annotated[str, Depends(validate_token)]):
+	try:
+		validate_payload = jwt_service.check_token_expire(token)
+		if validate_payload:
+			role = validate_payload.get("role")
+		else:
+			raise HTTPException(
+				status_code=status.HTTP_401_UNAUTHORIZED,
+				detail="Token is invalid",
+				headers={"WWW-Authenticate": "Bearer"},
+			)
+	except HTTPException as e:
+		raise e
+	else:
+		if not role or role != Role.ADMIN:
+			raise HTTPException(
+				status_code=status.HTTP_403_FORBIDDEN,
+				detail="User is not an administrator",
+				headers={"WWW-Authenticate": "Bearer"},
+			)
+		else:
+			return CurrentUser("ADMIN_USER_ID", role)

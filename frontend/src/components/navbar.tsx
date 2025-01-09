@@ -11,8 +11,9 @@ import {
   Navbar as NextUINavBar,
 } from "@nextui-org/navbar";
 import { link } from "@nextui-org/theme";
+import { User } from "@nextui-org/user";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FC, memo, useEffect, useState } from "react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { clsx } from "@/utils/clsx";
@@ -36,11 +37,15 @@ const navLinkClasses = clsx(
   "data-[active=true]:text-primary",
 );
 
-export interface NavbarProps {}
+export interface NavbarProps {
+  email: string | null;
+}
 
-const NavBar: FC<NavbarProps> = memo(() => {
+const NavBar: FC<NavbarProps> = memo(({ email }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean | undefined>(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const username = email?.slice(0, email.indexOf("@"));
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -88,11 +93,25 @@ const NavBar: FC<NavbarProps> = memo(() => {
       </NavbarContent>
 
       <NavbarContent className="flex w-full gap-2 sm:hidden" justify="end">
-        <Button color="primary" size="sm">
-          <NextLink color="foreground" href="/login">
-            Login
-          </NextLink>
-        </Button>
+        {username === null ? (
+          <NavbarItem className="flex h-full items-center">
+            <Button color="primary" size="sm">
+              <NextLink color="foreground" href="/login">
+                Login
+              </NextLink>
+            </Button>
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="flex h-full items-center">
+            <User
+              avatarProps={{
+                name: username,
+              }}
+              name={username}
+              onClick={() => router.push("/profile")}
+            />
+          </NavbarItem>
+        )}
         <NavbarItem className="flex h-full items-center">
           <ThemeSwitch />
         </NavbarItem>
@@ -108,13 +127,25 @@ const NavBar: FC<NavbarProps> = memo(() => {
         className="hidden basis-1/5 sm:flex sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="flex h-full items-center">
-          <Button color="primary" size="sm">
-            <NextLink color="foreground" href="/login">
-              Login
-            </NextLink>
-          </Button>
-        </NavbarItem>
+        {username === null ? (
+          <NavbarItem className="flex h-full items-center">
+            <Button color="primary" size="sm">
+              <NextLink color="foreground" href="/login">
+                Login
+              </NextLink>
+            </Button>
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="flex h-full items-center">
+            <User
+              avatarProps={{
+                name: username,
+              }}
+              name={username}
+              onClick={() => router.push("/profile")}
+            />
+          </NavbarItem>
+        )}
         <NavbarItem className="hidden sm:flex">
           <ThemeSwitch />
         </NavbarItem>
@@ -146,3 +177,6 @@ const NavBar: FC<NavbarProps> = memo(() => {
 });
 
 export default NavBar;
+function setEmail(email: any) {
+  throw new Error("Function not implemented.");
+}
