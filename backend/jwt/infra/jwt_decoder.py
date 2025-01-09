@@ -11,6 +11,7 @@ class JWTDecoder(IAbstractJWTDecoder):
 	) -> dict | None :
 		try:
 			return jwt.decode(token, secret_key, algorithms=[algorithm])
-		except JWTError:
+		except JWTError as e:
+			print("JWT decode error", str(e))
 			return None
 

@@ -5,8 +5,7 @@ from user.domain.repository.user_repo import IUserRepository
 from dependency_injector.wiring import inject
 from fastapi import HTTPException, status
 from utils.crypto import Crypto
-from sqlalchemy import Connection
-from common.auth import create_access_token, Role
+from common.auth import Role
 from jwt.application.jwt_service import JWTService
 
 #TODO: 비밀번호 변경, 회원탈퇴 등
@@ -62,3 +61,8 @@ class UserService:
 			"access_token": access_token,
 			"refresh_token": refresh_token
 		}
+
+	async def get_user(self, user_id: str):
+		return await self.user_repo.find_by_id(user_id)
+
+

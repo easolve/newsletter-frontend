@@ -3,7 +3,6 @@ from pydantic import BaseModel, Field, EmailStr
 from dependency_injector.wiring import inject, Provide
 from user.application.user_service import UserService
 from containers import Container
-from sqlalchemy import Connection
 from datetime import datetime
 from typing import Annotated
 from fastapi.security import OAuth2PasswordRequestForm
@@ -11,6 +10,8 @@ from typing import List
 from common.auth import CurrentUser, get_current_user
 from news.application.news_service import NewsService
 from jwt.application.jwt_service import JWTService
+from fastapi.responses import JSONResponse
+from  fastapi import status
 
 router = APIRouter(prefix="/api/user")
 
@@ -61,8 +62,24 @@ async def login(
 		password=form_data.password,
 		jwt_service=jwt_service,
 	)
-
-	return LoginResponse(**jwt)
+	response = JSONResponse(content={"messages": "login successful"}, status_code=status.HTTP_200_OK)
+	response.set_cookie(
+		key="access_token",
+		value=jwt["access_token"],
+		httponly=True,
+		secure=False, # HTTPS
+		samesite="none", # 벡엔드와 프론트엔드가 분리된 환경에서는 none으로 세팅
+		domain="localhost", #TODO: 도메인 사야함
+	)
+	response.set_cookie(
+		key="refresh_token",
+		value=jwt["refresh_token"],
+		httponly=True,
+		secure=False, # HTTPS
+		samesite="none", # 벡엔드와 프론트엔드가 분리된 환경에서는 none으로 세팅
+		domain="localhost", #TODO: 도메인 사야함
+	)
+	return response
 
 @router.get("/news", response_model=NewsResponse)
 @inject
