@@ -26,6 +26,7 @@ class NewsBody(BaseModel):
 
 
 class CreateNewsBody(BaseModel):
+    newsletter_id: int = Field(..., description="뉴스레터 id")
     topics: List[str] = Field(..., description="뉴스레터 토픽 리스트")
     sources: List[str] = Field(..., description="뉴스레터 url 리스트")
 
@@ -66,7 +67,7 @@ async def create_news(
     news_service: NewsService = Depends(Provide[Container.news_service]),
 ):
     response = await news_service.create_news(
-        user_id=current_user.id,
+        newsletter_id=body.newsletter_id,
         topics=body.topics,
         sources=body.sources,
     )

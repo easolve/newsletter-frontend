@@ -29,9 +29,8 @@ class Newsletter(BaseModel):
 
 
 class NewsletterSent(BaseModel):
-    newsletter_id: str
-    # TODO: 이후에 바뀌어야 함
-    name: str | None
+    newsletter_id: int
+    name: str
     generated_content: str
     sent_at: datetime
     created_at: datetime

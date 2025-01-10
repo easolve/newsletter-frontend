@@ -80,11 +80,11 @@ class NewsService:
         now = datetime.now()
 
         # TODO: 뉴스레터 딕셔너리로 리턴 받기, celery task로 비동기 뉴스레터 생성 요청
-        newsletter_sent = create_newsletter(topics, sources)
+        newsletter_sent: dict = create_newsletter(topics, sources)
         newsletter_sent = NewsletterSent(
             newsletter_id=newsletter_id,
-            name="newsletter_title",
-            generated_content=newsletter_sent,
+            name=newsletter_sent["title"],
+            generated_content=newsletter_sent["content"],
             sent_at=now,
             created_at=now,
             updated_at=now,
