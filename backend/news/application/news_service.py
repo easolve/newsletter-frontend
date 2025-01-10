@@ -68,8 +68,8 @@ class NewsService:
             updated_at=now,
         )
         # 뉴스레터 생성
-        await self.news_repo.save_news(user_id, newsletter)
-        return newsletter
+        newsletter_id = await self.news_repo.save_news(user_id, newsletter)
+        return newsletter_id
 
     async def create_news(
         self,
