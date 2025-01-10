@@ -2,17 +2,16 @@ from typing_extensions import TypedDict
 
 
 class WorkflowState(TypedDict):
-    intent_of_requested_content: str  # Intent of the requested content
     search_queries: list[str]  # Search terms related to the newsletter
     search_urls: list[str]  # URLs related to the search results
     search_results: list[str]  # Search results related to the newsletter content
     summary_contents: list[str]  # Translated and summarized content
     newsletter_contents: list[str]  # The main content of the newsletter
-    is_approved: bool  # Approval status of the newsletter
-    remaining_loops: int  # Remaining loops for the workflow
+    topics: list[str]  # Topics related to the newsletter
+    sources: list[str]  # Sources related to the newsletter
 
 
-def initialize_state(search_query: str, **kwargs) -> WorkflowState:
+def initialize_state(**kwargs) -> WorkflowState:
     """
     Initialize the workflow state for the newsletter generation process.
     Args:
@@ -32,14 +31,13 @@ def initialize_state(search_query: str, **kwargs) -> WorkflowState:
     """
 
     state: WorkflowState = {
-        "intent_of_requested_content": "",
-        "search_queries": [search_query],
+        "search_queries": [],
         "search_urls": [],
         "search_results": [],
         "summary_contents": [],
         "newsletter_contents": [],
-        "is_approved": False,
-        "remaining_loops": 3,
+        "topics": [],
+        "sources": [],
     }
 
     for key, value in kwargs.items():

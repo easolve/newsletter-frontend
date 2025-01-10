@@ -26,6 +26,7 @@ def search_node(state: WorkflowState):
         max_results=5,
         include_answer=False,
         include_raw_content=True,
+        include_domains=state["sources"],
     )
 
     raw_contents, urls = _get_raw_contents(response)
@@ -38,16 +39,3 @@ def search_node(state: WorkflowState):
         )
 
     return {"search_results": raw_contents, "search_urls": urls}
-
-
-from newsletter.graph.state import WorkflowState, initialize_state
-
-
-if __name__ == "__main__":
-    state = WorkflowState(
-        initialize_state(
-            "Tell me about the DOGE (Department of Government Efficiency) department in"
-            " the United States led by Elon Musk."
-        )
-    )
-    search_node(state)
