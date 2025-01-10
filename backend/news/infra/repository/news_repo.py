@@ -116,6 +116,8 @@ class NewsRepository(INewsRepository):
                 )
                 db.add(newsletter)
                 await db.commit()
+                await db.refresh(newsletter)
+                return newsletter.id
         except SQLAlchemyError as e:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)

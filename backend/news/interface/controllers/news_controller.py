@@ -43,7 +43,7 @@ async def save_news(
     body: NewsBody,
     news_service: NewsService = Depends(Provide[Container.news_service]),
 ):
-    await news_service.save_news(
+    newsletter_id = await news_service.save_news(
         user_id=current_user.id,
         name=body.name,
         description=body.description,
@@ -53,16 +53,16 @@ async def save_news(
         topic=body.topic if body.topic else [],
         source=body.source if body.source else [],
     )
-    response = JSONResponse(
-        content={"message": "뉴스레터가 성공적으로 생성되었습니다."}, status_code=201
-    )
+    response = JSONResponse(content={"newsletter_id": newsletter_id}, status_code=201)
     return response
 
 
 @router.post("/create", status_code=201, response_model=NewsletterSentResponse)
 @inject
 async def create_news(
-    current_user: Annotated[CurrentUser, Depends(get_current_user)],
+    current_user: Annotated[
+        CurrentUser, Depends(get_current_user)
+    ],  # user_id는 안 쓰지만 토큰 검증용
     body: CreateNewsBody,
     news_service: NewsService = Depends(Provide[Container.news_service]),
 ):
