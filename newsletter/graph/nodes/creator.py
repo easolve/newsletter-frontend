@@ -47,5 +47,9 @@ def creator_node(state: WorkflowState):
     print("====================creator_node====================")
     print(content_str)
 
+    content_str += "\n\n참고 자료:\n" + "\n".join(
+        f"- {url}" for url in state["search_urls"]
+    )
+
     state["newsletter_contents"].append(content_str)
     return {"newsletter_content": state["newsletter_contents"], "summary_contents": []}

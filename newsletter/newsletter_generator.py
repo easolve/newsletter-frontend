@@ -3,7 +3,7 @@ from newsletter.graph.state import WorkflowState, initialize_state
 
 
 # Function to call API
-def create_newsletter(topics: list[str], sources: list[str]):
+def create_newsletter(topics: list[str], sources: list[str]) -> str:
     graph = get_graph()
     state = WorkflowState(initialize_state(topics=topics, sources=sources))
     res = graph.invoke(state, {"recursion_limit": 100})

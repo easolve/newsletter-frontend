@@ -29,6 +29,6 @@ def get_graph() -> CompiledStateGraph:
 
     # 그래프 시각화
     save_graph_as_png(graph, "workflow.png")
-    display_graph(graph)
+    # display_graph(graph)
 
     return graph

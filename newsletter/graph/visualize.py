@@ -8,7 +8,7 @@ def save_graph_as_png(app: CompiledGraph, output_file_path="graph.png") -> None:
     png_image = app.get_graph().draw_mermaid_png(draw_method=MermaidDrawMethod.API)
     with open(output_file_path, "wb") as f:
         f.write(png_image)
-    os.system("open workflow.png")
+    os.system("code workflow.png")
 
 
 def display_graph(app: CompiledGraph) -> None:
