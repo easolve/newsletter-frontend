@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from newsletter.graph.state import WorkflowState
-from newsletter.prompts import SUMMARIZER_PROMPT
+from newsletter.graph.prompts import SUMMARIZER_PROMPT
 from pydantic import BaseModel
 import json
 
@@ -29,10 +29,11 @@ def _summarize_content(summary_dict: dict):
 
 
 def summarizer_node(state: WorkflowState):
+    topics = ", ".join(state["topics"])
     new_summary_contents = state["summary_contents"]
     summary_dict = {
         "original_content": "",
-        "intent_of_requested_content": state["intent_of_requested_content"],
+        "topics": topics,
     }
 
     while len(state["search_results"]) > 0:
@@ -52,16 +53,3 @@ def summarizer_node(state: WorkflowState):
         )
 
     return {"summary_contents": new_summary_contents}
-
-
-from newsletter.graph.state import WorkflowState, initialize_state
-
-if __name__ == "__main__":
-    state = WorkflowState(initialize_state("news"))
-    state["intent_of_requested_content"] = "news"
-    state["search_results"] = [
-        "The quick brown fox jumps over the lazy dog.",
-        "Trump has won the 2025 US presidential election.",
-    ]
-    state["intent_of_requested_content"] = "news"
-    summarizer_node(state)

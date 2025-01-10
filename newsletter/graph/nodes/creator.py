@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from newsletter.graph.state import WorkflowState
-from newsletter.prompts import CREATOR_PROMPT, POST_1, POST_2, POST_3
+from newsletter.graph.prompts import CREATOR_PROMPT, POST_1, POST_2, POST_3
 
 
 llm = ChatOpenAI(model="gpt-4o-mini")
@@ -8,8 +8,6 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 
 def _make_prompt_vars(state: WorkflowState) -> dict:
     original_content = ""
-    for i, content in enumerate(state["newsletter_contents"]):
-        original_content += f"PREV_CREATED_NEWS_LETTERS_{i + 1}:\n{content}\n"
 
     for i, content in enumerate(state["summary_contents"]):
         original_content += f"ORIGINAL_CONTENT_{i + 1}:\n{content}\n"
@@ -28,12 +26,12 @@ EXAMPLE_3:
 {POST_3}
 """
 
-    intent_of_requested_content = state["intent_of_requested_content"]
+    topics = ", ".join(state["topics"])
 
     return {
         "original_content": original_content,
         "example": example,
-        "intent_of_requested_content": intent_of_requested_content,
+        "topics": topics,
     }
 
 
@@ -48,6 +46,10 @@ def creator_node(state: WorkflowState):
         content_str = response.content
     print("====================creator_node====================")
     print(content_str)
+
+    content_str += "\n\n참고 자료:\n" + "\n".join(
+        f"- {url}" for url in state["search_urls"]
+    )
 
     state["newsletter_contents"].append(content_str)
     return {"newsletter_content": state["newsletter_contents"], "summary_contents": []}
