@@ -3,11 +3,16 @@ from newsletter.graph.state import WorkflowState, initialize_state
 
 
 # Function to call API
-def create_newsletter(topics: list[str], sources: list[str]) -> str:
+def create_newsletter(topics: list[str], sources: list[str]) -> dict:
     graph = get_graph()
     state = WorkflowState(initialize_state(topics=topics, sources=sources))
     res = graph.invoke(state, {"recursion_limit": 100})
-    return res["newsletter_contents"][-1]
+
+    res_dict = {
+        "title": res["newsletter_title"],
+        "content": res["newsletter_contents"][-1],
+    }
+    return res_dict
 
 
 import sys
@@ -24,12 +29,13 @@ if __name__ == "__main__":
     if len(sys.argv) > 2:
         source = sys.argv[2]
 
-    newsletter_content = create_newsletter([topic], [source])
+    res = create_newsletter([topic], [source])
 
     print("--------------------------------------")
-    print(newsletter_content)
+    print(res["title"])
+    print(res["content"])
     current_directory = os.getcwd()
     filename = get_unique_filename(f"{current_directory}/output", "newsletter")
 
     with open(filename, "w", encoding="utf-8") as f:
-        f.write(newsletter_content)
+        f.write(res["content"])

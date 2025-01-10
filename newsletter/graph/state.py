@@ -6,6 +6,7 @@ class WorkflowState(TypedDict):
     search_urls: list[str]  # URLs related to the search results
     search_results: list[str]  # Search results related to the newsletter content
     summary_contents: list[str]  # Translated and summarized content
+    newsletter_title: str  # Title of the newsletter
     newsletter_contents: list[str]  # The main content of the newsletter
     topics: list[str]  # Topics related to the newsletter
     sources: list[str]  # Sources related to the newsletter
@@ -35,6 +36,7 @@ def initialize_state(**kwargs) -> WorkflowState:
         "search_urls": [],
         "search_results": [],
         "summary_contents": [],
+        "newsletter_title": "",
         "newsletter_contents": [],
         "topics": [],
         "sources": [],
