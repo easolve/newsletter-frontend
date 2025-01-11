@@ -1,8 +1,11 @@
 "use client";
 
-import { getCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import {
+  createSampleNewsletter,
+  saveNewsletter,
+} from "@/app/create-newsletter/actions";
 import NewsletterDetail from "./steps/detail";
 import NewsletterFormat from "./steps/format";
 import NewsletterPreference from "./steps/preference";
@@ -70,8 +73,16 @@ const steps: NewsletterStep[] = [
 const NewsletterWizard: React.FC = () => {
   const [step, setStep] = useState<number>(0);
   const router = useRouter();
-  const { topics, sources, format, frequency, sample, name, description } =
-    useNewsletterData();
+  const {
+    topics,
+    sources,
+    format,
+    frequency,
+    sample,
+    setSample,
+    name,
+    description,
+  } = useNewsletterData();
 
   const currentData = {
     topics,
@@ -89,44 +100,17 @@ const NewsletterWizard: React.FC = () => {
     ? currentStep.validator(currentData)
     : true;
 
-  const saveNewsletter = async () => {
-    const url = new URL("/api/news/save", "http://localhost:8000");
-    const accessToken = getCookie("access_token");
-    try {
-      const response = await fetch(url.toString(), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          name: name,
-          description: description,
-          custom_prmopt: sample,
-          send_frequency: frequency,
-          is_active: "true",
-          topic: topics,
-          source: sources,
-        }),
-      });
-      if (!response.ok) {
-        // TODO: handle error
-        // e.g., 401 if invalid token
-        return;
-      }
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error saving newsletter:", error);
-      alert("Error saving newsletter.");
-    }
-  };
-
   const goNext = async () => {
     if (step < steps.length - 1) {
       setStep(step + 1);
+      if (step === steps.length - 1) {
+        const data = await createSampleNewsletter(topics, sources);
+        if (data) {
+          setSample([data]);
+        }
+      }
     } else {
-      await saveNewsletter();
+      await saveNewsletter(currentData);
       router.push("/");
       alert("Saved successfully!");
     }
