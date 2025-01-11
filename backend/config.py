@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     jwt_algorithm: str
     access_token_expire_time: int
     refresh_token_expire_time: int
+    redis_url: str
     langchain_tracing_v2: bool
     langchain_api_key: str
     langchain_endpoint: str

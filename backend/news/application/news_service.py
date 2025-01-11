@@ -7,6 +7,8 @@ from news.domain.news import Source
 from ulid import ULID
 from newsletter.newsletter_generator import create_newsletter
 from news.domain.news import NewsletterSent
+from common.celery import create_newsletter_task
+from celery.result import AsyncResult
 
 
 class NewsService:
@@ -71,20 +73,25 @@ class NewsService:
         newsletter_id = await self.news_repo.save_news(user_id, newsletter)
         return newsletter_id
 
-    async def create_news(
+    def create_newsletter_task(
         self,
-        newsletter_id: str,
         topics: list[str],
         sources: list[str],
+    ) -> AsyncResult:
+        task: AsyncResult = create_newsletter_task.delay(topics, sources)
+        return task
+
+    # 보낸 뉴스레터 DB에 저장하는 함수
+    async def save_sent_newsletter(
+        self,
+        newsletter_id: str,
+        newsletter_sent_result: dict,
     ):
         now = datetime.now()
-
-        # TODO: 뉴스레터 딕셔너리로 리턴 받기, celery task로 비동기 뉴스레터 생성 요청
-        newsletter_sent: dict = create_newsletter(topics, sources)
         newsletter_sent = NewsletterSent(
             newsletter_id=newsletter_id,
-            name=newsletter_sent["title"],
-            generated_content=newsletter_sent["content"],
+            name=newsletter_sent_result["title"],
+            generated_content=newsletter_sent_result["content"],
             sent_at=now,
             created_at=now,
             updated_at=now,

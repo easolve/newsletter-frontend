@@ -7,6 +7,8 @@ from common.auth import CurrentUser, get_current_user
 from news.application.news_service import NewsService
 from containers import Container
 from fastapi.responses import JSONResponse
+from common.celery import app
+from celery.result import AsyncResult
 
 router = APIRouter(prefix="/api/news")
 
@@ -25,10 +27,13 @@ class NewsBody(BaseModel):
     source: List[str] = Field(..., description="뉴스레터 url 리스트")
 
 
-class CreateNewsBody(BaseModel):
-    newsletter_id: int = Field(..., description="뉴스레터 id")
+class CreateNewsletterTaskBody(BaseModel):
     topics: List[str] = Field(..., description="뉴스레터 토픽 리스트")
     sources: List[str] = Field(..., description="뉴스레터 url 리스트")
+
+
+class CreateNewsletterBody(BaseModel):
+    newsletter_id: int
 
 
 class NewsletterSentResponse(BaseModel):
@@ -57,18 +62,57 @@ async def save_news(
     return response
 
 
-@router.post("/create", status_code=201, response_model=NewsletterSentResponse)
+@router.post("/task", status_code=201)
 @inject
-async def create_news(
-    current_user: Annotated[
-        CurrentUser, Depends(get_current_user)
-    ],  # user_id는 안 쓰지만 토큰 검증용
-    body: CreateNewsBody,
+def create_newsletter_task(
+    current_user: Annotated[CurrentUser, Depends(get_current_user)],
+    body: CreateNewsletterTaskBody,
     news_service: NewsService = Depends(Provide[Container.news_service]),
 ):
-    response = await news_service.create_news(
-        newsletter_id=body.newsletter_id,
+    task = news_service.create_newsletter_task(
         topics=body.topics,
         sources=body.sources,
     )
+    response = JSONResponse(content={"task_id": task.id}, status_code=201)
     return response
+
+
+# 보낸 뉴스레터 저장하지 않고 조회만 할 때
+@router.get("/example/{task_id}")
+@inject
+def get_newsletter(
+    current_user: Annotated[CurrentUser, Depends(get_current_user)],
+    task_id: str,
+):
+    task: AsyncResult = app.AsyncResult(task_id)
+    if task.ready():
+        response: NewsletterSentResponse = task.get()
+        return response
+    else:
+        response = JSONResponse(
+            content={"status": "pending"}, status_code=200
+        )  # 뉴스레터 생성 중
+        return response
+
+
+# 보낸 뉴스레터 저장할 때
+@router.post("/create/{task_id}", status_code=201)
+@inject
+async def create_newsletter_sent(
+    current_user: Annotated[CurrentUser, Depends(get_current_user)],
+    task_id: str,
+    body: CreateNewsletterBody,
+    news_service: NewsService = Depends(Provide[Container.news_service]),
+):
+    task: AsyncResult = app.AsyncResult(task_id)
+    if task.ready():
+        response: NewsletterSentResponse = await news_service.save_sent_newsletter(
+            newsletter_id=body.newsletter_id,
+            newsletter_sent_result=task.get(),
+        )
+        return response
+    else:
+        response = JSONResponse(
+            content={"status": "pending"}, status_code=200
+        )  # 뉴스레터 생성 중
+        return response
