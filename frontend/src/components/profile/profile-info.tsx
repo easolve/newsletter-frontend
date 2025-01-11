@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import { Divider } from "@nextui-org/divider";
 import { subtitle, title } from "@/styles/primitives";
 
 interface ProfileInfoProps {
@@ -55,7 +56,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ newsArr = dummyNews }) => {
   return (
     <>
       <h1 className={title({ size: "sm", fullWidth: true })}>My News</h1>
-      <div className="flex w-full flex-nowrap gap-6 overflow-x-auto py-2">
+      <div className="flex w-full flex-nowrap gap-6 overflow-x-auto p-6">
         {newsArr.map((news) => (
           <Card
             key={news.name}
@@ -67,6 +68,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ newsArr = dummyNews }) => {
               <h2 className={subtitle()}>{news.name}</h2>
               <p>{news.send_frequency}</p>
             </CardHeader>
+            <Divider />
             <CardBody>{news.description}</CardBody>
           </Card>
         ))}
