@@ -66,7 +66,7 @@ async def login(
 		value=jwt["access_token"],
 		httponly=True,
 		secure=False, # HTTPS
-		samesite="none", # 벡엔드와 프론트엔드가 분리된 환경에서는 none으로 세팅
+		samesite="lax", # 벡엔드와 프론트엔드가 분리된 환경에서는 none으로 세팅
 		domain="localhost", #TODO: 도메인 사야함
 	)
 	response.set_cookie(
@@ -74,7 +74,7 @@ async def login(
 		value=jwt["refresh_token"],
 		httponly=True,
 		secure=False, # HTTPS
-		samesite="none", # 벡엔드와 프론트엔드가 분리된 환경에서는 none으로 세팅
+		samesite="lax", # 벡엔드와 프론트엔드가 분리된 환경에서는 none으로 세팅
 		domain="localhost", #TODO: 도메인 사야함
 	)
 	return response
