@@ -27,6 +27,7 @@ Create a new newsletter using the 'ORIGINAL_CONTENTS' and 'PREV_CREATED_NEWS_LET
 1. The format of a new newsletter should follow the template in 'EXAMPLES' below.
 2. The new newsletter should contain the following topics '{topics}'
 3. The new newsletter must be written in Korean.
+4. the 'content' should contain the content of the finished newsletter, and the 'title' should contain the title of the 'content'.
 
 {original_content}
 

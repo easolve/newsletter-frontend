@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["sunko-seoul <sunko@student.42seoul.kr>"]
 readme = "README.md"
-packages = [{include = "newsletter"}]
+packages = []
 
 [tool.poetry.dependencies]
 python = "^3.11"
