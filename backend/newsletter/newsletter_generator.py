@@ -38,4 +38,5 @@ if __name__ == "__main__":
     filename = get_unique_filename(f"{current_directory}/output", "newsletter")
 
     with open(filename, "w", encoding="utf-8") as f:
+        f.write(res["title"])
         f.write(res["content"])

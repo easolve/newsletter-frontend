@@ -20,8 +20,11 @@ def _make_prompt_vars(state: WorkflowState) -> dict:
         original_content += f"ORIGINAL_CONTENT_{i + 1}:\n{content}\n"
 
     example = f"""
-EXAMPLE:
+EXAMPLE_1:
 {POST_1}
+
+EXAMPLE_2:
+{POST_2}
 """
 
     """
