@@ -13,7 +13,7 @@ import { useNewsletterData } from "../use-newsletter-data";
 interface NewsletterDetailProps {}
 
 const NewsletterDetail: React.FC<NewsletterDetailProps> = () => {
-  const { topics, sources, format, frequency, name, description } =
+  const { topics, sources, frequency, sample, name, description } =
     useNewsletterData();
 
   return (
@@ -46,6 +46,9 @@ const NewsletterDetail: React.FC<NewsletterDetailProps> = () => {
           </TableRow>
         </TableBody>
       </Table>
+      <div className="mt-4 flex justify-end">
+        {sample.length > 0 && sample[0]}
+      </div>
     </div>
   );
 };

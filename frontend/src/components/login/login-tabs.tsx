@@ -41,9 +41,10 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
         // e.g., 401 if invalid token
         return;
       }
-      const data = await response.json();
-      console.log("Response:", data);
       router.push("/");
+      setTimeout(() => {
+        router.refresh();
+      }, 200);
     } catch (error) {
       console.error("Error signing in:", error);
       alert("Error signing in.");
@@ -64,7 +65,6 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
     }
 
     const url = new URL("/api/user/register", "http://localhost:8000");
-
     try {
       const response: Response = await fetch(url.toString(), {
         method: "POST",
@@ -77,7 +77,6 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
         return;
       }
       const data = await response.json();
-      console.log("Response:", data);
     } catch (error) {
       console.error("Error signing up:", error);
       alert("Error signing up.");
