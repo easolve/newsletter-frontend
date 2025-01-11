@@ -12,7 +12,7 @@ RUN poetry config virtualenvs.create false \
 	&& poetry install --no-root --no-interaction
 
 # 로컬에 있는 소스코드를 컨테이너로 복사
-COPY ./backend /app
+COPY ./backend /app/backend
 
 # Python 경로 설정
 ENV PYTHONPATH=/usr/local/bin/python3.11
@@ -23,10 +23,10 @@ RUN chmod +x /usr/local/bin/poetry
 # Poetry가 설치된 Python을 사용하도록 설정
 RUN sed -i '1s|^.*$|#!/usr/local/bin/python3.11|' /usr/local/bin/poetry
 
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+COPY entrypoint.sh /app/backend/entrypoint.sh
+RUN chmod +x /app/backend/entrypoint.sh
 
-WORKDIR /app
+WORKDIR /app/backend
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/app/backend/entrypoint.sh"]
 
