@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
 import {
+  Button,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
@@ -9,9 +9,9 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
   Navbar as NextUINavBar,
-} from "@nextui-org/navbar";
+  User,
+} from "@nextui-org/react";
 import { link } from "@nextui-org/theme";
-import { User } from "@nextui-org/user";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
@@ -28,8 +28,8 @@ const menuItems: MenuItems[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Create", href: "/create-newsletter" },
-  { label: "Showcase", href: "/showcase", disabled: true },
-  { label: "Pricing", href: "/pricing", disabled: true },
+  // { label: "Showcase", href: "/showcase", disabled: true },
+  // { label: "Pricing", href: "/pricing", disabled: true },
 ];
 
 const navLinkClasses = clsx(
@@ -46,6 +46,13 @@ const NavBar: FC<NavbarProps> = ({ email }) => {
   const pathname = usePathname();
   const router = useRouter();
   const username = email ? email.slice(0, email.indexOf("@")) : null;
+
+  useEffect(() => {
+    if (username === null && !["/", "/login"].includes(pathname)) {
+      alert("Please login to access this page.");
+      router.push("/login");
+    }
+  }, [username, pathname]);
 
   useEffect(() => {
     if (isMenuOpen) {
