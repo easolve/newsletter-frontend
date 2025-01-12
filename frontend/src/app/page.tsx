@@ -1,4 +1,6 @@
-import { Textarea } from "@nextui-org/input";
+"use client";
+
+import { Textarea } from "@nextui-org/react";
 import { SearchLinearIcon } from "@/icons";
 import { subtitle, title } from "@/styles/primitives";
 
