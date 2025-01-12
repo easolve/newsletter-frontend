@@ -1,9 +1,6 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
-import { Card, CardBody } from "@nextui-org/card";
-import { Input } from "@nextui-org/input";
-import { Tab, Tabs } from "@nextui-org/tabs";
+import { Button, Card, CardBody, Input, Tab, Tabs } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -42,9 +39,7 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
         return;
       }
       router.push("/");
-      setTimeout(() => {
-        router.refresh();
-      }, 200);
+      router.refresh(); // NOTE: NOTE: /src/app/layout.tsx 에서 이메일을 보여주기 위해 (fetchUserEmail 을 다시 호출하기 위해) refresh 를 사용
     } catch (error) {
       console.error("Error signing in:", error);
       alert("Error signing in.");
@@ -76,7 +71,6 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
         // e.g., 401 if invalid token
         return;
       }
-      const data = await response.json();
     } catch (error) {
       console.error("Error signing up:", error);
       alert("Error signing up.");
