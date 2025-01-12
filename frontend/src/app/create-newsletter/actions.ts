@@ -2,11 +2,11 @@
 
 import { cookies } from "next/headers";
 
-interface NewsletterData {
+export interface NewsletterData {
   name: string;
   description: string;
   frequency: string;
-  sample: string[];
+  exampleContent: string | null;
   topics: string[];
   sources: string[];
 }
@@ -15,7 +15,7 @@ export async function saveNewsletter({
   name,
   description,
   frequency,
-  sample,
+  exampleContent,
   topics,
   sources,
 }: NewsletterData): Promise<void> {
@@ -38,7 +38,7 @@ export async function saveNewsletter({
       body: JSON.stringify({
         name,
         description,
-        custom_prmopt: sample,
+        custom_prmopt: exampleContent,
         send_frequency: frequency,
         is_active: "true",
         topic: topics,
@@ -65,7 +65,7 @@ export async function createSampleNewsletter(
     return null;
   }
 
-  const url = new URL("/api/news/create", "http://localhost:8000");
+  const url = new URL("/api/news/task", "http://localhost:8000");
 
   try {
     const res = await fetch(url.toString(), {
@@ -84,6 +84,36 @@ export async function createSampleNewsletter(
       return null;
     }
     const data = await res.json();
+    return data.task_id;
+  } catch {
+    return null;
+  }
+}
+
+export async function getSampleNewsletter(taskId: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("access_token")?.value;
+
+  if (!accessToken) {
+    return null;
+  }
+
+  const url = new URL(`/api/news/example/${taskId}`, "http://localhost:8000");
+
+  try {
+    const res = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      cache: "no-cache",
+    });
+    if (!res.ok) {
+      return null;
+    }
+    const data = await res.json();
+    console.log("data", data);
     return data;
   } catch {
     return null;
