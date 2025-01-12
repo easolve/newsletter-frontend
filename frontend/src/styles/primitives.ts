@@ -4,6 +4,7 @@ export const title = tv({
   base: "tracking-tight inline font-semibold",
   variants: {
     size: {
+      xs: "text-2xl lg:text-3xl",
       sm: "text-3xl lg:text-4xl",
       md: "text-[2.5rem] lg:text-5xl",
       lg: "text-4xl lg:text-6xl",
