@@ -1,21 +1,18 @@
 from langchain_core.prompts import PromptTemplate
 
-QUERY_OPTIMIZATION_PROMPT = PromptTemplate.from_template(
-    """You're an experienced newsletter editor. Your boss, who doesn't know much about newsletters, says '{search_query}'.
-You should write a newsletter based on what your boss said.
-Infer the country based on the language used by your boss, consider the background of that country, and understand the context of what your boss said.
+QUERY_OPTIMIZATION_PROMPT = PromptTemplate.from_template("""
+You are an experienced newsletter writer.
+In 'optimized_search_query', please create a query for Google to search for to write a newsletter about '{topics}'.
 
-In 'intent_of_requested_content', make a guess about what your boss wants you to write in the newsletter based on what he or she said.
-In 'optimized_search_query', enter the search terms you would search on Google to create that newsletter.
+# 'optimized_search_query' rules
+- Today is {current_date}. Set the search query to return the most recent results possible.
+- Please make the search term in English.
+""")
 
-- Today is {current_date}. Set 'optimized_search_query' to return the most recent search results possible.
-- Give all answers in English.
-"""
-)
 
 SUMMARIZER_PROMPT = PromptTemplate.from_template(
     """You're an expert at summarizing complex information.  When others see your summaries, they understand them as well as if they had read the full text.
-check if the original content is relevant to '{intent_of_requested_content}'.
+check if the original content is relevant to '{topics}'.
 - if it is relevant, provide a true for 'is_related' and a summary for 'summary'.
 - if it is not relevant, give false to 'is_related'.
 
@@ -28,9 +25,9 @@ CREATOR_PROMPT = PromptTemplate.from_template(
     """You are a competent senior newsletter author.
 Create a new newsletter using the 'ORIGINAL_CONTENTS' and 'PREV_CREATED_NEWS_LETTERS' below.
 1. The format of a new newsletter should follow the template in 'EXAMPLES' below.
-2. The new newsletter should be written with the following intentions: '{intent_of_requested_content}'
-3. The new newsletter should contain more content than 'PREV_CREATED_NEWS_LETTERS' or be of higher quality.
-4. The new newsletter must be written in Korean.
+2. The new newsletter should contain the following topics '{topics}'
+3. The new newsletter must be written in Korean.
+4. the 'content' should contain the content of the finished newsletter, and the 'title' should contain the title of the 'content'.
 
 {original_content}
 
@@ -40,18 +37,7 @@ New Newsletter:
 """
 )
 
-CHIEF_EDITOR_PROMPT = PromptTemplate.from_template(
-    """You are the general manager of a professional newsletter. Check the content of your newsletter below.
-1. the newsletter should be about "{intent_of_requested_content}".
-2. the newsletter should be clearly understandable to everyone who reads it.
-3. if you don't understand the content, give us a "new search term" without "{search_queries}".
-
-Newsletter:
-{newsletter_content}
-"""
-)
-
-POST_1 = """<새로운 VC 트렌드 시리즈 - 금융기관화 되가는 VC vs 본질을 고수하는 VC> (원문은 댓글 링크)
+POST_1 = """<새로운 VC 트렌드 시리즈 - 금융기관화 되가는 VC vs 본질을 고수하는 VC>
 
 실리콘밸리 VC 업계는 지난 30년간 큰 변화를 겪고있다.
 아래 두 회사가 그 변화를 대변하고 있다.
