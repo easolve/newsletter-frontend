@@ -2,7 +2,16 @@
 
 import React, { createContext, useContext, useMemo, useState } from "react";
 
-interface CreateNewsletterData {
+export interface CreateNewsletterData {
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+
+  description: string;
+  setDescription: React.Dispatch<React.SetStateAction<string>>;
+
+  frequency: string;
+  setFrequency: React.Dispatch<React.SetStateAction<string>>;
+
   topics: string[];
   setTopics: React.Dispatch<React.SetStateAction<string[]>>;
 
@@ -12,17 +21,14 @@ interface CreateNewsletterData {
   format: string[];
   setFormat: React.Dispatch<React.SetStateAction<string[]>>;
 
-  sample: string[];
-  setSample: React.Dispatch<React.SetStateAction<string[]>>;
+  exampleId: string | null;
+  setExampleId: React.Dispatch<React.SetStateAction<string | null>>;
 
-  frequency: string;
-  setFrequency: React.Dispatch<React.SetStateAction<string>>;
+  exampleTitle: string | null;
+  setExampleTitle: React.Dispatch<React.SetStateAction<string | null>>;
 
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-
-  description: string;
-  setDescription: React.Dispatch<React.SetStateAction<string>>;
+  exampleContent: string | null;
+  setExampleContent: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const NewsletterDataContext = createContext<CreateNewsletterData | undefined>(
@@ -32,32 +38,48 @@ const NewsletterDataContext = createContext<CreateNewsletterData | undefined>(
 export const NewsletterDataProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [frequency, setFrequency] = useState<string>("weekly");
   const [topics, setTopics] = useState<string[]>([]);
   const [sources, setSources] = useState<string[]>([]);
   const [format, setFormat] = useState<string[]>([]);
-  const [sample, setSample] = useState<string[]>([]);
-  const [frequency, setFrequency] = useState<string>("weekly");
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [exampleId, setExampleId] = useState<string | null>(null);
+  const [exampleTitle, setExampleTitle] = useState<string | null>(null);
+  const [exampleContent, setExampleContent] = useState<string | null>(null);
 
   const value: CreateNewsletterData = useMemo(
     () => ({
+      name,
+      setName,
+      description,
+      setDescription,
+      frequency,
+      setFrequency,
       topics,
       setTopics,
       sources,
       setSources,
       format,
       setFormat,
-      sample,
-      setSample,
-      frequency,
-      setFrequency,
-      name,
-      setName,
-      description,
-      setDescription,
+      exampleId,
+      setExampleId,
+      exampleTitle,
+      setExampleTitle,
+      exampleContent,
+      setExampleContent,
     }),
-    [topics, sources, format, frequency, sample, name, description],
+    [
+      name,
+      description,
+      topics,
+      sources,
+      format,
+      frequency,
+      exampleId,
+      exampleTitle,
+      exampleContent,
+    ],
   );
 
   return (

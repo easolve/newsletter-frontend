@@ -1,8 +1,12 @@
 "use client";
 
-import { getCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import {
+  createSampleNewsletter,
+  saveNewsletter,
+} from "@/app/create-newsletter/actions";
+import useDebouncedCallback from "@/hooks/use-debounced-callback";
 import NewsletterDetail from "./steps/detail";
 import NewsletterFormat from "./steps/format";
 import NewsletterPreference from "./steps/preference";
@@ -21,7 +25,7 @@ export interface NewsletterStep {
     sources: string[];
     format: string[];
     frequency: string;
-    sample: string[];
+    exampleContent: string | null;
     name: string;
     description: string;
   }) => boolean;
@@ -60,7 +64,7 @@ const steps: NewsletterStep[] = [
     validator: (data) => data.format.length > 0,
   },
   {
-    label: "Done!",
+    label: "Almost Done...",
     // description: "Lastly, enter the details of your newsletter.",
     progress: 100,
     component: NewsletterDetail,
@@ -70,15 +74,25 @@ const steps: NewsletterStep[] = [
 const NewsletterWizard: React.FC = () => {
   const [step, setStep] = useState<number>(0);
   const router = useRouter();
-  const { topics, sources, format, frequency, sample, name, description } =
-    useNewsletterData();
+  const {
+    topics,
+    sources,
+    format,
+    frequency,
+    setExampleId,
+    setExampleTitle,
+    exampleContent,
+    setExampleContent,
+    name,
+    description,
+  } = useNewsletterData();
 
   const currentData = {
     topics,
     sources,
     format,
     frequency,
-    sample,
+    exampleContent,
     name,
     description,
   };
@@ -89,44 +103,28 @@ const NewsletterWizard: React.FC = () => {
     ? currentStep.validator(currentData)
     : true;
 
-  const saveNewsletter = async () => {
-    const url = new URL("/api/news/save", "http://localhost:8000");
-    const accessToken = getCookie("access_token");
-    try {
-      const response = await fetch(url.toString(), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          name: name,
-          description: description,
-          custom_prmopt: sample,
-          send_frequency: frequency,
-          is_active: "true",
-          topic: topics,
-          source: sources,
-        }),
-      });
-      if (!response.ok) {
-        // TODO: handle error
-        // e.g., 401 if invalid token
-        return;
+  const debouncedCreateSampleNewsletter = useDebouncedCallback(
+    async (topics: string[], sources: string[]) => {
+      const id = await createSampleNewsletter(topics, sources);
+      if (id) {
+        setExampleId(id);
+      } else {
+        alert("Failed to create sample newsletter");
       }
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error saving newsletter:", error);
-      alert("Error saving newsletter.");
-    }
-  };
+    },
+    2000,
+  );
 
   const goNext = async () => {
     if (step < steps.length - 1) {
       setStep(step + 1);
+      if (step === steps.length - 2) {
+        setExampleTitle(null);
+        setExampleContent(null);
+        debouncedCreateSampleNewsletter(topics, sources);
+      }
     } else {
-      await saveNewsletter();
+      await saveNewsletter(currentData);
       router.push("/");
       alert("Saved successfully!");
     }

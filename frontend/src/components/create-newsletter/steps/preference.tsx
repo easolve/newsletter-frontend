@@ -1,8 +1,6 @@
 "use client";
 
-import { Input } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
-import { SharedSelection } from "@nextui-org/system";
+import { Input, Select, SelectItem, SharedSelection } from "@nextui-org/react";
 import { useNewsletterData } from "../use-newsletter-data";
 
 interface NewsletterPreferenceProps {}

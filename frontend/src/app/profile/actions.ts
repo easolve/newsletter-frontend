@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { MyNewsDto } from "@/components/profile/profile-info";
 
 export async function fetchUserProfile(): Promise<MyNewsDto[]> {
@@ -29,4 +30,9 @@ export async function fetchUserProfile(): Promise<MyNewsDto[]> {
   } catch {
     return [];
   }
+}
+
+export async function logout() {
+  (await cookies()).delete("access_token");
+  redirect("/login");
 }

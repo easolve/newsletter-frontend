@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, CheckboxGroup } from "@nextui-org/checkbox";
+import { Checkbox, CheckboxGroup } from "@nextui-org/react";
 import { useNewsletterData } from "../use-newsletter-data";
 
 interface NewsletterTopicProps {}

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
 import {
+  Button,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
@@ -9,12 +9,12 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
   Navbar as NextUINavBar,
-} from "@nextui-org/navbar";
+  User,
+} from "@nextui-org/react";
 import { link } from "@nextui-org/theme";
-import { User } from "@nextui-org/user";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { FC, memo, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { clsx } from "@/utils/clsx";
 
@@ -28,8 +28,8 @@ const menuItems: MenuItems[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Create", href: "/create-newsletter" },
-  { label: "Showcase", href: "/showcase", disabled: true },
-  { label: "Pricing", href: "/pricing", disabled: true },
+  // { label: "Showcase", href: "/showcase", disabled: true },
+  // { label: "Pricing", href: "/pricing", disabled: true },
 ];
 
 const navLinkClasses = clsx(
@@ -41,11 +41,18 @@ export interface NavbarProps {
   email: string | null;
 }
 
-const NavBar: FC<NavbarProps> = memo(({ email }) => {
+const NavBar: FC<NavbarProps> = ({ email }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean | undefined>(false);
   const pathname = usePathname();
   const router = useRouter();
-  const username = email?.slice(0, email.indexOf("@"));
+  const username = email ? email.slice(0, email.indexOf("@")) : null;
+
+  useEffect(() => {
+    if (username === null && !["/", "/login"].includes(pathname)) {
+      alert("Please login to access this page.");
+      router.push("/login");
+    }
+  }, [username, pathname]);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -141,6 +148,11 @@ const NavBar: FC<NavbarProps> = memo(({ email }) => {
               avatarProps={{
                 name: username,
               }}
+              classNames={{
+                base: "cursor-pointer",
+                name: "cursor-pointer",
+                wrapper: "cursor-pointer",
+              }}
               name={username}
               onClick={() => router.push("/profile")}
             />
@@ -174,9 +186,6 @@ const NavBar: FC<NavbarProps> = memo(({ email }) => {
       </NavbarMenu>
     </NextUINavBar>
   );
-});
+};
 
 export default NavBar;
-function setEmail(email: any) {
-  throw new Error("Function not implemented.");
-}
