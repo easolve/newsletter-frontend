@@ -6,6 +6,7 @@ import {
   createSampleNewsletter,
   saveNewsletter,
 } from "@/app/create-newsletter/actions";
+import useDebouncedCallback from "@/hooks/use-debounced-callback";
 import NewsletterDetail from "./steps/detail";
 import NewsletterFormat from "./steps/format";
 import NewsletterPreference from "./steps/preference";
@@ -24,7 +25,7 @@ export interface NewsletterStep {
     sources: string[];
     format: string[];
     frequency: string;
-    sample: string[];
+    exampleContent: string | null;
     name: string;
     description: string;
   }) => boolean;
@@ -63,7 +64,7 @@ const steps: NewsletterStep[] = [
     validator: (data) => data.format.length > 0,
   },
   {
-    label: "Done!",
+    label: "Almost Done...",
     // description: "Lastly, enter the details of your newsletter.",
     progress: 100,
     component: NewsletterDetail,
@@ -78,8 +79,10 @@ const NewsletterWizard: React.FC = () => {
     sources,
     format,
     frequency,
-    sample,
-    setSample,
+    setExampleId,
+    setExampleTitle,
+    exampleContent,
+    setExampleContent,
     name,
     description,
   } = useNewsletterData();
@@ -89,7 +92,7 @@ const NewsletterWizard: React.FC = () => {
     sources,
     format,
     frequency,
-    sample,
+    exampleContent,
     name,
     description,
   };
@@ -100,14 +103,25 @@ const NewsletterWizard: React.FC = () => {
     ? currentStep.validator(currentData)
     : true;
 
+  const debouncedCreateSampleNewsletter = useDebouncedCallback(
+    async (topics: string[], sources: string[]) => {
+      const id = await createSampleNewsletter(topics, sources);
+      if (id) {
+        setExampleId(id);
+      } else {
+        alert("Failed to create sample newsletter");
+      }
+    },
+    2000,
+  );
+
   const goNext = async () => {
     if (step < steps.length - 1) {
       setStep(step + 1);
-      if (step === steps.length - 1) {
-        const data = await createSampleNewsletter(topics, sources);
-        if (data) {
-          setSample([data]);
-        }
+      if (step === steps.length - 2) {
+        setExampleTitle(null);
+        setExampleContent(null);
+        debouncedCreateSampleNewsletter(topics, sources);
       }
     } else {
       await saveNewsletter(currentData);
