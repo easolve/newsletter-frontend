@@ -36,6 +36,8 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
       if (!response.ok) {
         // TODO: handle error
         // e.g., 401 if invalid token
+        console.error("Error signing in:", response.statusText);
+        alert("Error signing in.");
         return;
       }
       router.push("/");
