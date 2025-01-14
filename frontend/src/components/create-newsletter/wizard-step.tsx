@@ -67,7 +67,7 @@ const WizardStep: React.FC<WizardStepProps> = ({
           {description && <p className={subtitle()}>{description}</p>}
         </div>
 
-        <div>{children}</div>
+        <div className="flex h-full flex-col">{children}</div>
       </div>
       <div className="flex w-full items-center justify-between">
         {step > 0 ? <Button onPress={onPrev}>Prev</Button> : <div />}
