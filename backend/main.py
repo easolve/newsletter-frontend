@@ -9,17 +9,22 @@ app = FastAPI()
 app.container = Container()
 
 app.add_middleware(
-	CORSMiddleware,
-	allow_origins=["http://localhost:3000"],
-	allow_credentials=True,
-	allow_methods=["GET", "POST"],
-	#TODO: 필요한 헤더만 넣어야 함
-	allow_headers=["*"],
+    CORSMiddleware,
+    allow_origins=[
+        "https://easerve.site",
+        "https://localhost",
+        "http://localhost:8000",
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    # TODO: 필요한 헤더만 넣어야 함
+    allow_headers=["*"],
 )
 
 app.include_router(user_router)
 app.include_router(news_router)
 
+
 @app.get("/")
 def hello():
-	return {"Hello": "World"}
+    return {"Hello": "World"}
