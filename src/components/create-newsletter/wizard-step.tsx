@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Progress } from "@nextui-org/react";
+import { Button, Progress } from "@heroui/react";
 import React from "react";
 import { subtitle, title } from "@/styles/primitives";
 

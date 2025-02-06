@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
   Tabs,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useEffect } from "react";
 import { getSampleNewsletter } from "@/app/create-newsletter/actions";
 import { subtitle, title } from "@/styles/primitives";

@@ -1,4 +1,4 @@
-import { NextUIProvider } from "@nextui-org/system";
+import { HeroUIProvider } from "@heroui/system";
 import type { Metadata } from "next";
 import NavBar from "@/components/navbar";
 import NextThemesProvider from "@/providers/next-themes-provider";
@@ -19,12 +19,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <NextUIProvider>
+        <HeroUIProvider>
           <NextThemesProvider>
             <NavBar email={email} />
             {children}
           </NextThemesProvider>
-        </NextUIProvider>
+        </HeroUIProvider>
       </body>
     </html>
   );

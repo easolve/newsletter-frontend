@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, CheckboxGroup, Chip, Input } from "@nextui-org/react";
+import { Checkbox, CheckboxGroup, Chip, Input } from "@heroui/react";
 import { useState } from "react";
 import { useNewsletterData } from "../use-newsletter-data";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, CheckboxGroup } from "@nextui-org/react";
+import { Checkbox, CheckboxGroup } from "@heroui/react";
 import { useNewsletterData } from "../use-newsletter-data";
 
 interface NewsletterFormatProps {}

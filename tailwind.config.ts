@@ -1,8 +1,8 @@
-import { nextui } from "@nextui-org/theme/plugin";
+import { heroui } from "@heroui/theme/plugin";
 import path from "path";
 import type { Config } from "tailwindcss";
 
-const nexUiThemePath = path.dirname(require.resolve("@nextui-org/theme"));
+const nexUiThemePath = path.dirname(require.resolve("@heroui/theme"));
 
 export default {
   content: [
@@ -16,7 +16,7 @@ export default {
   },
   darkMode: "class",
   plugins: [
-    nextui({
+    heroui({
       addCommonColors: true,
       themes: {
         dark: {

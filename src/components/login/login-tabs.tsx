@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardBody, Input, Tab, Tabs } from "@nextui-org/react";
+import { Button, Card, CardBody, Input, Tab, Tabs } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

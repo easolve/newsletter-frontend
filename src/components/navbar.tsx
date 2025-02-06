@@ -10,8 +10,8 @@ import {
   NavbarMenuToggle,
   Navbar as NextUINavBar,
   User,
-} from "@nextui-org/react";
-import { link } from "@nextui-org/theme";
+} from "@heroui/react";
+import { link } from "@heroui/theme";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";

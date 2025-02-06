@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
 
 // import { useNewsletterData } from "../use-newsletter-data";
 
