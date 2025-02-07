@@ -6,14 +6,7 @@ import { subtitle, title } from "@/styles/primitives";
 import { logout } from "./api/logout";
 
 interface ProfileInfoProps {
-  newsArr: MyNewsDto[];
-}
-
-export interface MyNewsDto {
-  id: string;
-  name: string;
-  description: string;
-  send_frequency: string;
+  newsArr: Newsletter[];
 }
 
 const ProfileInfo: React.FC<ProfileInfoProps> = ({ newsArr }) => {
