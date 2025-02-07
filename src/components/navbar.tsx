@@ -47,12 +47,14 @@ const NavBar: FC<NavbarProps> = ({ email }) => {
   const router = useRouter();
   const username = email ? email.slice(0, email.indexOf("@")) : null;
 
-  useEffect(() => {
-    if (username === null && !["/", "/login"].includes(pathname)) {
-      alert("Please login to access this page.");
-      router.push("/login");
-    }
-  }, [username, pathname]);
+  if (process.env.NODE_ENV === "production") {
+    useEffect(() => {
+      if (username === null && !["/", "/login"].includes(pathname)) {
+        alert("Please login to access this page.");
+        router.push("/login");
+      }
+    }, [username, pathname]);
+  }
 
   useEffect(() => {
     if (isMenuOpen) {
