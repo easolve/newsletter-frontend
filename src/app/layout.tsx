@@ -1,6 +1,6 @@
 import { HeroUIProvider } from "@heroui/system";
 import type { Metadata } from "next";
-import NavBar from "@/components/navbar";
+import NavBar from "@/features/navbar";
 import NextThemesProvider from "@/providers/next-themes-provider";
 import { fetchUserEmail } from "./actions";
 import "./globals.css";

@@ -15,7 +15,7 @@ import { link } from "@heroui/theme";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
-import { ThemeSwitch } from "@/components/theme-switch";
+import { ThemeSwitch } from "@/features/theme-switch";
 import { clsx } from "@/utils/clsx";
 
 interface MenuItems {

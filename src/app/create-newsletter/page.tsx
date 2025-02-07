@@ -1,5 +1,5 @@
-import NewsletterWizard from "@/components/create-newsletter/newsletter-wizard";
-import { NewsletterDataProvider } from "@/components/create-newsletter/use-newsletter-data";
+import NewsletterWizard from "@/features/create-newsletter/newsletter-wizard";
+import { NewsletterDataProvider } from "@/features/create-newsletter/use-newsletter-data";
 
 export default function CreateYourOwnNewsletterPage() {
   return (

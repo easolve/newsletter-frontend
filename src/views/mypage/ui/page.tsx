@@ -1,4 +1,4 @@
-import ProfileInfo from "@/components/profile/profile-info";
+import ProfileInfo from "@/features/profile/profile-info";
 import { fetchUserProfile } from "../api/user-profile";
 
 export default async function ProfilePage() {

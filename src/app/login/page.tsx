@@ -1,4 +1,4 @@
-import LoginTabs from "@/components/login/login-tabs";
+import LoginTabs from "@/features/login/login-tabs";
 import { title } from "@/styles/primitives";
 
 export default function LoginPage() {
