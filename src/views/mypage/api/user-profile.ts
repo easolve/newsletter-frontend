@@ -1,9 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { MyNewsDto } from "@/components/profile/profile-info";
 
-export async function fetchUserProfile(): Promise<MyNewsDto[]> {
+export async function fetchUserProfile(): Promise<Newsletter[]> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("access_token")?.value;
 
