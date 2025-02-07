@@ -1,9 +1,9 @@
 "use client";
 
 import { Button, Card, CardBody, CardHeader, Divider } from "@heroui/react";
-import { logout } from "@/app/profile/actions";
 import { LogoutIcon, SettingsIcon } from "@/icons";
 import { subtitle, title } from "@/styles/primitives";
+import { logout } from "./api/logout";
 
 interface ProfileInfoProps {
   newsArr: MyNewsDto[];
