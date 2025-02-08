@@ -19,10 +19,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <HeroUIProvider>
+        <HeroUIProvider className="grid h-screen w-screen grid-rows-[auto,1fr]">
           <NextThemesProvider>
             <NavBar email={email} />
-            {children}
+            <main className="size-full max-w-7xl justify-self-center overflow-y-auto overflow-x-hidden px-6 pb-8 pt-2">
+              {children}
+            </main>
           </NextThemesProvider>
         </HeroUIProvider>
       </body>

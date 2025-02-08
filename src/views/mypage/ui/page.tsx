@@ -3,11 +3,5 @@ import { fetchUserProfile } from "../api/user-profile";
 
 export default async function ProfilePage() {
   const news = await fetchUserProfile();
-  return (
-    <main className="mx-auto h-[calc(100vh_-_64px)] w-full max-w-7xl overflow-y-auto overflow-x-hidden px-6">
-      <div className="flex h-full w-full flex-col items-center space-y-6 rounded-lg p-6">
-        <Newsletter newsletters={news} />
-      </div>
-    </main>
-  );
+  return <Newsletter newsletters={news} />;
 }
