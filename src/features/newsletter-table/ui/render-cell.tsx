@@ -16,7 +16,7 @@ export const renderCell = (newsletter: Newsletter, columnKey: React.Key) => {
     case "send_frequency":
       return <Frequency frequency={newsletter.send_frequency} />;
     case "actions":
-      return <ActionsDropdown />;
+      return <ActionsDropdown newsletterId={newsletter.id} />;
     default:
       return cellValue;
   }
