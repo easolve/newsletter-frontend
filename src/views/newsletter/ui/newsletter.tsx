@@ -9,6 +9,7 @@ import {
   Textarea,
 } from "@heroui/react";
 import { EnvelopeIcon } from "@/shared/ui/icons";
+import SelectFrequency from "@/shared/ui/select-frequency";
 import { card } from "./styles";
 
 interface Props {
@@ -37,6 +38,11 @@ const Newsletter = ({ newsletter }: Props) => {
           labelPlacement="outside"
           label="Description"
           defaultValue={newsletter.description}
+        />
+        <SelectFrequency
+          isDisabled
+          labelPlacement="outside"
+          defaultSelectedKeys={[newsletter.send_frequency]}
         />
       </CardBody>
       <CardFooter>
