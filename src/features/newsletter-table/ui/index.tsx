@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@heroui/react";
 import React, { type ChangeEvent } from "react";
-import { SearchIcon } from "@/icons";
+import { SearchIcon } from "@/shared/ui/icons";
 import { COLUMNS, INITIAL_VISIBLE_COLUMNS } from "../config";
 import AddButton from "./add-button";
 import ColumnsDropdown from "./columns-dropdown";

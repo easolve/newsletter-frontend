@@ -1,5 +1,5 @@
 import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
-import { UsersIcon } from "@/icons";
+import { UsersIcon } from "@/shared/ui/icons";
 import { card } from "./styles";
 
 const Subscribers = () => {
