@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, Divider } from "@heroui/react";
 import { BookOpenIcon } from "@/shared/ui/icons";
 import { card } from "@/views/newsletter/ui/styles";
