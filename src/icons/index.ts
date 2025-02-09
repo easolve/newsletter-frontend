@@ -7,3 +7,6 @@ export { PlusIcon } from "./plus";
 export { ChevronDownIcon } from "./chevron-down";
 export { VerticalDotsIcon } from "./vertical-dots";
 export { SearchIcon } from "./search";
+export { EnvelopeIcon } from "./envelope";
+export { BookOpenIcon } from "./book-open";
+export { UsersIcon } from "./users";
