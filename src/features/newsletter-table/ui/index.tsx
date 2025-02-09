@@ -110,7 +110,7 @@ export default function NewsletterTable({ newsletters = [] }: Props) {
         <div className="flex items-end justify-between gap-3">
           <Input
             isClearable
-            className="w-full sm:max-w-[44%]"
+            className="w-full md:max-w-96"
             placeholder="Search by name or description..."
             startContent={<SearchIcon />}
             value={searchValue}
