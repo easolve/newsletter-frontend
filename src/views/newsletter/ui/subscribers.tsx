@@ -1,4 +1,7 @@
+"use client";
+
 import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
+import SubscriberTable from "@/features/subscriber-table";
 import { UsersIcon } from "@/shared/ui/icons";
 import { card } from "./styles";
 
@@ -12,7 +15,9 @@ const Subscribers = () => {
         <h3>SUBSCRIBERS</h3>
       </CardHeader>
       <Divider />
-      <CardBody></CardBody>
+      <CardBody>
+        <SubscriberTable />
+      </CardBody>
     </Card>
   );
 };
