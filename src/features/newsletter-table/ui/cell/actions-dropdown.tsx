@@ -25,7 +25,7 @@ const ActionsDropdown = ({ newsletterId }: Props) => {
             <VerticalDotsIcon className="text-default-300" />
           </Button>
         </DropdownTrigger>
-        <DropdownMenu>
+        <DropdownMenu disabledKeys={["edit", "delete"]}>
           <DropdownItem
             key="view"
             onPress={() => router.push(`/newsletter/${newsletterId}`)}
