@@ -12,7 +12,7 @@ interface Props {
   frequency: Frequency;
 }
 
-const Frequency = ({ frequency }: Props) => {
+const FrequencyChip = ({ frequency }: Props) => {
   return (
     <Chip
       className="capitalize"
@@ -25,4 +25,4 @@ const Frequency = ({ frequency }: Props) => {
   );
 };
 
-export default Frequency;
+export default FrequencyChip;
