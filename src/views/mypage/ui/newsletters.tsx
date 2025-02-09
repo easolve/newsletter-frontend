@@ -8,7 +8,7 @@ interface Props {
   newsletters: Newsletter[];
 }
 
-const Newsletter = ({ newsletters }: Props) => {
+const Newsletters = ({ newsletters }: Props) => {
   return (
     <Card className="h-full w-full p-6" shadow="sm">
       <CardHeader>
@@ -21,4 +21,4 @@ const Newsletter = ({ newsletters }: Props) => {
   );
 };
 
-export default Newsletter;
+export default Newsletters;
