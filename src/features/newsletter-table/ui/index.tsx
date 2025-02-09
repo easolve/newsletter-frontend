@@ -110,7 +110,11 @@ export default function NewsletterTable({ newsletters = [] }: Props) {
         <div className="flex items-end justify-between gap-3">
           <Input
             isClearable
-            className="w-full md:max-w-96"
+            classNames={{
+              base: "w-full md:max-w-96",
+              inputWrapper: "border-1",
+            }}
+            variant="bordered"
             placeholder="Search by name or description..."
             startContent={<SearchIcon />}
             value={searchValue}
@@ -170,7 +174,7 @@ export default function NewsletterTable({ newsletters = [] }: Props) {
 
   return (
     <Table
-      isHeaderSticky
+      removeWrapper
       aria-label="Example table with custom cells, pagination and sorting"
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
