@@ -23,7 +23,7 @@ interface Props {
   newsletters: Newsletter[];
 }
 
-export default function NewletterTable({ newsletters = [] }: Props) {
+export default function NewsletterTable({ newsletters = [] }: Props) {
   const [searchValue, setSearchValue] = React.useState("");
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS),
