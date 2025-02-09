@@ -8,7 +8,7 @@ import {
   Input,
   Textarea,
 } from "@heroui/react";
-import { EnvelopeIcon } from "@/icons";
+import { EnvelopeIcon } from "@/shared/ui/icons";
 import { card } from "./styles";
 
 interface Props {

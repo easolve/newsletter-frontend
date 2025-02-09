@@ -3,8 +3,8 @@
 import { SwitchProps, VisuallyHidden, useSwitch } from "@heroui/react";
 import { useTheme } from "next-themes";
 import { FC } from "react";
-import { MoonFilledIcon, SunFilledIcon } from "@/icons";
 import { useIsSSR } from "@/providers/ssr-provider";
+import { MoonFilledIcon, SunFilledIcon } from "@/shared/ui/icons";
 import { clsx } from "@/utils/clsx";
 
 export interface ThemeSwitchProps {

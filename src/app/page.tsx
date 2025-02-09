@@ -1,7 +1,7 @@
 "use client";
 
 import { Textarea } from "@heroui/react";
-import { SearchLinearIcon } from "@/icons";
+import { SearchLinearIcon } from "@/shared/ui/icons";
 import { subtitle, title } from "@/styles/primitives";
 
 export default function Home() {

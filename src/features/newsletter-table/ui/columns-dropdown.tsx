@@ -6,7 +6,7 @@ import {
   type DropdownMenuProps,
   DropdownTrigger,
 } from "@heroui/react";
-import { ChevronDownIcon } from "@/icons";
+import { ChevronDownIcon } from "@/shared/ui/icons";
 import { capitalize } from "@/utils/capitalize";
 import { COLUMNS } from "../config";
 

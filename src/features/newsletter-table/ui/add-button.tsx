@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import { PlusIcon } from "@/icons";
+import { PlusIcon } from "@/shared/ui/icons";
 
 const AddButton = () => {
   const router = useRouter();

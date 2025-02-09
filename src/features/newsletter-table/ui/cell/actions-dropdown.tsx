@@ -9,7 +9,7 @@ import {
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { VerticalDotsIcon } from "@/icons";
+import { VerticalDotsIcon } from "@/shared/ui/icons";
 
 interface Props {
   newsletterId: Newsletter["id"];
