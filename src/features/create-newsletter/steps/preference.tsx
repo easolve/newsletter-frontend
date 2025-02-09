@@ -1,6 +1,7 @@
 "use client";
 
-import { Input, Select, SelectItem, SharedSelection } from "@heroui/react";
+import { Input, SharedSelection } from "@heroui/react";
+import SelectFrequency from "@/shared/ui/select-frequency";
 import { useNewsletterData } from "../use-newsletter-data";
 
 interface NewsletterPreferenceProps {}
@@ -9,25 +10,6 @@ interface NewsletterPreference {
   key: string;
   label: string;
 }
-
-const frequencies: NewsletterPreference[] = [
-  {
-    key: "daily",
-    label: "Daily",
-  },
-  {
-    key: "weekly",
-    label: "Weekly",
-  },
-  {
-    key: "bi-weekly",
-    label: "Bi-weekly",
-  },
-  {
-    key: "monthly",
-    label: "Monthly",
-  },
-];
 
 const NewsletterPreference: React.FC<NewsletterPreferenceProps> = () => {
   const {
@@ -61,17 +43,12 @@ const NewsletterPreference: React.FC<NewsletterPreferenceProps> = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <Select
+      <SelectFrequency
         className="max-w-xs"
-        label="Frequency"
         placeholder="Select frequency"
         defaultSelectedKeys={[frequency]}
         onSelectionChange={handleChange}
-      >
-        {frequencies.map((frequency) => (
-          <SelectItem key={frequency.key}>{frequency.label}</SelectItem>
-        ))}
-      </Select>
+      />
     </div>
   );
 };
