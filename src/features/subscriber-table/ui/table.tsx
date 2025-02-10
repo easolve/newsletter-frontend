@@ -104,6 +104,7 @@ export default function SubscriberTable() {
           <Input
             isClearable
             variant="bordered"
+            size="sm"
             classNames={{
               base: "w-full max-w-xs",
               inputWrapper: "border-1",
@@ -116,7 +117,7 @@ export default function SubscriberTable() {
           />
           <div className="flex gap-2">
             {(selectedKeys === "all" || selectedKeys.size > 0) && (
-              <Button color="danger" isDisabled>
+              <Button color="danger" isDisabled size="sm">
                 Delete
               </Button>
             )}
