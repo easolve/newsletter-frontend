@@ -19,7 +19,12 @@ const AddSubscriberModal = () => {
 
   return (
     <>
-      <Button color="primary" endContent={<PlusIcon />} onPress={onOpen}>
+      <Button
+        color="primary"
+        endContent={<PlusIcon />}
+        onPress={onOpen}
+        size="sm"
+      >
         Add New
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="2xl">
