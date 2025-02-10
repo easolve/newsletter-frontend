@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -12,7 +11,8 @@ import {
 } from "@heroui/react";
 import { EnvelopeIcon } from "@/shared/ui/icons";
 import SelectFrequency from "@/shared/ui/select-frequency";
-import { card } from "./styles";
+import { card } from "../styles";
+import Generate from "./generate";
 
 interface Props {
   newsletter: Newsletter;
@@ -48,9 +48,7 @@ const Newsletter = ({ newsletter }: Props) => {
         />
       </CardBody>
       <CardFooter>
-        <Button className="w-full" color="primary">
-          Send
-        </Button>
+        <Generate />
       </CardFooter>
     </Card>
   );
