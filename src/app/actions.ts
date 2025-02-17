@@ -10,7 +10,7 @@ export async function fetchUserEmail(): Promise<string | null> {
     return null;
   }
 
-  const url = new URL("/api/user/me", process.env.NEXT_PUBLIC_BACKEND_API_URL);
+  const url = new URL("/v1/user", process.env.NEXT_PUBLIC_BACKEND_API_URL);
 
   try {
     const res = await fetch(url, {

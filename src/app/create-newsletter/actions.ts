@@ -27,7 +27,7 @@ export async function saveNewsletter({
   }
 
   const url = new URL(
-    "/api/news/save",
+    "/v1/news/save",
     process.env.NEXT_PUBLIC_BACKEND_API_URL,
   );
 
@@ -69,7 +69,7 @@ export async function createSampleNewsletter(
   }
 
   const url = new URL(
-    "/api/news/task",
+    "/v1/news/task",
     process.env.NEXT_PUBLIC_BACKEND_API_URL,
   );
 
@@ -105,7 +105,7 @@ export async function getSampleNewsletter(taskId: string) {
   }
 
   const url = new URL(
-    `/api/news/example/${taskId}`,
+    `/v1/news/example/${taskId}`,
     process.env.NEXT_PUBLIC_BACKEND_API_URL,
   );
 
