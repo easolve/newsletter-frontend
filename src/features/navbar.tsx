@@ -15,6 +15,7 @@ import { link } from "@heroui/theme";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
+import Profile from "@/features/profile";
 import { ThemeSwitch } from "@/features/theme-switch";
 import { clsx } from "@/utils/clsx";
 
@@ -146,18 +147,7 @@ const NavBar: FC<NavbarProps> = ({ email }) => {
           </NavbarItem>
         ) : (
           <NavbarItem className="flex h-full items-center">
-            <User
-              avatarProps={{
-                name: username,
-              }}
-              classNames={{
-                base: "cursor-pointer",
-                name: "cursor-pointer",
-                wrapper: "cursor-pointer",
-              }}
-              name={username}
-              onClick={() => router.push("/profile")}
-            />
+            <Profile username={username} />
           </NavbarItem>
         )}
         <NavbarItem className="hidden sm:flex">
