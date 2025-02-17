@@ -20,7 +20,7 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
     }
 
     const url = new URL(
-      "/api/user/login",
+      "/v1/user/login",
       process.env.NEXT_PUBLIC_BACKEND_API_URL,
     );
     let loginData = new URLSearchParams();
@@ -65,7 +65,7 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
     }
 
     const url = new URL(
-      "/api/user/register",
+      "/v1/user/register",
       process.env.NEXT_PUBLIC_BACKEND_API_URL,
     );
     try {

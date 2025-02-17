@@ -11,7 +11,7 @@ export async function fetchUserProfile(): Promise<Newsletter[]> {
   }
 
   const url = new URL(
-    "/api/user/news",
+    "/v1/user/news",
     process.env.NEXT_PUBLIC_BACKEND_API_URL,
   );
 
