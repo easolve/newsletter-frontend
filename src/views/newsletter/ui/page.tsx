@@ -1,8 +1,9 @@
-import { SubscriberProvider } from "@/providers/subscriber-provider";
+import SubscriberTable from "@/features/subscriber-table";
+import { UsersIcon } from "@/shared/ui/icons";
 import { fetchNewsletter, fetchSubscribers } from "../api/fetch";
 import History from "./history";
+import ItemLayout from "./item-layout";
 import Newsletter from "./newsletter";
-import Subscribers from "./subscribers";
 
 const NewsletterPage = async () => {
   const newsletter = await fetchNewsletter();
@@ -12,9 +13,12 @@ const NewsletterPage = async () => {
     <article className="flex flex-col gap-5">
       <section className="flex gap-5 max-md:flex-col">
         <Newsletter newsletter={newsletter} />
-        <SubscriberProvider $subscribers={subscribers}>
-          <Subscribers />
-        </SubscriberProvider>
+        <ItemLayout
+          headerTitle="SUBSCRIBERS"
+          headerStartContent={<UsersIcon />}
+        >
+          <SubscriberTable subscribers={subscribers} />
+        </ItemLayout>
       </section>
       <History />
     </article>
