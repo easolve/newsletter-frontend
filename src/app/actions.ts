@@ -1,31 +1,16 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { callAPI } from "@/shared/api";
 
 export async function fetchUserEmail(): Promise<string | null> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("access_token")?.value;
-
-  if (!accessToken) {
-    return null;
-  }
-
-  const url = new URL("/v1/user", process.env.NEXT_PUBLIC_BACKEND_API_URL);
-
-  try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      cache: "no-store", // `cache: 'no-store'` to ensure we always refetch or handle caching as needed
-    });
-    if (!res.ok) {
-      return null;
-    }
-    const data = await res.json(); // e.g. { "id": "...", "email": "..." }
-    return data.email ?? null;
-  } catch {
-    return null;
-  }
+  return callAPI.serverSide
+    .get("/v1/user")
+    .then((res) => {
+      const { email }: User = res.data;
+      if (!email) {
+        return null;
+      }
+      return email;
+    })
+    .catch(() => null);
 }
