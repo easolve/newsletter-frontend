@@ -1,7 +1,7 @@
+import HistoryTable from "@/features/history-table";
 import SubscriberTable from "@/features/subscriber-table";
-import { UsersIcon } from "@/shared/ui/icons";
+import { BookOpenIcon, UsersIcon } from "@/shared/ui/icons";
 import { fetchNewsletter, fetchSubscribers } from "../api/fetch";
-import History from "./history";
 import ItemLayout from "./item-layout";
 import Newsletter from "./newsletter";
 
@@ -20,7 +20,9 @@ const NewsletterPage = async () => {
           <SubscriberTable subscribers={subscribers} />
         </ItemLayout>
       </section>
-      <History />
+      <ItemLayout headerTitle="HISTORY" headerStartContent={<BookOpenIcon />}>
+        <HistoryTable />
+      </ItemLayout>
     </article>
   );
 };
