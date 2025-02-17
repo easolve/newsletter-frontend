@@ -13,8 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/react";
-import React, { useContext } from "react";
-import { SubscriberContext } from "@/providers/subscriber-provider";
+import React from "react";
 import { SearchIcon } from "@/shared/ui/icons";
 import AddSubscriberModal from "./add-subscriber/modal";
 import { renderCell } from "./table-cell";
@@ -28,8 +27,7 @@ interface Props {
   subscribers: Subscriber[];
 }
 
-export default function SubscriberTable() {
-  const { subscribers } = useContext(SubscriberContext);
+export default function SubscriberTable({ subscribers }: Props) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
     new Set([]),
