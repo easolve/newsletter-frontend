@@ -1,20 +1,10 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Divider,
-  Input,
-  type Selection,
-  Textarea,
-} from "@heroui/react";
-import { useCallback, useState } from "react";
+import { Button, Input, type Selection, Textarea } from "@heroui/react";
+import { useCallback, useMemo, useState } from "react";
 import { EnvelopeIcon } from "@/shared/ui/icons";
 import SelectFrequency from "@/shared/ui/select-frequency";
-import { card } from "../styles";
+import ItemLayout from "../item-layout";
 import ActionsDropdown from "./actions-dropdown";
 import Generate from "./generate";
 
@@ -23,7 +13,6 @@ interface Props {
 }
 
 const Newsletter = ({ newsletter }: Props) => {
-  const { wrapper, header } = card();
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(newsletter.name);
   const [description, setDescription] = useState(newsletter.description);
@@ -42,53 +31,51 @@ const Newsletter = ({ newsletter }: Props) => {
     setFrequency(new Set([newsletter.send_frequency]));
   }, []);
 
-  return (
-    <Card className={wrapper({ class: "w-full md:max-w-xs" })} shadow="sm">
-      <CardHeader className={header({ class: "justify-between" })}>
-        <div className="flex gap-2">
-          <EnvelopeIcon />
-          <h3>NEWSLETTER</h3>
+  const footerContent = useMemo(() => {
+    if (isEditing) {
+      return (
+        <div className="grid w-full grid-cols-2 gap-1">
+          <Button color="danger" variant="light" onPress={handleClickCancel}>
+            Cancel
+          </Button>
+          <Button color="primary" isDisabled>
+            Save
+          </Button>
         </div>
-        <ActionsDropdown onEdit={handleClickEdit} />
-      </CardHeader>
-      <Divider />
-      <CardBody className="gap-3">
-        <Input
-          isDisabled={!isEditing}
-          labelPlacement="outside"
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Textarea
-          isDisabled={!isEditing}
-          labelPlacement="outside"
-          label="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <SelectFrequency
-          isDisabled={!isEditing}
-          labelPlacement="outside"
-          selectedKeys={frequency}
-          onSelectionChange={setFrequency}
-        />
-      </CardBody>
-      <CardFooter>
-        {isEditing ? (
-          <div className="grid w-full grid-cols-2 gap-1">
-            <Button color="danger" variant="light" onPress={handleClickCancel}>
-              Cancel
-            </Button>
-            <Button color="primary" isDisabled>
-              Save
-            </Button>
-          </div>
-        ) : (
-          <Generate />
-        )}
-      </CardFooter>
-    </Card>
+      );
+    }
+    return <Generate />;
+  }, [isEditing]);
+
+  return (
+    <ItemLayout
+      className="w-full md:max-w-xs"
+      headerTitle="NEWSLETTER"
+      headerStartContent={<EnvelopeIcon />}
+      headerEndContent={<ActionsDropdown onEdit={handleClickEdit} />}
+      footerContent={footerContent}
+    >
+      <Input
+        isDisabled={!isEditing}
+        labelPlacement="outside"
+        label="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <Textarea
+        isDisabled={!isEditing}
+        labelPlacement="outside"
+        label="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <SelectFrequency
+        isDisabled={!isEditing}
+        labelPlacement="outside"
+        selectedKeys={frequency}
+        onSelectionChange={setFrequency}
+      />
+    </ItemLayout>
   );
 };
 
