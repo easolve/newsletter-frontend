@@ -5,7 +5,6 @@ import { tv } from "tailwind-variants";
 
 interface Props {
   headerTitle: string;
-  headerStartContent: React.ReactNode;
   headerEndContent?: React.ReactNode;
   children: React.ReactNode;
   footerContent?: React.ReactNode;
@@ -18,7 +17,6 @@ const wrapper = tv({
 
 const ItemLayout = ({
   headerTitle,
-  headerStartContent,
   headerEndContent,
   children,
   footerContent,
