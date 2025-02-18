@@ -10,3 +10,4 @@ export { SearchIcon } from "./search";
 export { EnvelopeIcon } from "./envelope";
 export { BookOpenIcon } from "./book-open";
 export { UsersIcon } from "./users";
+export { ArrowClockwiseIcon } from "./arrow-clockwise";
