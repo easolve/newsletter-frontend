@@ -27,9 +27,9 @@ const ItemLayout = ({
   return (
     <Card className={wrapper({ class: className })} shadow="sm">
       <CardHeader className="align-center h-12 justify-between">
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           {headerStartContent}
-          <h3>{headerTitle}</h3>
+          <h3 className="text-xl font-medium">{headerTitle}</h3>
         </div>
         {headerEndContent}
       </CardHeader>

@@ -20,10 +20,10 @@ import ColumnsDropdown from "./columns-dropdown";
 import { renderCell } from "./render-cell";
 
 interface Props {
-  newsletters: Newsletter[];
+  newsletters: Newsletter.Info[];
 }
 
-export default function NewsletterTable({ newsletters = [] }: Props) {
+export default function NewsletterTable({ newsletters }: Props) {
   const [searchValue, setSearchValue] = React.useState("");
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS),
@@ -74,8 +74,8 @@ export default function NewsletterTable({ newsletters = [] }: Props) {
 
   const sortedItems = React.useMemo(() => {
     return [...items].sort((a, b) => {
-      const first = a[sortDescriptor.column as keyof Newsletter];
-      const second = b[sortDescriptor.column as keyof Newsletter];
+      const first = a[sortDescriptor.column as keyof Newsletter.Info];
+      const second = b[sortDescriptor.column as keyof Newsletter.Info];
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;

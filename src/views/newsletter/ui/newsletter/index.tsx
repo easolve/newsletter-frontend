@@ -9,7 +9,7 @@ import ActionsDropdown from "./actions-dropdown";
 import Generate from "./generate";
 
 interface Props {
-  newsletter: Newsletter;
+  newsletter: Newsletter.Info;
 }
 
 const Newsletter = ({ newsletter }: Props) => {
@@ -50,7 +50,7 @@ const Newsletter = ({ newsletter }: Props) => {
   return (
     <ItemLayout
       className="w-full md:max-w-xs"
-      headerTitle="NEWSLETTER"
+      headerTitle="Newsletter"
       headerStartContent={<EnvelopeIcon />}
       headerEndContent={<ActionsDropdown onEdit={handleClickEdit} />}
       footerContent={footerContent}

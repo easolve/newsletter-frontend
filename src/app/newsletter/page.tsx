@@ -1,1 +1,1 @@
-export { default } from "@/views/mypage";
+export { default } from "@/views/all-newsletters";

@@ -4,4 +4,4 @@ interface Column {
   sortable?: boolean;
 }
 
-type UID = keyof Newsletter | "actions";
+type UID = keyof Newsletter.Info | "actions";
