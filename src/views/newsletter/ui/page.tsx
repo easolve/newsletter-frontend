@@ -6,9 +6,16 @@ import { fetchNewsletter, fetchSubscribers } from "../api";
 import ItemLayout from "./item-layout";
 import Newsletter from "./newsletter";
 
-const NewsletterPage = async () => {
-  const newsletter = await fetchNewsletter();
-  const subscribers = await fetchSubscribers();
+interface Props {
+  params: Promise<{
+    info_id: string;
+  }>;
+}
+
+const NewsletterPage = async ({ params }: Props) => {
+  const { info_id } = await params;
+  const newsletter = await fetchNewsletter(info_id);
+  const subscribers = await fetchSubscribers(info_id);
 
   return (
     <article className="flex flex-col gap-5">
