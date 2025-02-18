@@ -17,7 +17,7 @@ const Layout = ({ children }: Props) => {
           Newsletter
         </BreadcrumbItem>
       </Breadcrumbs>
-      <div className="mb-6 mt-2">
+      <div className="mb-8 mt-4">
         <h1 className="mb-1 text-3xl font-bold tracking-tight">
           Newsletter Management
         </h1>
