@@ -16,13 +16,13 @@ const NewsletterPage = async () => {
       <section className="flex gap-5 max-md:flex-col">
         <Newsletter newsletter={newsletter} />
         <ItemLayout
-          headerTitle="SUBSCRIBERS"
+          headerTitle="Subscribers"
           headerStartContent={<UsersIcon />}
         >
           <SubscriberTable subscribers={subscribers} />
         </ItemLayout>
       </section>
-      <ItemLayout headerTitle="HISTORY" headerStartContent={<BookOpenIcon />}>
+      <ItemLayout headerTitle="History" headerStartContent={<BookOpenIcon />}>
         <HistoryTable />
       </ItemLayout>
     </article>

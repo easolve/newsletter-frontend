@@ -50,7 +50,7 @@ const Newsletter = ({ newsletter }: Props) => {
   return (
     <ItemLayout
       className="w-full md:max-w-xs"
-      headerTitle="NEWSLETTER"
+      headerTitle="Newsletter"
       headerStartContent={<EnvelopeIcon />}
       headerEndContent={<ActionsDropdown onEdit={handleClickEdit} />}
       footerContent={footerContent}
