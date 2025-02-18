@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   Dropdown,
@@ -9,7 +11,7 @@ import React from "react";
 import { VerticalDotsIcon } from "@/shared/ui/icons";
 
 interface Props {
-  onEdit: () => void;
+  onEdit?: () => void;
 }
 
 const ActionsDropdown = ({ onEdit }: Props) => {
