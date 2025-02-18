@@ -1,5 +1,6 @@
 import {
   Button,
+  Divider,
   Modal,
   ModalBody,
   ModalContent,
@@ -31,7 +32,8 @@ const AddSubscriberModal = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader>Add Subscriber</ModalHeader>
+              <ModalHeader className="py-3">Add Subscriber</ModalHeader>
+              <Divider />
               <ModalBody>
                 <Tabs disabledKeys={["csv"]} variant="underlined">
                   <Tab key="input" title="Enter Manually">
