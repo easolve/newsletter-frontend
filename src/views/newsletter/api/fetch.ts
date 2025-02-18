@@ -5,7 +5,7 @@ export const fetchNewsletter = async () => {
       id: "1",
       description: "This is my newsletter",
       send_frequency: "daily",
-    } as Newsletter;
+    } as Newsletter.Info;
   }
 };
 
