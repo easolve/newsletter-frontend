@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, CardFooter, CardHeader, Divider } from "@heroui/react";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { tv } from "tailwind-variants";
 
 interface Props {
@@ -26,14 +26,10 @@ const ItemLayout = ({
 }: Props) => {
   return (
     <Card className={wrapper({ class: className })} shadow="sm">
-      <CardHeader className="align-center h-12 justify-between">
-        <div className="flex items-center gap-2">
-          {headerStartContent}
-          <h3 className="text-xl font-medium">{headerTitle}</h3>
-        </div>
+      <CardHeader className="align-center h-10 justify-between pt-5">
+        <h3 className="font-semibold leading-none">{headerTitle}</h3>
         {headerEndContent}
       </CardHeader>
-      <Divider />
       <CardBody className="gap-3">{children}</CardBody>
       {footerContent && <CardFooter>{footerContent}</CardFooter>}
     </Card>
