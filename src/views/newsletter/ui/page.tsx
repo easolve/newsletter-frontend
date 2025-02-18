@@ -18,7 +18,7 @@ const NewsletterPage = async ({ params }: Props) => {
 
   return (
     <article className="flex flex-col gap-5">
-      <Header name={newsletter.name} />
+      <Header />
       <section className="flex gap-5 max-md:flex-col">
         <Newsletter newsletter={newsletter} />
         <ItemLayout headerTitle="Subscribers">
