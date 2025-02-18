@@ -1,6 +1,5 @@
 import HistoryTable from "@/features/history-table";
 import SubscriberTable from "@/features/subscriber-table";
-import { BookOpenIcon, UsersIcon } from "@/shared/ui/icons";
 import Header from "@/views/newsletter/ui/header";
 import { fetchNewsletter, fetchSubscribers } from "../api";
 import ItemLayout from "./item-layout";
@@ -22,14 +21,11 @@ const NewsletterPage = async ({ params }: Props) => {
       <Header name={newsletter.name} />
       <section className="flex gap-5 max-md:flex-col">
         <Newsletter newsletter={newsletter} />
-        <ItemLayout
-          headerTitle="Subscribers"
-          headerStartContent={<UsersIcon />}
-        >
+        <ItemLayout headerTitle="Subscribers">
           <SubscriberTable subscribers={subscribers} />
         </ItemLayout>
       </section>
-      <ItemLayout headerTitle="History" headerStartContent={<BookOpenIcon />}>
+      <ItemLayout headerTitle="History">
         <HistoryTable />
       </ItemLayout>
     </article>

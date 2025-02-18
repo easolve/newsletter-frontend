@@ -2,7 +2,6 @@
 
 import { Button, Input, type Selection, Textarea } from "@heroui/react";
 import { useCallback, useMemo, useState } from "react";
-import { EnvelopeIcon } from "@/shared/ui/icons";
 import SelectFrequency from "@/shared/ui/select-frequency";
 import ItemLayout from "../item-layout";
 import ActionsDropdown from "./actions-dropdown";
@@ -51,7 +50,6 @@ const Newsletter = ({ newsletter }: Props) => {
     <ItemLayout
       className="w-full md:max-w-xs"
       headerTitle="Newsletter"
-      headerStartContent={<EnvelopeIcon />}
       headerEndContent={<ActionsDropdown onEdit={handleClickEdit} />}
       footerContent={footerContent}
     >
