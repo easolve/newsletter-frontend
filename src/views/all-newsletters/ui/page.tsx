@@ -1,7 +1,12 @@
+import NewsletterTable from "@/features/newsletter-table";
 import { fetchUserProfile } from "../api/user-profile";
-import Newsletters from "./newsletters";
+import Layout from "./layout";
 
 export default async function ProfilePage() {
-  const news = await fetchUserProfile();
-  return <Newsletters newsletters={news} />;
+  const newsletters = await fetchUserProfile();
+  return (
+    <Layout>
+      <NewsletterTable newsletters={newsletters} />
+    </Layout>
+  );
 }
