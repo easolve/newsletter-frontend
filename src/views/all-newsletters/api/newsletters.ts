@@ -2,7 +2,7 @@
 
 import { callAPI } from "@/shared/api";
 
-export async function fetchNewsletters(): Promise<Newsletter[]> {
+export async function fetchNewsletters(): Promise<Newsletter.Info[]> {
   return callAPI.serverSide
     .get("v1/news/info")
     .then((res) => res.data)
