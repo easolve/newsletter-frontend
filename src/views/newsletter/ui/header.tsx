@@ -4,11 +4,7 @@ import { BreadcrumbItem, Breadcrumbs } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { EnvelopeIcon } from "@/shared/ui/icons";
 
-interface Props {
-  name: string;
-}
-
-const Header = ({ name }: Props) => {
+const Header = () => {
   const router = useRouter();
 
   return (
@@ -19,7 +15,7 @@ const Header = ({ name }: Props) => {
       >
         Newsletter
       </BreadcrumbItem>
-      <BreadcrumbItem>{name}</BreadcrumbItem>
+      <BreadcrumbItem>Dashboard</BreadcrumbItem>
     </Breadcrumbs>
   );
 };
