@@ -9,7 +9,7 @@ import ActionsDropdown from "./actions-dropdown";
 import Generate from "./generate";
 
 interface Props {
-  newsletter: Newsletter;
+  newsletter: Newsletter.Info;
 }
 
 const Newsletter = ({ newsletter }: Props) => {
