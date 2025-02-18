@@ -2,8 +2,11 @@ import React from "react";
 import ActionsDropdown from "./cell/actions-dropdown";
 import FrequencyChip from "./cell/frequency-chip";
 
-export const renderCell = (newsletter: Newsletter, columnKey: React.Key) => {
-  const cellValue = newsletter[columnKey as keyof Newsletter];
+export const renderCell = (
+  newsletter: Newsletter.Info,
+  columnKey: React.Key,
+) => {
+  const cellValue = newsletter[columnKey as keyof Newsletter.Info];
 
   switch (columnKey) {
     case "name":
