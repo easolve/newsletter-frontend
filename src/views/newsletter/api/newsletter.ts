@@ -2,7 +2,19 @@ import { callAPI } from "@/shared/api";
 
 export const fetchNewsletter = async (
   info_id: string,
-): Promise<Newsletter.Info> => {
+): Promise<Newsletter.Info | null> => {
+  if (process.env.NODE_ENV === "development") {
+    if (info_id === "test") {
+      return {
+        name: "My Newsletter",
+        id: "1",
+        description: "This is my newsletter",
+        send_frequency: "daily",
+        is_active: false,
+      };
+    }
+  }
+
   return callAPI.serverSide
     .get(`/v1/news/info/${info_id}`)
     .then((res) => {
@@ -13,15 +25,6 @@ export const fetchNewsletter = async (
       return news;
     })
     .catch(() => {
-      if (process.env.NODE_ENV === "development") {
-        if (info_id === "test") {
-          return {
-            name: "My Newsletter",
-            id: "1",
-            description: "This is my newsletter",
-            send_frequency: "daily",
-          };
-        }
-      }
+      return null;
     });
 };
