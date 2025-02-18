@@ -9,7 +9,7 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <Breadcrumbs>
         <BreadcrumbItem
           startContent={<EnvelopeIcon height="1rem" width="1rem" />}
@@ -17,17 +17,15 @@ const Layout = ({ children }: Props) => {
           Newsletter
         </BreadcrumbItem>
       </Breadcrumbs>
-      <div className="mb-8 mt-4">
-        <h1 className="mb-1 text-3xl font-bold tracking-tight">
-          Newsletter Management
-        </h1>
+      <div>
+        <h1 className="mb-1 text-3xl font-bold tracking-tight">Overview</h1>
         <p>
           Easily manage your published newsletters and make edits or new
           releases with ease.
         </p>
       </div>
       {children}
-    </>
+    </div>
   );
 };
 
