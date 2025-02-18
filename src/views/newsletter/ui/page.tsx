@@ -2,7 +2,7 @@ import HistoryTable from "@/features/history-table";
 import SubscriberTable from "@/features/subscriber-table";
 import { BookOpenIcon, UsersIcon } from "@/shared/ui/icons";
 import Header from "@/views/newsletter/ui/header";
-import { fetchNewsletter, fetchSubscribers } from "../api/fetch";
+import { fetchNewsletter, fetchSubscribers } from "../api";
 import ItemLayout from "./item-layout";
 import Newsletter from "./newsletter";
 
