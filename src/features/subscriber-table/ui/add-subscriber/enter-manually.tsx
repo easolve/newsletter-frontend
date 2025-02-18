@@ -78,7 +78,13 @@ const EnterManually = ({ addList, setAddList }: Props) => {
         isInvalid={Boolean(errorMessage)}
         errorMessage={errorMessage}
       />
-      <Button onPress={() => addToList(inputValue)}>Add</Button>
+      <Button
+        variant="flat"
+        color="primary"
+        onPress={() => addToList(inputValue)}
+      >
+        Add
+      </Button>
       <div className="col-span-2 flex flex-wrap gap-1">
         {addList.map((email) => (
           <Chip key={email} onClose={() => removeFromList(email)}>
