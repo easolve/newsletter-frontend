@@ -15,7 +15,7 @@ const wrapper = tv({
   base: "p-1 grow min-h-[200px]",
 });
 
-const ItemLayout = ({
+const TableLayout = ({
   headerTitle,
   headerEndContent,
   children,
@@ -34,4 +34,4 @@ const ItemLayout = ({
   );
 };
 
-export default ItemLayout;
+export default TableLayout;

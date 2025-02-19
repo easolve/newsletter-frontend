@@ -3,7 +3,7 @@
 import { Button, Input, type Selection, Textarea } from "@heroui/react";
 import { useCallback, useMemo, useState } from "react";
 import SelectFrequency from "@/shared/ui/select-frequency";
-import ItemLayout from "../item-layout";
+import TableLayout from "../table-layout";
 import ActionsDropdown from "./actions-dropdown";
 import Generate from "./generate";
 
@@ -47,7 +47,7 @@ const Newsletter = ({ newsletter }: Props) => {
   }, [isEditing]);
 
   return (
-    <ItemLayout
+    <TableLayout
       className="w-full md:max-w-xs"
       headerTitle="Newsletter"
       headerEndContent={<ActionsDropdown onEdit={handleClickEdit} />}
@@ -73,7 +73,7 @@ const Newsletter = ({ newsletter }: Props) => {
         selectedKeys={frequency}
         onSelectionChange={setFrequency}
       />
-    </ItemLayout>
+    </TableLayout>
   );
 };
 
