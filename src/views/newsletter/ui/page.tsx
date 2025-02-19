@@ -6,9 +6,9 @@ import { ArrowClockwiseIcon } from "@/shared/ui/icons";
 import { capitalize } from "@/utils/capitalize";
 import { fetchNewsletter, fetchSubscribers } from "../api";
 import Header from "./header";
-import ItemLayout from "./item-layout";
 import ActionsDropdown from "./newsletter/actions-dropdown";
 import PreferenceCard from "./newsletter/preference-card";
+import TableLayout from "./table-layout";
 
 interface Props {
   params: Promise<{
@@ -43,12 +43,12 @@ const NewsletterPage = async ({ params }: Props) => {
           {capitalize(newsletter.send_frequency)}
         </PreferenceCard>
       </div>
-      <ItemLayout headerTitle="Subscribers">
+      <TableLayout headerTitle="Subscribers">
         <SubscriberTable subscribers={subscribers} />
-      </ItemLayout>
-      <ItemLayout headerTitle="Archive">
+      </TableLayout>
+      <TableLayout headerTitle="Archive">
         <HistoryTable />
-      </ItemLayout>
+      </TableLayout>
     </article>
   );
 };
