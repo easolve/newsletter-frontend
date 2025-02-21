@@ -21,3 +21,14 @@ export const get = async (url: string) => {
     },
   });
 };
+
+export const post = async <T>(url: string, data: T) => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("access_token")?.value;
+
+  return server.post(url, data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};

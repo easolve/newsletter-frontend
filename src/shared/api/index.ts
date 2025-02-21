@@ -1,7 +1,7 @@
 import { client } from "./client";
-import { get } from "./server";
+import { get, post } from "./server";
 
 export const callAPI = {
   clientSide: client,
-  serverSide: { get },
+  serverSide: { get, post },
 };
