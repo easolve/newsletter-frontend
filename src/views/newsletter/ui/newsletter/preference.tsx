@@ -43,7 +43,7 @@ interface Props {
 
 const Preference = ({ info }: Props) => {
   return keys.map((key) => (
-    <Card key={key} shadow="sm" className="w-fit p-1">
+    <Card key={key} shadow="sm" className="w-fit p-1 max-lg:grow">
       <CardBody className="flex flex-row items-center gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-small bg-default-100 text-foreground-500 transition-background">
           {metaData[key].icon}

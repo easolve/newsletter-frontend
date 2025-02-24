@@ -12,10 +12,10 @@ interface Props {
 }
 
 const wrapper = tv({
-  base: "p-1 grow min-h-[200px]",
+  base: "p-1",
 });
 
-const TableLayout = ({
+const ItemLayout = ({
   headerTitle,
   headerEndContent,
   children,
@@ -34,4 +34,4 @@ const TableLayout = ({
   );
 };
 
-export default TableLayout;
+export default ItemLayout;

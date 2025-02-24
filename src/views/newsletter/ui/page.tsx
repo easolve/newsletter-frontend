@@ -4,9 +4,11 @@ import SubscriberTable from "@/features/subscriber-table";
 import { NewsletterStatus } from "@/shared/ui";
 import { fetchNewsletter, fetchSubscribers } from "../api";
 import Header from "./header";
+import ItemLayout from "./item-layout";
 import ActionsDropdown from "./newsletter/actions-dropdown";
 import Preference from "./newsletter/preference";
-import TableLayout from "./table-layout";
+import Prompt from "./newsletter/prompt";
+import TopicChip from "./newsletter/topic-chip";
 
 interface Props {
   params: Promise<{
@@ -35,16 +37,29 @@ const NewsletterPage = async ({ params }: Props) => {
           <ActionsDropdown />
         </div>
         <p className="mt-1 text-2xl font-light">{newsletter.description}</p>
+        <div className="mt-2 flex gap-2">
+          {newsletter.topic.map((item) => (
+            <TopicChip key={item}>{item}</TopicChip>
+          ))}
+        </div>
       </section>
-      <div className="flex flex-row gap-5">
-        <Preference info={newsletter} />
-      </div>
-      <TableLayout headerTitle="Subscribers">
-        <SubscriberTable subscribers={subscribers} />
-      </TableLayout>
-      <TableLayout headerTitle="Archive">
+      <section className="grid gap-5 lg:grid-cols-[auto,1fr]">
+        <div className="grid grid-rows-[auto,1fr] gap-5">
+          <div className="flex gap-5">
+            <Preference info={newsletter} />
+          </div>
+          <ItemLayout headerTitle="Sources"></ItemLayout>
+        </div>
+        <ItemLayout headerTitle="Prompt">
+          <Prompt>{newsletter.custom_prompt}</Prompt>
+        </ItemLayout>
+      </section>
+      <ItemLayout headerTitle="Archive">
         <HistoryTable />
-      </TableLayout>
+      </ItemLayout>
+      <ItemLayout headerTitle="Subscribers">
+        <SubscriberTable subscribers={subscribers} />
+      </ItemLayout>
     </article>
   );
 };
