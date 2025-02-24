@@ -12,7 +12,7 @@ import React from "react";
 import { VerticalDotsIcon } from "@/shared/ui/icons";
 
 interface Props {
-  newsletterId: Newsletter["id"];
+  newsletterId: Newsletter.Info["id"];
 }
 
 const ActionsDropdown = ({ newsletterId }: Props) => {
