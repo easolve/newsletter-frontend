@@ -11,6 +11,7 @@ export const fetchNewsletter = async (
         description: "This is my newsletter",
         send_frequency: "daily",
         is_active: false,
+        language: "en",
       };
     }
   }
