@@ -34,6 +34,9 @@ export const renderCell = (
         <div className="flex flex-col">
           <div className="text-lg font-semibold">{newsletter.name}</div>
           <div>{newsletter.description}</div>
+          <div className="text-xs text-foreground-500">
+            {newsletter.topics.map((topic) => "#" + topic).join(" ")}
+          </div>
         </div>
       );
     case "send_frequency":
