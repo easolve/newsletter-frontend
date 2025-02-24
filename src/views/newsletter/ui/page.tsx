@@ -2,12 +2,10 @@ import { redirect } from "next/navigation";
 import HistoryTable from "@/features/history-table";
 import SubscriberTable from "@/features/subscriber-table";
 import { NewsletterStatus } from "@/shared/ui";
-import { ArrowClockwiseIcon } from "@/shared/ui/icons";
-import { capitalize } from "@/utils/capitalize";
 import { fetchNewsletter, fetchSubscribers } from "../api";
 import Header from "./header";
 import ActionsDropdown from "./newsletter/actions-dropdown";
-import PreferenceCard from "./newsletter/preference-card";
+import Preference from "./newsletter/preference";
 import TableLayout from "./table-layout";
 
 interface Props {
@@ -39,9 +37,7 @@ const NewsletterPage = async ({ params }: Props) => {
         <p className="mt-1 text-2xl font-light">{newsletter.description}</p>
       </section>
       <div className="flex flex-row gap-5">
-        <PreferenceCard icon={<ArrowClockwiseIcon />} title={"Frequency"}>
-          {capitalize(newsletter.send_frequency)}
-        </PreferenceCard>
+        <Preference info={newsletter} />
       </div>
       <TableLayout headerTitle="Subscribers">
         <SubscriberTable subscribers={subscribers} />
