@@ -23,15 +23,17 @@ interface Props {
   newsletters: Newsletter.Info[];
 }
 
+const DEFAULT_ROWS_PER_PAGE = 10;
+
 export default function NewsletterTable({ newsletters }: Props) {
   const [searchValue, setSearchValue] = React.useState("");
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS),
   );
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
-    column: "name",
-    direction: "ascending",
+    column: "create_at",
+    direction: "descending",
   });
   const [page, setPage] = React.useState(1);
 
@@ -56,7 +58,10 @@ export default function NewsletterTable({ newsletters }: Props) {
           newsletter.description
             .toLowerCase()
             .includes(searchValue.toLowerCase()) ||
-          newsletter.name.toLowerCase().includes(searchValue.toLowerCase()),
+          newsletter.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          newsletter.topics.some((topic) =>
+            topic.toLowerCase().includes(searchValue.toLowerCase()),
+          ),
       );
     }
 
@@ -115,7 +120,7 @@ export default function NewsletterTable({ newsletters }: Props) {
               inputWrapper: "border-1",
             }}
             variant="bordered"
-            placeholder="Search by name or description..."
+            placeholder="Search by Name or Description or Topic"
             startContent={<SearchIcon />}
             value={searchValue}
             onClear={() => onClear()}
@@ -138,6 +143,7 @@ export default function NewsletterTable({ newsletters }: Props) {
             <select
               className="bg-transparent text-small text-default-400 outline-none"
               onChange={onRowsPerPageChange}
+              defaultValue={DEFAULT_ROWS_PER_PAGE}
             >
               <option value="5">5</option>
               <option value="10">10</option>
