@@ -7,13 +7,24 @@ namespace Newsletter {
     send_time: string;
     language: import("countries-list").TLanguageCode;
     is_active: boolean;
-    topic: string[];
-    source: string[];
+    topics: string[];
+    sources: string[];
   }
 
-  interface Info extends Base {
+  interface Primitive extends Base {
+    language: string;
     id: string;
+    created_at: string;
+    updated_at: string;
+    subscribers_count: number;
+    last_send_status: SentStatus;
+  }
+
+  interface Info extends Primitive {
+    language: import("countries-list").TLanguageCode;
   }
 }
 
 type Frequency = "daily" | "weekly" | "bi-weekly" | "monthly";
+
+type SentStatus = "FAILED" | "SENT" | "STANDBY" | "NONE";
