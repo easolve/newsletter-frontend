@@ -1,11 +1,13 @@
-export const UsersIcon = () => {
+import type { IconSvgProps } from "@/types/icons";
+
+export const UsersIcon = ({ size = 24, ...props }: IconSvgProps) => {
   return (
     <svg
-      className="h-6 w-6 text-gray-800 dark:text-white"
+      {...props}
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={size}
+      height={size}
       fill="currentColor"
       viewBox="0 0 24 24"
     >
