@@ -22,7 +22,7 @@ const ActionsDropdown = ({ onEdit }: Props) => {
           <VerticalDotsIcon />
         </Button>
       </DropdownTrigger>
-      <DropdownMenu>
+      <DropdownMenu disabledKeys={["edit"]}>
         <DropdownItem key="edit" onPress={onEdit}>
           Edit
         </DropdownItem>
