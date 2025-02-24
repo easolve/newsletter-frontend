@@ -16,13 +16,6 @@ export default {
   plugins: [
     heroui({
       addCommonColors: true,
-      themes: {
-        dark: {
-          colors: {
-            background: "#2D3034",
-          },
-        },
-      },
     }),
   ],
 } satisfies Config;
