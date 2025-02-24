@@ -38,7 +38,7 @@ const NewsletterPage = async ({ params }: Props) => {
         </div>
         <p className="mt-1 text-2xl font-light">{newsletter.description}</p>
         <div className="mt-2 flex gap-2">
-          {newsletter.topic.map((item) => (
+          {newsletter.topics.map((item) => (
             <TopicChip key={item}>{item}</TopicChip>
           ))}
         </div>

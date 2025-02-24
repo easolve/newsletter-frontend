@@ -1,16 +1,21 @@
 "use server";
 
 import { callAPI } from "@/shared/api";
+import { transformNewsletter } from "@/utils/newsletter";
+
+interface ResData {
+  info: Newsletter.Primitive[];
+}
 
 export async function fetchNewsletters(): Promise<Newsletter.Info[]> {
   return callAPI.serverSide
-    .get("v1/news/info")
+    .get<ResData>("v1/news/info")
     .then((res) => {
       if (process.env.NODE_ENV === "development") {
         console.log(res.data);
       }
       const { info } = res.data;
-      return info;
+      return info.map((item) => transformNewsletter(item));
     })
     .catch((err) => {
       if (process.env.NODE_ENV === "development") {

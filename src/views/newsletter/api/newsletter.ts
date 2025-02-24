@@ -1,4 +1,5 @@
 import { callAPI } from "@/shared/api";
+import { transformNewsletter } from "@/utils/newsletter";
 
 export const fetchNewsletter = async (
   info_id: string,
@@ -23,7 +24,7 @@ export const fetchNewsletter = async (
         console.log(res.data);
       }
       const { news } = res.data;
-      return news;
+      return transformNewsletter(news);
     })
     .catch(() => {
       return null;
