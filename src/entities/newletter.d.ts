@@ -5,7 +5,7 @@ namespace Newsletter {
     custom_prompt: string;
     send_frequency: Frequency;
     send_time: string;
-    language: Language;
+    language: import("countries-list").TLanguageCode;
     is_active: boolean;
     topic: string[];
     source: string[];
@@ -17,5 +17,3 @@ namespace Newsletter {
 }
 
 type Frequency = "daily" | "weekly" | "bi-weekly" | "monthly";
-
-type Language = "ko" | "en";
