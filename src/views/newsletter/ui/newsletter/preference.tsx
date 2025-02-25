@@ -42,21 +42,25 @@ interface Props {
 }
 
 const Preference = ({ info }: Props) => {
-  return keys.map((key) => (
-    <Card key={key} shadow="sm" className="w-fit p-1 max-lg:grow">
-      <CardBody className="flex flex-row items-center gap-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-small bg-default-100 text-foreground-500 transition-background">
-          {metaData[key].icon}
-        </div>
-        <div className="flex flex-col">
-          <div className="text-sm font-semibold">{metaData[key].title}</div>
-          <div className="text-xl font-extralight">
-            {metaData[key].format(info[key])}
-          </div>
-        </div>
-      </CardBody>
-    </Card>
-  ));
+  return (
+    <div className="flex gap-5">
+      {keys.map((key) => (
+        <Card key={key} shadow="sm" className="w-fit p-1 max-lg:grow">
+          <CardBody className="flex flex-row items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-small bg-default-100 text-foreground-500 transition-background">
+              {metaData[key].icon}
+            </div>
+            <div className="flex flex-col">
+              <div className="text-sm font-semibold">{metaData[key].title}</div>
+              <div className="text-xl font-extralight">
+                {metaData[key].format(info[key])}
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      ))}
+    </div>
+  );
 };
 
 export default Preference;
