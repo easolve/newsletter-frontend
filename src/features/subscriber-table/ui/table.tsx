@@ -102,9 +102,8 @@ export default function SubscriberTable({ subscribers }: Props) {
           <Input
             isClearable
             variant="bordered"
-            size="sm"
             classNames={{
-              base: "w-full max-w-xs",
+              base: "w-full md:max-w-[55%] lg:max-w-[44%]",
               inputWrapper: "border-1",
             }}
             placeholder="Search by email..."
@@ -115,7 +114,7 @@ export default function SubscriberTable({ subscribers }: Props) {
           />
           <div className="flex gap-2">
             {(selectedKeys === "all" || selectedKeys.size > 0) && (
-              <Button color="danger" isDisabled size="sm">
+              <Button color="danger" isDisabled>
                 Delete
               </Button>
             )}
@@ -172,12 +171,11 @@ export default function SubscriberTable({ subscribers }: Props) {
 
   return (
     <Table
-      removeWrapper
       aria-label="Example table with custom cells, pagination and sorting"
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{
-        wrapper: "max-h-[382px]",
+        wrapper: "min-h-[285px] p-0 shadow-none rounded-none bg-transparent",
       }}
       selectedKeys={selectedKeys}
       selectionMode="multiple"
