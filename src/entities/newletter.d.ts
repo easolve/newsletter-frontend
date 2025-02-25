@@ -23,6 +23,15 @@ namespace Newsletter {
   interface Info extends Primitive {
     language: import("countries-list").TLanguageCode;
   }
+
+  interface History {
+    id: string;
+    title: string;
+    send_status: SentStatus;
+    sent_at: string;
+    created_at: string;
+    updated_at: string;
+  }
 }
 
 type Frequency = "daily" | "weekly" | "bi-weekly" | "monthly";
