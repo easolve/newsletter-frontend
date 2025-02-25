@@ -55,7 +55,7 @@ const NewsletterPage = async ({ params }: Props) => {
         </ItemLayout>
       </section>
       <ItemLayout headerTitle="Archive">
-        <HistoryTable />
+        <HistoryTable records={[]} />
       </ItemLayout>
       <ItemLayout headerTitle="Subscribers">
         <SubscriberTable subscribers={subscribers} />
