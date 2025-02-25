@@ -106,7 +106,7 @@ export default function SubscriberTable({ subscribers }: Props) {
               base: "w-full md:max-w-[55%] lg:max-w-[44%]",
               inputWrapper: "border-1",
             }}
-            placeholder="Search by email..."
+            placeholder="Search by Email"
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
@@ -123,7 +123,7 @@ export default function SubscriberTable({ subscribers }: Props) {
         </div>
         <div className="flex items-center justify-between">
           <span className="text-small text-default-400">
-            Total {subscribers.length} users
+            Total {subscribers.length} subscribers
           </span>
           <label className="flex items-center text-small text-default-400">
             Rows per page:
@@ -196,7 +196,7 @@ export default function SubscriberTable({ subscribers }: Props) {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No Subcribers found"} items={sortedItems}>
+      <TableBody emptyContent={"No subscribers found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.email}>
             {(columnKey) => (
