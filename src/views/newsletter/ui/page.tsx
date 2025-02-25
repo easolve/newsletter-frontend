@@ -44,10 +44,8 @@ const NewsletterPage = async ({ params }: Props) => {
         </div>
       </section>
       <section className="grid gap-5 lg:grid-cols-[auto,1fr]">
-        <div className="grid grid-rows-[auto,1fr] gap-5">
-          <div className="flex gap-5">
-            <Preference info={newsletter} />
-          </div>
+        <div className="flex flex-col gap-5">
+          <Preference info={newsletter} />
           <ItemLayout headerTitle="Sources"></ItemLayout>
         </div>
         <ItemLayout headerTitle="Prompt">
