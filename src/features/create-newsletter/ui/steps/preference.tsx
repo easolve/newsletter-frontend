@@ -2,7 +2,7 @@
 
 import { Input, SharedSelection } from "@heroui/react";
 import SelectFrequency from "@/shared/ui/select-frequency";
-import { useNewsletterData } from "../store/create-data";
+import { useNewsletterData } from "../../store/create-data";
 
 interface NewsletterPreferenceProps {}
 
