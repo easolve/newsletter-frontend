@@ -1,5 +1,9 @@
 import { redirect } from "next/navigation";
-import { NewsletterProvider } from "@/entities/newsletter/store";
+import {
+  HistoryProvider,
+  NewsletterProvider,
+  fetchHistory,
+} from "@/entities/newsletter";
 import HistoryTable from "@/features/history-table";
 import SubscriberTable from "@/features/subscriber-table";
 import { NewsletterStatus } from "@/shared/ui";
@@ -21,6 +25,7 @@ const NewsletterPage = async ({ params }: Props) => {
   const { info_id } = await params;
   const newsletter = await fetchNewsletter(info_id);
   const subscribers = await fetchSubscribers(info_id);
+  const history = await fetchHistory(info_id);
 
   if (!newsletter) {
     redirect("/newsletter");
@@ -55,7 +60,9 @@ const NewsletterPage = async ({ params }: Props) => {
           </ItemLayout>
         </section>
         <ItemLayout headerTitle="Archive">
-          <HistoryTable records={[]} />
+          <HistoryProvider history={history}>
+            <HistoryTable />
+          </HistoryProvider>
         </ItemLayout>
         <ItemLayout headerTitle="Subscribers">
           <SubscriberTable subscribers={subscribers} />

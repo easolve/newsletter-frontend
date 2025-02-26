@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { useCallback, useState } from "react";
-import { useNewsletterStore } from "@/entities/newsletter/store";
+import { useNewsletterStore } from "@/entities/newsletter";
 import { addSubscribers } from "@/features/subscriber-table/api/add-subscribers";
 import { PlusIcon } from "@/shared/ui/icons";
 import { useAddSubscriberStore } from "../../store/add";
