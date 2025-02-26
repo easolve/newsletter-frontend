@@ -1,21 +1,14 @@
 "use client";
 
-import { type TimeInputProps } from "@heroui/react";
 import { create } from "zustand";
 
-type Time = TimeInputProps["value"];
-
-export interface NewsletterForm {
-  name: string;
-  description: string;
-  frequency: string;
-  topics: string[];
-  sources: string[];
+export interface NewsletterForm
+  extends Omit<Newsletter.Base, "send_frequency"> {
+  send_frequency: string;
   format: string[];
   exampleId: string | null;
   exampleTitle: string | null;
   exampleContent: string | null;
-  sendTime: Time;
 }
 
 interface NewsletterFormActions {
@@ -28,7 +21,7 @@ interface NewsletterFormActions {
   setExampleId: (exampleId: string | null) => void;
   setExampleTitle: (exampleTitle: string | null) => void;
   setExampleContent: (exampleContent: string | null) => void;
-  setSendTime: (sendTime: Time) => void;
+  setSendTime: (send_time: string) => void;
 }
 
 type NewsletterFormStore = NewsletterForm & NewsletterFormActions;
@@ -41,8 +34,8 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
     description: "",
     setDescription: (description) => set({ description }),
 
-    frequency: "",
-    setFrequency: (frequency) => set({ frequency }),
+    send_frequency: "",
+    setFrequency: (send_frequency) => set({ send_frequency }),
 
     topics: [],
     setTopics: (topics) => set({ topics }),
@@ -62,7 +55,11 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
     exampleContent: null,
     setExampleContent: (exampleContent) => set({ exampleContent }),
 
-    sendTime: null,
-    setSendTime: (sendTime) => set({ sendTime }),
+    send_time: "",
+    setSendTime: (send_time) => set({ send_time }),
+
+    language: null,
+    is_active: true,
+    custom_prompt: "",
   }),
 );

@@ -1,11 +1,17 @@
-import { TimeInput } from "@heroui/react";
+import { TimeInput, type TimeInputProps } from "@heroui/react";
+import { useState } from "react";
 import { useNewsletterFormStore } from "../store/form-data";
 
-export const InputSendTime = () => {
-  const sendTime = useNewsletterFormStore((state) => state.sendTime);
-  const setSendTime = useNewsletterFormStore((state) => state.setSendTime);
+type Time = Exclude<TimeInputProps["value"], undefined>;
 
-  return (
-    <TimeInput label="Send Time" value={sendTime} onChange={setSendTime} />
-  );
+export const InputSendTime = () => {
+  const [value, setValue] = useState<Time>(null);
+
+  const handleChange = (time: Time) => {
+    const timeString = time?.toString() || "";
+    useNewsletterFormStore.getState().setSendTime(timeString);
+    setValue(time);
+  };
+
+  return <TimeInput label="Send Time" value={value} onChange={handleChange} />;
 };
