@@ -16,7 +16,7 @@ export const fetchHistory = async (
     })
     .catch((err) => {
       if (process.env.NODE_ENV === "development") {
-        console.log(err.response.data);
+        console.log(err.response?.data);
       }
       return null;
     });
