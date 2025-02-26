@@ -15,13 +15,9 @@ import {
 } from "@heroui/react";
 import React from "react";
 import { SearchIcon } from "@/shared/ui/icons";
+import { SUBSCRIBER_COLUMNS } from "../config";
 import AddSubscriberModal from "./add-subscriber/modal";
 import { renderCell } from "./table-cell";
-
-const SUBSCRIBER_COLUMNS = [
-  { name: "EMAIL", uid: "email", sortable: true },
-  { name: "ACTIONS", uid: "actions" },
-];
 
 interface Props {
   subscribers: Subscriber[];

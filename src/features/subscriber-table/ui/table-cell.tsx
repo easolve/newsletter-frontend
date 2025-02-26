@@ -11,6 +11,27 @@ export const renderCell = (subscriber: Subscriber, columnKey: React.Key) => {
   const cellValue = subscriber[columnKey as keyof Subscriber];
 
   switch (columnKey) {
+    case "created_at": {
+      const date = new Date(cellValue);
+      return (
+        <div className="flex gap-2">
+          <div>
+            {date.toLocaleDateString("en-EN", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
+          <div>
+            {date.toLocaleTimeString("en-EN", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
+        </div>
+      );
+    }
+
     case "actions":
       return (
         <div className="relative flex items-center justify-end gap-2">
