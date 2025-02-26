@@ -5,7 +5,7 @@ import { create } from "zustand";
 
 type Time = TimeInputProps["value"];
 
-export interface CreateNewsletterState {
+export interface NewsletterForm {
   name: string;
   description: string;
   frequency: string;
@@ -18,7 +18,7 @@ export interface CreateNewsletterState {
   sendTime: Time;
 }
 
-interface CreateNewsletterActions {
+interface NewsletterFormActions {
   setName: (name: string) => void;
   setDescription: (description: string) => void;
   setFrequency: (frequency: string) => void;
@@ -31,36 +31,38 @@ interface CreateNewsletterActions {
   setSendTime: (sendTime: Time) => void;
 }
 
-type CreateNewsletterData = CreateNewsletterState & CreateNewsletterActions;
+type NewsletterFormStore = NewsletterForm & NewsletterFormActions;
 
-export const useNewsletterData = create<CreateNewsletterData>((set, get) => ({
-  name: "",
-  setName: (name) => set({ name }),
+export const useNewsletterFormStore = create<NewsletterFormStore>(
+  (set, get) => ({
+    name: "",
+    setName: (name) => set({ name }),
 
-  description: "",
-  setDescription: (description) => set({ description }),
+    description: "",
+    setDescription: (description) => set({ description }),
 
-  frequency: "weekly",
-  setFrequency: (frequency) => set({ frequency }),
+    frequency: "weekly",
+    setFrequency: (frequency) => set({ frequency }),
 
-  topics: [],
-  setTopics: (topics) => set({ topics }),
+    topics: [],
+    setTopics: (topics) => set({ topics }),
 
-  sources: [],
-  setSources: (sources) => set({ sources }),
+    sources: [],
+    setSources: (sources) => set({ sources }),
 
-  format: [],
-  setFormat: (format) => set({ format }),
+    format: [],
+    setFormat: (format) => set({ format }),
 
-  exampleId: null,
-  setExampleId: (exampleId) => set({ exampleId }),
+    exampleId: null,
+    setExampleId: (exampleId) => set({ exampleId }),
 
-  exampleTitle: null,
-  setExampleTitle: (exampleTitle) => set({ exampleTitle }),
+    exampleTitle: null,
+    setExampleTitle: (exampleTitle) => set({ exampleTitle }),
 
-  exampleContent: null,
-  setExampleContent: (exampleContent) => set({ exampleContent }),
+    exampleContent: null,
+    setExampleContent: (exampleContent) => set({ exampleContent }),
 
-  sendTime: null,
-  setSendTime: (sendTime) => set({ sendTime }),
-}));
+    sendTime: null,
+    setSendTime: (sendTime) => set({ sendTime }),
+  }),
+);

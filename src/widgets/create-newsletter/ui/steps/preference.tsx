@@ -1,7 +1,10 @@
 "use client";
 
 import { Input, SharedSelection } from "@heroui/react";
-import { InputSendTime, useNewsletterData } from "@/features/newsletter-form";
+import {
+  InputSendTime,
+  useNewsletterFormStore,
+} from "@/features/newsletter-form";
 import SelectFrequency from "@/shared/ui/select-frequency";
 
 interface NewsletterPreferenceProps {}
@@ -19,7 +22,7 @@ const NewsletterPreference: React.FC<NewsletterPreferenceProps> = () => {
     setName,
     description,
     setDescription,
-  } = useNewsletterData();
+  } = useNewsletterFormStore();
 
   const handleChange = (keys: SharedSelection) => {
     const frequency = Array.from(keys)[0] as string;

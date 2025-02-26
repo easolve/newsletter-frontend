@@ -1,12 +1,12 @@
 "use client";
 
 import { Checkbox, CheckboxGroup } from "@heroui/react";
-import { useNewsletterData } from "@/features/newsletter-form";
+import { useNewsletterFormStore } from "@/features/newsletter-form";
 
 interface NewsletterFormatProps {}
 
 const NewsletterFormat: React.FC<NewsletterFormatProps> = () => {
-  const { format, setFormat } = useNewsletterData();
+  const { format, setFormat } = useNewsletterFormStore();
 
   const handleChange = (format: string[]) => {
     setFormat(format);

@@ -1,8 +1,8 @@
 import { Button } from "@heroui/react";
 import React from "react";
 import {
-  type CreateNewsletterState,
-  useNewsletterData,
+  type NewsletterForm,
+  useNewsletterFormStore,
 } from "@/features/newsletter-form";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   onPrev: () => void;
   onNext: () => void;
   onNextLabel?: string;
-  validator?: (data: CreateNewsletterState) => boolean;
+  validator?: (data: NewsletterForm) => boolean;
 }
 
 const WizardStepButton = ({
@@ -20,7 +20,7 @@ const WizardStepButton = ({
   onNextLabel,
   validator,
 }: Props) => {
-  const data = useNewsletterData();
+  const data = useNewsletterFormStore();
   const canProceed = validator ? validator(data) : true;
 
   return (
