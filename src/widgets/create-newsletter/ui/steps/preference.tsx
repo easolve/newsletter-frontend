@@ -4,6 +4,7 @@ import { Input } from "@heroui/react";
 import {
   InputSendTime,
   SelectFrequency,
+  SelectLanguage,
   useNewsletterFormStore,
 } from "@/features/newsletter-form";
 
@@ -36,6 +37,7 @@ const NewsletterPreference: React.FC<NewsletterPreferenceProps> = () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
+      <SelectLanguage />
       <SelectFrequency />
       <InputSendTime />
     </div>

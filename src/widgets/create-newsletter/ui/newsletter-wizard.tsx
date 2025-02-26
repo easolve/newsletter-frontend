@@ -34,7 +34,8 @@ const steps: NewsletterStep[] = [
       data.send_time.length > 0 &&
       data.send_frequency.length > 0 &&
       data.name.length > 0 &&
-      data.description.length > 0,
+      data.description.length > 0 &&
+      data.language !== null,
   },
   {
     label: "Topic",
