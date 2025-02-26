@@ -32,6 +32,7 @@ const steps: NewsletterStep[] = [
     component: NewsletterPreference,
     validator: (data) =>
       data.sendTime !== null &&
+      data.frequency.length > 0 &&
       data.name.length > 0 &&
       data.description.length > 0,
   },

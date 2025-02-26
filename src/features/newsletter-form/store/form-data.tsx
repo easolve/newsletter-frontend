@@ -41,7 +41,7 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
     description: "",
     setDescription: (description) => set({ description }),
 
-    frequency: "weekly",
+    frequency: "",
     setFrequency: (frequency) => set({ frequency }),
 
     topics: [],
