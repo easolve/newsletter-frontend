@@ -16,9 +16,9 @@ import {
   Tabs,
 } from "@heroui/react";
 import { useEffect } from "react";
+import { useNewsletterData } from "@/features/newsletter-form/";
 import { subtitle, title } from "@/styles/primitives";
 import { getSampleNewsletter } from "../../api/actions";
-import { useNewsletterData } from "../../store/create-data";
 
 interface NewsletterDetailProps {}
 

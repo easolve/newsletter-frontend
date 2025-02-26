@@ -1,4 +1,4 @@
-import NewsletterWizard from "@/features/create-newsletter";
+import NewsletterWizard from "@/widgets/create-newsletter";
 
 export default function CreateYourOwnNewsletterPage() {
   return <NewsletterWizard />;

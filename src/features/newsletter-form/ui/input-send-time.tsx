@@ -1,7 +1,7 @@
 import { TimeInput } from "@heroui/react";
-import { useNewsletterData } from "../../store/create-data";
+import { useNewsletterData } from "../store/form-data";
 
-const inputSendTime = () => {
+export const InputSendTime = () => {
   const sendTime = useNewsletterData((state) => state.sendTime);
   const setSendTime = useNewsletterData((state) => state.setSendTime);
 
@@ -9,5 +9,3 @@ const inputSendTime = () => {
     <TimeInput label="Send Time" value={sendTime} onChange={setSendTime} />
   );
 };
-
-export default inputSendTime;
