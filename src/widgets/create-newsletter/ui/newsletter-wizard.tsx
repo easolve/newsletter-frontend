@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import {
-  type CreateNewsletterState,
-  useNewsletterData,
+  type NewsletterForm,
+  useNewsletterFormStore,
 } from "@/features/newsletter-form";
 import useDebouncedCallback from "@/hooks/use-debounced-callback";
 import { createSampleNewsletter, saveNewsletter } from "../api/actions";
@@ -21,7 +21,7 @@ export interface NewsletterStep {
   description?: string;
   progress?: number;
   component: React.FC;
-  validator?: (data: CreateNewsletterState) => boolean;
+  validator?: (data: NewsletterForm) => boolean;
 }
 
 const steps: NewsletterStep[] = [
@@ -68,11 +68,13 @@ const NewsletterWizard: React.FC = () => {
   const [step, setStep] = useState<number>(0);
   const router = useRouter();
 
-  const topics = useNewsletterData((state) => state.topics);
-  const sources = useNewsletterData((state) => state.sources);
-  const setExampleId = useNewsletterData((state) => state.setExampleId);
-  const setExampleTitle = useNewsletterData((state) => state.setExampleTitle);
-  const setExampleContent = useNewsletterData(
+  const topics = useNewsletterFormStore((state) => state.topics);
+  const sources = useNewsletterFormStore((state) => state.sources);
+  const setExampleId = useNewsletterFormStore((state) => state.setExampleId);
+  const setExampleTitle = useNewsletterFormStore(
+    (state) => state.setExampleTitle,
+  );
+  const setExampleContent = useNewsletterFormStore(
     (state) => state.setExampleContent,
   );
 
@@ -99,7 +101,7 @@ const NewsletterWizard: React.FC = () => {
         debouncedCreateSampleNewsletter(topics, sources);
       }
     } else {
-      const { name, description } = useNewsletterData.getState();
+      const { name, description } = useNewsletterFormStore.getState();
       const errorMessage = await saveNewsletter({
         name,
         description,

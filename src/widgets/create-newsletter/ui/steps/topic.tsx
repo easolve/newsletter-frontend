@@ -2,13 +2,13 @@
 
 import { Checkbox, CheckboxGroup, Chip, Input } from "@heroui/react";
 import { useState } from "react";
-import { useNewsletterData } from "@/features/newsletter-form";
+import { useNewsletterFormStore } from "@/features/newsletter-form";
 
 interface NewsletterTopicProps {}
 
 const NewsletterTopic: React.FC<NewsletterTopicProps> = () => {
   const [inputValue, setInputValue] = useState("");
-  const { topics, setTopics } = useNewsletterData();
+  const { topics, setTopics } = useNewsletterFormStore();
 
   const handleChange = (topic: string[]) => {
     setTopics(topic);

@@ -16,7 +16,7 @@ import {
   Tabs,
 } from "@heroui/react";
 import { useEffect } from "react";
-import { useNewsletterData } from "@/features/newsletter-form/";
+import { useNewsletterFormStore } from "@/features/newsletter-form";
 import { subtitle, title } from "@/styles/primitives";
 import { getSampleNewsletter } from "../../api/actions";
 
@@ -34,7 +34,7 @@ const NewsletterDetail: React.FC<NewsletterDetailProps> = () => {
     setExampleTitle,
     exampleContent,
     setExampleContent,
-  } = useNewsletterData();
+  } = useNewsletterFormStore();
 
   useEffect(() => {
     if (!exampleId) return;
