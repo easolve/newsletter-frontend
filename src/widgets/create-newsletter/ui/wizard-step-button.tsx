@@ -3,7 +3,7 @@ import React from "react";
 import {
   type CreateNewsletterState,
   useNewsletterData,
-} from "@/features/create-newsletter/store/create-data";
+} from "@/features/newsletter-form";
 
 interface Props {
   step: number;
