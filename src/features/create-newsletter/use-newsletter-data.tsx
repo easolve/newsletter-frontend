@@ -1,100 +1,61 @@
 "use client";
 
-import React, { createContext, useContext, useMemo, useState } from "react";
+import { create } from "zustand";
 
-export interface CreateNewsletterData {
+interface CreateNewsletterData {
   name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
+  setName: (name: string) => void;
 
   description: string;
-  setDescription: React.Dispatch<React.SetStateAction<string>>;
+  setDescription: (description: string) => void;
 
   frequency: string;
-  setFrequency: React.Dispatch<React.SetStateAction<string>>;
+  setFrequency: (frequency: string) => void;
 
   topics: string[];
-  setTopics: React.Dispatch<React.SetStateAction<string[]>>;
+  setTopics: (topics: string[]) => void;
 
   sources: string[];
-  setSources: React.Dispatch<React.SetStateAction<string[]>>;
+  setSources: (sources: string[]) => void;
 
   format: string[];
-  setFormat: React.Dispatch<React.SetStateAction<string[]>>;
+  setFormat: (format: string[]) => void;
 
   exampleId: string | null;
-  setExampleId: React.Dispatch<React.SetStateAction<string | null>>;
+  setExampleId: (exampleId: string | null) => void;
 
   exampleTitle: string | null;
-  setExampleTitle: React.Dispatch<React.SetStateAction<string | null>>;
+  setExampleTitle: (exampleTitle: string | null) => void;
 
   exampleContent: string | null;
-  setExampleContent: React.Dispatch<React.SetStateAction<string | null>>;
+  setExampleContent: (exampleContent: string | null) => void;
 }
 
-const NewsletterDataContext = createContext<CreateNewsletterData | undefined>(
-  undefined,
-);
+export const useNewsletterData = create<CreateNewsletterData>((set) => ({
+  name: "",
+  setName: (name) => set({ name }),
 
-export const NewsletterDataProvider: React.FC<{
-  children: React.ReactNode;
-}> = ({ children }) => {
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [frequency, setFrequency] = useState<string>("weekly");
-  const [topics, setTopics] = useState<string[]>([]);
-  const [sources, setSources] = useState<string[]>([]);
-  const [format, setFormat] = useState<string[]>([]);
-  const [exampleId, setExampleId] = useState<string | null>(null);
-  const [exampleTitle, setExampleTitle] = useState<string | null>(null);
-  const [exampleContent, setExampleContent] = useState<string | null>(null);
+  description: "",
+  setDescription: (description) => set({ description }),
 
-  const value: CreateNewsletterData = useMemo(
-    () => ({
-      name,
-      setName,
-      description,
-      setDescription,
-      frequency,
-      setFrequency,
-      topics,
-      setTopics,
-      sources,
-      setSources,
-      format,
-      setFormat,
-      exampleId,
-      setExampleId,
-      exampleTitle,
-      setExampleTitle,
-      exampleContent,
-      setExampleContent,
-    }),
-    [
-      name,
-      description,
-      topics,
-      sources,
-      format,
-      frequency,
-      exampleId,
-      exampleTitle,
-      exampleContent,
-    ],
-  );
+  frequency: "weekly",
+  setFrequency: (frequency) => set({ frequency }),
 
-  return (
-    <NewsletterDataContext.Provider value={value}>
-      {children}
-    </NewsletterDataContext.Provider>
-  );
-};
+  topics: [],
+  setTopics: (topics) => set({ topics }),
 
-export function useNewsletterData() {
-  const context = useContext(NewsletterDataContext);
-  if (!context) {
-    throw new Error(
-      "`useNewsletterData` must be used within a `NewsletterDataProvider`",
-    );
-  }
-  return context;
-}
+  sources: [],
+  setSources: (sources) => set({ sources }),
+
+  format: [],
+  setFormat: (format) => set({ format }),
+
+  exampleId: null,
+  setExampleId: (exampleId) => set({ exampleId }),
+
+  exampleTitle: null,
+  setExampleTitle: (exampleTitle) => set({ exampleTitle }),
+
+  exampleContent: null,
+  setExampleContent: (exampleContent) => set({ exampleContent }),
+}));
