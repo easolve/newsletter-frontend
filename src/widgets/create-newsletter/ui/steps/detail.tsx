@@ -28,7 +28,7 @@ const NewsletterDetail: React.FC<NewsletterDetailProps> = () => {
     description,
     topics,
     sources,
-    frequency,
+    send_frequency,
     exampleId,
     exampleTitle,
     setExampleTitle,
@@ -95,7 +95,7 @@ const NewsletterDetail: React.FC<NewsletterDetailProps> = () => {
                 </TableRow>
                 <TableRow key="frequency">
                   <TableCell>Frequency</TableCell>
-                  <TableCell>{frequency}</TableCell>
+                  <TableCell>{send_frequency}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

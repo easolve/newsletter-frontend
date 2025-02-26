@@ -5,7 +5,7 @@ namespace Newsletter {
     custom_prompt: string;
     send_frequency: Frequency;
     send_time: string;
-    language: import("countries-list").TLanguageCode;
+    language: import("countries-list").TLanguageCode | null;
     is_active: boolean;
     topics: string[];
     sources: string[];
