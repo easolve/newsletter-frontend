@@ -4,28 +4,24 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import useDebouncedCallback from "@/hooks/use-debounced-callback";
 import { createSampleNewsletter, saveNewsletter } from "../api/actions";
-import { useNewsletterData } from "../store/create-data";
+import {
+  type CreateNewsletterState,
+  useNewsletterData,
+} from "../store/create-data";
 import NewsletterDetail from "./steps/detail";
 import NewsletterFormat from "./steps/format";
 import NewsletterPreference from "./steps/preference";
 import NewsletterSource from "./steps/source";
 import NewsletterTopic from "./steps/topic";
 import WizardStep from "./wizard-step";
+import WizardStepButton from "./wizard-step-button";
 
 export interface NewsletterStep {
   label: string;
   description?: string;
   progress?: number;
   component: React.FC;
-  validator?: (data: {
-    topics: string[];
-    sources: string[];
-    format: string[];
-    frequency: string;
-    exampleContent: string | null;
-    name: string;
-    description: string;
-  }) => boolean;
+  validator?: (data: CreateNewsletterState) => boolean;
 }
 
 const steps: NewsletterStep[] = [
@@ -71,34 +67,16 @@ const steps: NewsletterStep[] = [
 const NewsletterWizard: React.FC = () => {
   const [step, setStep] = useState<number>(0);
   const router = useRouter();
-  const {
-    topics,
-    sources,
-    format,
-    frequency,
-    setExampleId,
-    setExampleTitle,
-    exampleContent,
-    setExampleContent,
-    name,
-    description,
-  } = useNewsletterData();
 
-  const currentData = {
-    topics,
-    sources,
-    format,
-    frequency,
-    exampleContent,
-    name,
-    description,
-  };
+  const topics = useNewsletterData((state) => state.topics);
+  const sources = useNewsletterData((state) => state.sources);
+  const setExampleId = useNewsletterData((state) => state.setExampleId);
+  const setExampleTitle = useNewsletterData((state) => state.setExampleTitle);
+  const setExampleContent = useNewsletterData(
+    (state) => state.setExampleContent,
+  );
 
   const currentStep = steps[step];
-
-  const canProceed = currentStep.validator
-    ? currentStep.validator(currentData)
-    : true;
 
   const debouncedCreateSampleNewsletter = useDebouncedCallback(
     async (topics: string[], sources: string[]) => {
@@ -121,7 +99,12 @@ const NewsletterWizard: React.FC = () => {
         debouncedCreateSampleNewsletter(topics, sources);
       }
     } else {
-      const errorMessage = await saveNewsletter(currentData);
+      const { name, description } = useNewsletterData.getState();
+      const errorMessage = await saveNewsletter({
+        name,
+        description,
+        // TODO : Add other fields
+      });
       if (!errorMessage) {
         alert("Saved successfully!");
         router.push("/newsletter");
@@ -140,19 +123,24 @@ const NewsletterWizard: React.FC = () => {
   const StepComponent = currentStep.component;
 
   return (
-    <WizardStep
-      step={step}
-      totalSteps={steps.length}
-      label={currentStep.label}
-      description={currentStep.description}
-      progress={currentStep.progress}
-      onNext={goNext}
-      onPrev={goPrev}
-      onNextLabel={step === steps.length - 1 ? "Save" : "Next"}
-      canProceed={canProceed}
-    >
-      <StepComponent />
-    </WizardStep>
+    <div className="flex h-full w-full flex-col justify-between space-y-6 rounded-lg p-6">
+      <WizardStep
+        step={step}
+        totalSteps={steps.length}
+        label={currentStep.label}
+        description={currentStep.description}
+        progress={currentStep.progress}
+      >
+        <StepComponent />
+      </WizardStep>
+      <WizardStepButton
+        step={step}
+        onPrev={goPrev}
+        onNext={goNext}
+        onNextLabel={step === steps.length - 1 ? "Save" : "Next"}
+        validator={currentStep.validator}
+      />
+    </div>
   );
 };
 

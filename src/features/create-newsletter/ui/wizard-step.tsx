@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Progress } from "@heroui/react";
+import { Progress } from "@heroui/react";
 import React from "react";
 import { subtitle, title } from "@/styles/primitives";
 
@@ -24,10 +24,6 @@ interface WizardStepProps {
   label: string;
   description?: string;
   progress?: number;
-  onPrev: () => void;
-  onNext: () => void;
-  onNextLabel?: string;
-  canProceed?: boolean;
   children: React.ReactNode;
 }
 
@@ -37,49 +33,31 @@ const WizardStep: React.FC<WizardStepProps> = ({
   label,
   description,
   progress,
-  onPrev,
-  onNext,
-  onNextLabel = "Next",
-  canProceed = true,
   children,
 }) => {
   const progressValue = progress ?? (step / totalSteps) * 100;
 
   return (
-    <div className="flex h-full w-full flex-col justify-between space-y-6 rounded-lg p-6">
-      <div className="flex h-full w-full flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <h1
-            className={title({
-              size: "sm",
-            })}
-          >
-            {label}
-          </h1>
-          <Progress
-            aria-label="Progress bar"
-            classNames={{
-              base: "max-w-[300px]",
-            }}
-            value={progressValue}
-            showValueLabel={true}
-          />
-          {description && <p className={subtitle()}>{description}</p>}
-        </div>
-
-        <div className="flex h-full flex-col">{children}</div>
-      </div>
-      <div className="flex w-full items-center justify-between">
-        {step > 0 ? <Button onPress={onPrev}>Prev</Button> : <div />}
-        <Button
-          onPress={onNext}
-          color="primary"
-          variant="solid"
-          isDisabled={!canProceed}
+    <div className="flex h-full w-full flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <h1
+          className={title({
+            size: "sm",
+          })}
         >
-          {onNextLabel}
-        </Button>
+          {label}
+        </h1>
+        <Progress
+          aria-label="Progress bar"
+          classNames={{
+            base: "max-w-[300px]",
+          }}
+          value={progressValue}
+          showValueLabel={true}
+        />
+        {description && <p className={subtitle()}>{description}</p>}
       </div>
+      <div className="flex h-full flex-col">{children}</div>
     </div>
   );
 };
