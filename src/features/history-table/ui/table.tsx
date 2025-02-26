@@ -9,6 +9,7 @@ import {
   Input,
   Pagination,
   type Selection,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -17,24 +18,25 @@ import {
   TableRow,
 } from "@heroui/react";
 import React from "react";
+import { historyContext } from "@/entities/newsletter";
 import { ChevronDownIcon, PlusIcon, SearchIcon } from "@/shared/ui";
 import { COLUMNS, STATUS_OPTION } from "../config";
 import { renderCell } from "./render-cell";
 
-interface Props {
-  records: Newsletter.History[];
-}
-
-const HistoryTable = ({ records }: Props) => {
+const HistoryTable = () => {
+  const { records } = React.useContext(historyContext);
   const [searchValue, setSearchValue] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(searchValue);
 
   const filteredItems = React.useMemo(() => {
+    if (records === null) {
+      return [];
+    }
+
     let filteredRecords = [...records];
 
     if (hasSearchFilter) {
@@ -86,6 +88,10 @@ const HistoryTable = ({ records }: Props) => {
   }, []);
 
   const topContent = React.useMemo(() => {
+    if (records === null) {
+      return null;
+    }
+
     return (
       <div className="flex flex-col gap-4">
         <div className="flex items-end justify-between gap-3">
@@ -157,7 +163,7 @@ const HistoryTable = ({ records }: Props) => {
     statusFilter,
     onSearchChange,
     onRowsPerPageChange,
-    records.length,
+    records,
     hasSearchFilter,
   ]);
 
@@ -198,7 +204,12 @@ const HistoryTable = ({ records }: Props) => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No records found"} items={items}>
+      <TableBody
+        isLoading={records === null}
+        loadingContent={<Spinner label="Loading..." />}
+        emptyContent={"No records found"}
+        items={items}
+      >
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
