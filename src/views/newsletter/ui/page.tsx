@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { NewsletterProvider } from "@/entities/newsletter/store";
 import HistoryTable from "@/features/history-table";
 import SubscriberTable from "@/features/subscriber-table";
 import { NewsletterStatus } from "@/shared/ui";
@@ -26,39 +27,41 @@ const NewsletterPage = async ({ params }: Props) => {
   }
 
   return (
-    <article className="flex flex-col gap-5">
-      <Header />
-      <section>
-        <div className="flex justify-between">
-          <span className="flex items-end gap-2">
-            <h1 className="text-5xl font-bold">{newsletter.name}</h1>
-            <NewsletterStatus isActive={newsletter.is_active} />
-          </span>
-          <ActionsDropdown />
-        </div>
-        <p className="mt-1 text-2xl font-light">{newsletter.description}</p>
-        <div className="mt-2 flex gap-2">
-          {newsletter.topics.map((item) => (
-            <TopicChip key={item}>{item}</TopicChip>
-          ))}
-        </div>
-      </section>
-      <section className="grid gap-5 lg:grid-cols-[auto,1fr]">
-        <div className="flex flex-col gap-5">
-          <Preference info={newsletter} />
-          <ItemLayout headerTitle="Sources"></ItemLayout>
-        </div>
-        <ItemLayout headerTitle="Prompt">
-          <Prompt>{newsletter.custom_prompt}</Prompt>
+    <NewsletterProvider id={info_id}>
+      <article className="flex flex-col gap-5">
+        <Header />
+        <section>
+          <div className="flex justify-between">
+            <span className="flex items-end gap-2">
+              <h1 className="text-5xl font-bold">{newsletter.name}</h1>
+              <NewsletterStatus isActive={newsletter.is_active} />
+            </span>
+            <ActionsDropdown />
+          </div>
+          <p className="mt-1 text-2xl font-light">{newsletter.description}</p>
+          <div className="mt-2 flex gap-2">
+            {newsletter.topics.map((item) => (
+              <TopicChip key={item}>{item}</TopicChip>
+            ))}
+          </div>
+        </section>
+        <section className="grid gap-5 lg:grid-cols-[auto,1fr]">
+          <div className="flex flex-col gap-5">
+            <Preference info={newsletter} />
+            <ItemLayout headerTitle="Sources"></ItemLayout>
+          </div>
+          <ItemLayout headerTitle="Prompt">
+            <Prompt>{newsletter.custom_prompt}</Prompt>
+          </ItemLayout>
+        </section>
+        <ItemLayout headerTitle="Archive">
+          <HistoryTable records={[]} />
         </ItemLayout>
-      </section>
-      <ItemLayout headerTitle="Archive">
-        <HistoryTable records={[]} />
-      </ItemLayout>
-      <ItemLayout headerTitle="Subscribers">
-        <SubscriberTable subscribers={subscribers} />
-      </ItemLayout>
-    </article>
+        <ItemLayout headerTitle="Subscribers">
+          <SubscriberTable subscribers={subscribers} />
+        </ItemLayout>
+      </article>
+    </NewsletterProvider>
   );
 };
 
