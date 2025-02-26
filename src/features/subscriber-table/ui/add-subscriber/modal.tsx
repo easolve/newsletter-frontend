@@ -10,13 +10,38 @@ import {
   Tabs,
   useDisclosure,
 } from "@heroui/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useNewsletterStore } from "@/entities/newsletter/store";
+import { addSubscribers } from "@/features/subscriber-table/api/add-subscribers";
 import { PlusIcon } from "@/shared/ui/icons";
-import EnterManually from "./enter-manually";
+import { useAddSubscriberStore } from "../../store/add";
+import AddManually from "./add-manually";
 
 const AddSubscriberModal = () => {
-  const [addList, setAddList] = useState<string[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCilckClose = useCallback(() => {
+    onClose();
+    useAddSubscriberStore.getState().clear();
+  }, []);
+
+  const handleClickSave = useCallback(async () => {
+    const { id } = useNewsletterStore.getState();
+    const { list } = useAddSubscriberStore.getState();
+    if (!list.length) {
+      return;
+    }
+    setIsLoading(true);
+    const errorMessage = await addSubscribers(id, list);
+    if (!errorMessage) {
+      setIsLoading(false);
+      handleCilckClose();
+      return;
+    }
+    alert(errorMessage);
+    setIsLoading(false);
+  }, []);
 
   return (
     <>
@@ -32,16 +57,24 @@ const AddSubscriberModal = () => {
               <ModalBody>
                 <Tabs disabledKeys={["csv"]} variant="underlined">
                   <Tab key="input" title="Enter Manually">
-                    <EnterManually addList={addList} setAddList={setAddList} />
+                    <AddManually />
                   </Tab>
                   <Tab key="csv" title="Upload CSV"></Tab>
                 </Tabs>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={handleCilckClose}
+                >
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button
+                  color="primary"
+                  onPress={handleClickSave}
+                  isLoading={isLoading}
+                >
                   Save
                 </Button>
               </ModalFooter>
