@@ -12,7 +12,7 @@ import NewsletterFormat from "./steps/format";
 import NewsletterPreference from "./steps/preference";
 import NewsletterSource from "./steps/source";
 import NewsletterTopic from "./steps/topic";
-import { useNewsletterData } from "./use-newsletter-data";
+import { useNewsletterData } from "./store/create-data";
 import WizardStep from "./wizard-step";
 
 export interface NewsletterStep {

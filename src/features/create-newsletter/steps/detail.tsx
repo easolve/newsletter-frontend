@@ -5,7 +5,6 @@ import {
   CardBody,
   CardHeader,
   Divider,
-  ScrollShadow,
   Spinner,
   Tab,
   Table,
@@ -19,7 +18,7 @@ import {
 import { useEffect } from "react";
 import { getSampleNewsletter } from "@/app/create-newsletter/actions";
 import { subtitle, title } from "@/styles/primitives";
-import { useNewsletterData } from "../use-newsletter-data";
+import { useNewsletterData } from "../store/create-data";
 
 interface NewsletterDetailProps {}
 
