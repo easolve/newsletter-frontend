@@ -1,44 +1,36 @@
 "use client";
 
 import { Button, Chip, Input } from "@heroui/react";
-import type {
-  ChangeEvent,
-  Dispatch,
-  KeyboardEventHandler,
-  SetStateAction,
-} from "react";
+import type { ChangeEvent, KeyboardEventHandler } from "react";
 import { useCallback, useState } from "react";
+import { useAddSubscriberStore } from "../../store/add";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-interface Props {
-  addList: string[];
-  setAddList: Dispatch<SetStateAction<string[]>>;
-}
-
-const EnterManually = ({ addList, setAddList }: Props) => {
+const AddManually = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const removeFromList = useCallback((email: string) => {
-    setAddList((prev) => prev.filter((item) => item !== email));
-  }, []);
+  const list = useAddSubscriberStore((s) => s.list);
+  const addToList = useAddSubscriberStore((s) => s.addToList);
+  const removeFromList = useAddSubscriberStore((s) => s.removeFromList);
 
-  const addToList = useCallback(
+  const onAdd = useCallback(
     (email: string) => {
+      email = email.trim();
       if (!EMAIL_REGEX.test(email)) {
         setErrorMessage("Please check the email format.");
         return;
       }
-      if (addList.includes(email)) {
+      if (list.includes(email)) {
         setErrorMessage("Email already added.");
         return;
       }
       setErrorMessage("");
-      setAddList((prev) => [...prev, email]);
+      addToList(email);
       setInputValue("");
     },
-    [addList],
+    [list, addToList],
   );
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
@@ -46,10 +38,10 @@ const EnterManually = ({ addList, setAddList }: Props) => {
       if (e.key !== "Enter") {
         return;
       }
-      const email = e.currentTarget.value.trim();
-      addToList(email);
+      const email = e.currentTarget.value;
+      onAdd(email);
     },
-    [addList],
+    [onAdd],
   );
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -78,15 +70,11 @@ const EnterManually = ({ addList, setAddList }: Props) => {
         isInvalid={Boolean(errorMessage)}
         errorMessage={errorMessage}
       />
-      <Button
-        variant="flat"
-        color="primary"
-        onPress={() => addToList(inputValue)}
-      >
+      <Button variant="flat" color="primary" onPress={() => onAdd(inputValue)}>
         Add
       </Button>
       <div className="col-span-2 flex flex-wrap gap-1">
-        {addList.map((email) => (
+        {list.map((email) => (
           <Chip key={email} onClose={() => removeFromList(email)}>
             {email}
           </Chip>
@@ -96,4 +84,4 @@ const EnterManually = ({ addList, setAddList }: Props) => {
   );
 };
 
-export default EnterManually;
+export default AddManually;
