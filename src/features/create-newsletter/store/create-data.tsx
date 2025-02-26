@@ -1,37 +1,39 @@
 "use client";
 
+import { type TimeInputProps } from "@heroui/react";
 import { create } from "zustand";
 
-interface CreateNewsletterData {
+type Time = TimeInputProps["value"];
+
+export interface CreateNewsletterState {
   name: string;
-  setName: (name: string) => void;
-
   description: string;
-  setDescription: (description: string) => void;
-
   frequency: string;
-  setFrequency: (frequency: string) => void;
-
   topics: string[];
-  setTopics: (topics: string[]) => void;
-
   sources: string[];
-  setSources: (sources: string[]) => void;
-
   format: string[];
-  setFormat: (format: string[]) => void;
-
   exampleId: string | null;
-  setExampleId: (exampleId: string | null) => void;
-
   exampleTitle: string | null;
-  setExampleTitle: (exampleTitle: string | null) => void;
-
   exampleContent: string | null;
-  setExampleContent: (exampleContent: string | null) => void;
+  sendTime: Time;
 }
 
-export const useNewsletterData = create<CreateNewsletterData>((set) => ({
+interface CreateNewsletterActions {
+  setName: (name: string) => void;
+  setDescription: (description: string) => void;
+  setFrequency: (frequency: string) => void;
+  setTopics: (topics: string[]) => void;
+  setSources: (sources: string[]) => void;
+  setFormat: (format: string[]) => void;
+  setExampleId: (exampleId: string | null) => void;
+  setExampleTitle: (exampleTitle: string | null) => void;
+  setExampleContent: (exampleContent: string | null) => void;
+  setSendTime: (sendTime: Time) => void;
+}
+
+type CreateNewsletterData = CreateNewsletterState & CreateNewsletterActions;
+
+export const useNewsletterData = create<CreateNewsletterData>((set, get) => ({
   name: "",
   setName: (name) => set({ name }),
 
@@ -58,4 +60,7 @@ export const useNewsletterData = create<CreateNewsletterData>((set) => ({
 
   exampleContent: null,
   setExampleContent: (exampleContent) => set({ exampleContent }),
+
+  sendTime: null,
+  setSendTime: (sendTime) => set({ sendTime }),
 }));
