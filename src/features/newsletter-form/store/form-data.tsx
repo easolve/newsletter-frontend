@@ -22,6 +22,7 @@ interface NewsletterFormActions {
   setExampleTitle: (exampleTitle: string | null) => void;
   setExampleContent: (exampleContent: string | null) => void;
   setSendTime: (send_time: string) => void;
+  setLanguage: (language: NewsletterForm["language"]) => void;
 }
 
 type NewsletterFormStore = NewsletterForm & NewsletterFormActions;
@@ -59,6 +60,8 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
     setSendTime: (send_time) => set({ send_time }),
 
     language: null,
+    setLanguage: (language) => set({ language }),
+
     is_active: true,
     custom_prompt: "",
   }),
