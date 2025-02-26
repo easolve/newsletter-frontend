@@ -16,9 +16,9 @@ import {
   Tabs,
 } from "@heroui/react";
 import { useEffect } from "react";
-import { getSampleNewsletter } from "@/app/create-newsletter/actions";
 import { subtitle, title } from "@/styles/primitives";
-import { useNewsletterData } from "../store/create-data";
+import { getSampleNewsletter } from "../../api/actions";
+import { useNewsletterData } from "../../store/create-data";
 
 interface NewsletterDetailProps {}
 

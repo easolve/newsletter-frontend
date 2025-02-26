@@ -2,17 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import {
-  createSampleNewsletter,
-  saveNewsletter,
-} from "@/app/create-newsletter/actions";
 import useDebouncedCallback from "@/hooks/use-debounced-callback";
+import { createSampleNewsletter, saveNewsletter } from "../api/actions";
+import { useNewsletterData } from "../store/create-data";
 import NewsletterDetail from "./steps/detail";
 import NewsletterFormat from "./steps/format";
 import NewsletterPreference from "./steps/preference";
 import NewsletterSource from "./steps/source";
 import NewsletterTopic from "./steps/topic";
-import { useNewsletterData } from "./store/create-data";
 import WizardStep from "./wizard-step";
 
 export interface NewsletterStep {

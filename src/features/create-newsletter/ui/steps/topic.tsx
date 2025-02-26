@@ -2,7 +2,7 @@
 
 import { Checkbox, CheckboxGroup, Chip, Input } from "@heroui/react";
 import { useState } from "react";
-import { useNewsletterData } from "../store/create-data";
+import { useNewsletterData } from "../../store/create-data";
 
 interface NewsletterTopicProps {}
 
