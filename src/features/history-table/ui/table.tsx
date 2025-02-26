@@ -179,6 +179,7 @@ const HistoryTable = ({ records }: Props) => {
 
   return (
     <Table
+      aria-label="Newsletter Records Table"
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{
