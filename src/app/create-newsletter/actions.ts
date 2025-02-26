@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { callAPI } from "@/shared/api";
 
 export interface NewsletterData {
   name: string;
@@ -11,50 +12,21 @@ export interface NewsletterData {
   sources: string[];
 }
 
-export async function saveNewsletter({
-  name,
-  description,
-  frequency,
-  exampleContent,
-  topics,
-  sources,
-}: NewsletterData): Promise<void> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("access_token")?.value;
-
-  if (!accessToken) {
-    return;
-  }
-
-  const url = new URL(
-    "/v1/news/save",
-    process.env.NEXT_PUBLIC_BACKEND_API_URL,
-  );
-
-  try {
-    const res = await fetch(url.toString(), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
-        name,
-        description,
-        custom_prmopt: exampleContent,
-        send_frequency: frequency,
-        is_active: "true",
-        topic: topics,
-        source: sources,
-      }),
-      cache: "no-cache",
+export async function saveNewsletter(data: Newsletter.Base): Promise<string> {
+  return callAPI.serverSide
+    .post("/v1/news/info", data)
+    .then((res) => {
+      if (process.env.NODE_ENV === "development") {
+        console.log(res.data);
+      }
+      return "";
+    })
+    .catch((err) => {
+      if (process.env.NODE_ENV === "development") {
+        console.log(err.response.data);
+      }
+      return "Failed to save newsletter";
     });
-    if (!res.ok) {
-      return;
-    }
-  } catch {
-    return;
-  }
 }
 
 export async function createSampleNewsletter(
@@ -68,10 +40,7 @@ export async function createSampleNewsletter(
     return null;
   }
 
-  const url = new URL(
-    "/v1/news/task",
-    process.env.NEXT_PUBLIC_BACKEND_API_URL,
-  );
+  const url = new URL("/v1/news/task", process.env.NEXT_PUBLIC_BACKEND_API_URL);
 
   try {
     const res = await fetch(url.toString(), {

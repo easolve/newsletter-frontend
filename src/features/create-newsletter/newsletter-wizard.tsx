@@ -124,9 +124,13 @@ const NewsletterWizard: React.FC = () => {
         debouncedCreateSampleNewsletter(topics, sources);
       }
     } else {
-      await saveNewsletter(currentData);
-      router.push("/");
-      alert("Saved successfully!");
+      const errorMessage = await saveNewsletter(currentData);
+      if (!errorMessage) {
+        alert("Saved successfully!");
+        router.push("/newsletter");
+        return;
+      }
+      alert(errorMessage);
     }
   };
 
