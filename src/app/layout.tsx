@@ -22,7 +22,7 @@ export default async function RootLayout({
         <HeroUIProvider className="grid h-screen w-screen grid-rows-[auto,1fr]">
           <NextThemesProvider>
             <NavBar email={email} />
-            <main className="size-full max-w-7xl justify-self-center overflow-y-auto overflow-x-hidden px-6 pb-8 pt-2 scrollbar-hide">
+            <main className="flex size-full max-w-7xl justify-self-center overflow-y-auto overflow-x-hidden p-4 !pt-2 scrollbar-hide sm:p-6">
               {children}
             </main>
           </NextThemesProvider>
