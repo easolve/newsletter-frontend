@@ -3,7 +3,7 @@ namespace Newsletter {
     name: string;
     description: string;
     custom_prompt: string;
-    send_frequency: Frequency;
+    send_frequency: string;
     send_time: string;
     language: import("countries-list").TLanguageCode | null;
     is_active: boolean;
@@ -11,7 +11,13 @@ namespace Newsletter {
     sources: string[];
   }
 
+  type ExampleData = Pick<
+    Base,
+    "topics" | "sources" | "language" | "custom_prompt"
+  >;
+
   interface Primitive extends Base {
+    send_frequency: Frequency;
     language: string;
     id: string;
     created_at: string;

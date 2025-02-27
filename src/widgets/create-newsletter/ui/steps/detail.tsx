@@ -1,11 +1,6 @@
 "use client";
 
 import {
-  Card,
-  CardBody,
-  CardHeader,
-  Divider,
-  Spinner,
   Tab,
   Table,
   TableBody,
@@ -15,52 +10,13 @@ import {
   TableRow,
   Tabs,
 } from "@heroui/react";
-import { useEffect } from "react";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
-import { subtitle, title } from "@/styles/primitives";
-import { getSampleNewsletter } from "../../api/actions";
+import { title } from "@/styles/primitives";
+import Example from "./example";
 
-interface NewsletterDetailProps {}
-
-const NewsletterDetail: React.FC<NewsletterDetailProps> = () => {
-  const {
-    name,
-    description,
-    topics,
-    sources,
-    send_frequency,
-    exampleId,
-    exampleTitle,
-    setExampleTitle,
-    exampleContent,
-    setExampleContent,
-  } = useNewsletterFormStore();
-
-  useEffect(() => {
-    if (!exampleId) return;
-    let isCancelled = false;
-
-    async function pollExample() {
-      if (!exampleId) return;
-      const data = await getSampleNewsletter(exampleId);
-      if (!data) return;
-
-      if (data?.status === "pending") {
-        if (!isCancelled) {
-          setTimeout(pollExample, 3000);
-        }
-      } else if (!isCancelled && data.content) {
-        setExampleTitle(data.title);
-        setExampleContent(data.content);
-      }
-    }
-
-    pollExample();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [exampleId, setExampleTitle, setExampleContent]);
+const NewsletterDetail = () => {
+  const { name, description, topics, sources, send_frequency } =
+    useNewsletterFormStore();
 
   return (
     <div className="container mt-4 flex h-full max-w-7xl flex-col">
@@ -106,19 +62,7 @@ const NewsletterDetail: React.FC<NewsletterDetailProps> = () => {
             Example Newsletter
           </h1>
           <div className="mt-4 flex h-full justify-center">
-            {exampleTitle ? (
-              <Card classNames={{ base: "w-full" }}>
-                <CardHeader>
-                  <h2 className={subtitle()}>{exampleTitle}</h2>
-                </CardHeader>
-                <Divider />
-                <CardBody className="max-h-[400px] overflow-y-auto">
-                  <div className="whitespace-pre-wrap">{exampleContent}</div>
-                </CardBody>
-              </Card>
-            ) : (
-              <Spinner color="primary" label="Generating news sample..." />
-            )}
+            <Example />
           </div>
         </Tab>
       </Tabs>

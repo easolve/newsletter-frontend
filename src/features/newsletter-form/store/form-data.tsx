@@ -2,13 +2,8 @@
 
 import { create } from "zustand";
 
-export interface NewsletterForm
-  extends Omit<Newsletter.Base, "send_frequency"> {
-  send_frequency: string;
+interface NewsletterForm extends Newsletter.Base {
   format: string[];
-  exampleId: string | null;
-  exampleTitle: string | null;
-  exampleContent: string | null;
 }
 
 interface NewsletterFormActions {
@@ -18,11 +13,9 @@ interface NewsletterFormActions {
   setTopics: (topics: string[]) => void;
   setSources: (sources: string[]) => void;
   setFormat: (format: string[]) => void;
-  setExampleId: (exampleId: string | null) => void;
-  setExampleTitle: (exampleTitle: string | null) => void;
-  setExampleContent: (exampleContent: string | null) => void;
   setSendTime: (send_time: string) => void;
   setLanguage: (language: NewsletterForm["language"]) => void;
+  getData: () => Newsletter.Base;
 }
 
 type NewsletterFormStore = NewsletterForm & NewsletterFormActions;
@@ -47,15 +40,6 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
     format: [],
     setFormat: (format) => set({ format }),
 
-    exampleId: null,
-    setExampleId: (exampleId) => set({ exampleId }),
-
-    exampleTitle: null,
-    setExampleTitle: (exampleTitle) => set({ exampleTitle }),
-
-    exampleContent: null,
-    setExampleContent: (exampleContent) => set({ exampleContent }),
-
     send_time: "",
     setSendTime: (send_time) => set({ send_time }),
 
@@ -64,5 +48,32 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
 
     is_active: true,
     custom_prompt: "",
+
+    getData: () => {
+      const {
+        name,
+        description,
+        send_frequency,
+        topics,
+        sources,
+        format,
+        send_time,
+        language,
+        is_active,
+        custom_prompt,
+      } = get();
+      return {
+        name,
+        description,
+        send_frequency,
+        topics,
+        sources,
+        format,
+        send_time,
+        language,
+        is_active,
+        custom_prompt,
+      };
+    },
   }),
 );
