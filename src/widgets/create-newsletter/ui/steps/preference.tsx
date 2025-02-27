@@ -8,31 +8,22 @@ import {
   useNewsletterFormStore,
 } from "@/features/newsletter-form";
 
-interface NewsletterPreferenceProps {}
-
-interface NewsletterPreference {
-  key: string;
-  label: string;
-}
-
-const NewsletterPreference: React.FC<NewsletterPreferenceProps> = () => {
+const NewsletterPreference = () => {
   const { name, setName, description, setDescription } =
     useNewsletterFormStore();
 
   return (
     <div className="flex max-w-7xl flex-grow flex-col gap-4">
       <Input
-        className="max-w-xs"
         label="Name"
-        placeholder="Name"
+        placeholder="Enter name"
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <Input
-        className="max-w-xs"
         label="Description"
-        placeholder="Description"
+        placeholder="Enter description"
         type="text"
         value={description}
         onChange={(e) => setDescription(e.target.value)}

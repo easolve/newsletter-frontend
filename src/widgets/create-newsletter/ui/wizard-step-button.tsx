@@ -47,7 +47,7 @@ const WizardStepButton = () => {
   }, []);
 
   return (
-    <div className="flex w-full items-center justify-between">
+    <>
       {step > 0 ? <Button onPress={goPrev}>Prev</Button> : <div />}
       <Button
         onPress={step === STEPS.length - 1 ? save : goNext}
@@ -58,7 +58,7 @@ const WizardStepButton = () => {
       >
         {NextButtonLabel}
       </Button>
-    </div>
+    </>
   );
 };
 

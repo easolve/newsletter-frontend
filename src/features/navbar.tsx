@@ -65,9 +65,9 @@ const NavBar: FC<NavbarProps> = ({ email }) => {
 
   return (
     <NextUINavBar
-      className={clsx({
-        "z-[100001]": isMenuOpen,
-      })}
+      classNames={{
+        wrapper: "px-4 sm:px-6",
+      }}
       maxWidth="xl"
       position="sticky"
       isMenuOpen={isMenuOpen}
