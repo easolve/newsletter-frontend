@@ -13,3 +13,4 @@ export { UsersIcon } from "./users";
 export { ArrowClockwiseIcon } from "./arrow-clockwise";
 export { LanguageIcon } from "./language";
 export { ClockIcon } from "./clock";
+export { ArrowRightIcon } from "./arrow-right";
