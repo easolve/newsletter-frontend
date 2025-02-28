@@ -17,6 +17,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import Profile from "@/features/profile";
 import { ThemeSwitch } from "@/features/theme-switch";
+import { NAME } from "@/shared/config";
 import { clsx } from "@/utils/clsx";
 
 interface MenuItems {
@@ -80,7 +81,7 @@ const NavBar: FC<NavbarProps> = ({ email }) => {
             className="flex items-center justify-start gap-2 transition-opacity tap-highlight-transparent active:opacity-50"
             href="/"
           >
-            <p className="text-3xl font-semibold text-inherit">Easolve</p>
+            <p className="text-3xl font-bold text-inherit">{NAME}</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden items-center justify-start gap-6 lg:flex">
