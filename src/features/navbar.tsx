@@ -81,7 +81,9 @@ const NavBar: FC<NavbarProps> = ({ email }) => {
             className="flex items-center justify-start gap-2 transition-opacity tap-highlight-transparent active:opacity-50"
             href="/"
           >
-            <p className="text-3xl font-bold text-inherit">{NAME}</p>
+            <p className="text-3xl font-extrabold italic text-inherit">
+              {NAME}
+            </p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden items-center justify-start gap-6 lg:flex">
