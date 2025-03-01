@@ -1,3 +1,5 @@
+"use server";
+
 import { callAPI } from "@/shared/api";
 
 export async function saveNewsletter(data: Newsletter.Base): Promise<string> {
