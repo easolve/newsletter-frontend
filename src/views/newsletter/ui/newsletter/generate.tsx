@@ -11,25 +11,69 @@ import {
   Tooltip,
   useDisclosure,
 } from "@heroui/react";
-import { useEffect, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
+import {
+  createNewsletterTask,
+  getGeneratedArchive,
+  saveArchive,
+  sendArchive,
+} from "@/shared/ui/drawer/api";
 
-const Generate = () => {
+interface GenerateProps {
+  infoId: number;
+}
+
+const Generate = ({ infoId }: GenerateProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [historyId, setHistoryId] = useState(0);
 
-  const handleGenerate = async () => {
+  const handleGenerate = useCallback(async () => {
     setIsLoading(true);
-    // Call API to generate newsletter
-    setIsLoading(false);
-  };
+    try {
+      const ret = await createNewsletterTask({
+        topics: ["technology", "business", "entertainment"],
+        sources: ["techcrunch", "wired", "cnn"],
+      });
+
+      const taskID = ret.task_id;
+      let data = null;
+      let retryCount = 0;
+      const maxRetries = 30;
+      const pollingInterval = 3000;
+
+      // Poll until we get the generated content or hit max retries
+      async function pollExample() {
+        const data = await getGeneratedArchive(taskID);
+        if (!data) return;
+
+        if (data?.status === "pending") {
+          setTimeout(pollExample, 3000);
+        } else if (data.content) {
+          setTitle(data.title);
+          setContent(data.content);
+          setHistoryId(data.history_id);
+        }
+      }
+      pollExample();
+
+      if (!data && retryCount >= maxRetries) {
+        console.error("Generation timed out after maximum retries");
+      }
+    } catch (error) {
+      console.error("Failed to generate newsletter:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
       handleGenerate();
     }
-  }, [isOpen]);
+  }, [isOpen, handleGenerate]);
 
   return (
     <>
@@ -76,7 +120,14 @@ const Generate = () => {
                       </svg>
                     </Button>
                   </Tooltip>
-                  <Button variant="flat" size="sm" isDisabled={isLoading}>
+                  <Button
+                    variant="flat"
+                    size="sm"
+                    isDisabled={isLoading}
+                    onPress={() => {
+                      handleGenerate();
+                    }}
+                  >
                     Regenerate
                   </Button>
                 </div>
@@ -86,10 +137,37 @@ const Generate = () => {
                     variant="flat"
                     size="sm"
                     isDisabled={isLoading}
+                    onPress={async () => {
+                      if (!content || !title) {
+                        alert("Please generate the newsletter first");
+                      }
+                      const ret = await saveArchive(infoId, {
+                        status: "STANDBY",
+                        title,
+                        content,
+                      });
+                      setHistoryId(ret.history_id);
+                    }}
                   >
                     Save
                   </Button>
-                  <Button color="primary" size="sm" isDisabled={isLoading}>
+                  <Button
+                    color="primary"
+                    size="sm"
+                    isDisabled={isLoading}
+                    onPress={async () => {
+                      if (!content || !title) {
+                        alert("Please generate the newsletter first");
+                      }
+                      const ret = await saveArchive(infoId, {
+                        status: "STANDBY",
+                        title,
+                        content,
+                      });
+                      setHistoryId(ret.history_id);
+                      sendArchive({ history_id: historyId, info_id: infoId });
+                    }}
+                  >
                     Send
                   </Button>
                 </div>

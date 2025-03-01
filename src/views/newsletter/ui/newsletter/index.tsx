@@ -44,7 +44,7 @@ const Newsletter = ({ newsletter }: Props) => {
         </div>
       );
     }
-    return <Generate />;
+    return <Generate infoId={1} />;
   }, [isEditing]);
 
   return (

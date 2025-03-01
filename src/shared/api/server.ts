@@ -11,24 +11,11 @@ const server = axios.create({
   withCredentials: true,
 });
 
-export const get = async (url: string) => {
+server.interceptors.request.use(async (config) => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("access_token")?.value;
+  config.headers.Authorization = `Bearer ${accessToken}`;
+  return config;
+});
 
-  return server.get(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-};
-
-export const post = async <T>(url: string, data: T) => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("access_token")?.value;
-
-  return server.post(url, data, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-};
+export default server;
