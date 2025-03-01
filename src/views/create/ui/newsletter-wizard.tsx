@@ -3,12 +3,12 @@
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
-import { saveNewsletter } from "@/views/create/api/save";
 import {
   CreateWizardBody,
   CreateWizardButton,
   CreateWizardHeader,
 } from "@/widgets/create-newsletter";
+import { saveNewsletter } from "../api/save";
 
 const NewsletterWizard = () => {
   const router = useRouter();
