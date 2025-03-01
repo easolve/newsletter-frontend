@@ -12,47 +12,45 @@ import {
 } from "@heroui/react";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
 import { title } from "@/styles/primitives";
+import { capitalize } from "@/utils/capitalize";
+import { TABLE_FIELDS } from "@/widgets/create-newsletter/config";
 import Example from "./example";
 
 const NewsletterDetail = () => {
-  const { name, description, topics, sources, send_frequency } =
-    useNewsletterFormStore();
+  const formData = useNewsletterFormStore();
+  const details = {
+    ...formData,
+    send_time: formData.send_time.slice(0, 5),
+    topics: formData.topics.join(", "),
+    sources: formData.sources.join(", "),
+  };
 
   return (
     <div className="container mt-4 flex h-full max-w-7xl flex-col">
       <Tabs aria-label="Newsletter Detail">
         <Tab key="Newsletter-detail" title="Detail">
           <h1 className={title({ size: "xs", fullWidth: true })}>
-            News Detail
+            Newsletter Detail
           </h1>
 
           <div className="mt-4 flex justify-center">
-            <Table aria-label="News detail Table" isStriped>
+            <Table aria-label="News detail Table" removeWrapper>
               <TableHeader>
-                <TableColumn className="w-1/4 text-lg">Item</TableColumn>
-                <TableColumn className="text-lg">Detail</TableColumn>
+                <TableColumn className="w-1/4 text-small">FIELD</TableColumn>
+                <TableColumn className="text-small">DETAIL</TableColumn>
               </TableHeader>
               <TableBody>
-                <TableRow key="name">
-                  <TableCell>Newsletter Name</TableCell>
-                  <TableCell>{name}</TableCell>
-                </TableRow>
-                <TableRow key="description">
-                  <TableCell>Description</TableCell>
-                  <TableCell>{description}</TableCell>
-                </TableRow>
-                <TableRow key="topics">
-                  <TableCell>Topics</TableCell>
-                  <TableCell>{topics.join(", ")}</TableCell>
-                </TableRow>
-                <TableRow key="sources">
-                  <TableCell>Sources</TableCell>
-                  <TableCell>{sources.join(", ")}</TableCell>
-                </TableRow>
-                <TableRow key="frequency">
-                  <TableCell>Frequency</TableCell>
-                  <TableCell>{send_frequency}</TableCell>
-                </TableRow>
+                {TABLE_FIELDS.map((key) => (
+                  <TableRow key={key}>
+                    <TableCell>
+                      {key
+                        .split("_")
+                        .map((s) => capitalize(s))
+                        .join(" ")}
+                    </TableCell>
+                    <TableCell>{details[key]}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </div>
