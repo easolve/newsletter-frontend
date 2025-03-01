@@ -33,7 +33,7 @@ const NewsletterPage = async ({ params }: Props) => {
 
   return (
     <NewsletterProvider id={info_id}>
-      <article className="flex flex-col gap-5">
+      <article className="flex w-full flex-col gap-5">
         <Header />
         <section>
           <div className="flex justify-between">
