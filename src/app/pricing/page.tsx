@@ -12,14 +12,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { title } from "@/styles/primitives";
 
-// 카드 컴포넌트를 모션 컴포넌트로 확장
+// Extend Card component with motion
 const MotionCard = motion(Card);
 
 export default function PricingPage() {
-  // 각 카드의 호버 상태 관리
+  // Manage hover state for each card
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  // 카드 애니메이션 변형 설정
+  // Card animation variants
   const cardVariants = {
     initial: { y: 20, opacity: 0 },
     animate: (i: number) => ({
@@ -61,13 +61,13 @@ export default function PricingPage() {
             Pricing
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-lg text-foreground-500">
-            여러분의 필요에 맞는 다양한 요금제를 제공합니다. Generletter로 더
-            많은 독자와 소통하세요.
+            We offer a variety of plans to meet your needs. Connect with more
+            readers using Generletter.
           </p>
         </motion.div>
 
         <div className="mt-8 grid w-full grid-cols-1 justify-items-center gap-4 md:grid-cols-3 md:gap-6">
-          {/* 프리 요금제 */}
+          {/* Free Plan */}
           <MotionCard
             className={`w-full border-2 transition-colors duration-300 ${
               hoveredCard === 0 ? "border-default-300" : "border-transparent"
@@ -81,10 +81,17 @@ export default function PricingPage() {
             onMouseLeave={() => setHoveredCard(null)}
           >
             <CardHeader className="flex flex-col gap-2 pb-6">
-              <h2 className="text-2xl font-bold">프리 플랜</h2>
-              <p className="text-default-500">개인 사용자를 위한 기본 요금제</p>
+              <div className="w-fit rounded-full bg-transparent px-3 py-1 text-xs font-medium text-transparent">
+                Placeholder
+              </div>
+              <h2 className="text-2xl font-bold">Free Plan</h2>
+              <p className="text-default-500">
+                Basic plan for individual users
+              </p>
               <div className="mt-3 flex items-baseline">
-                <span className="text-4xl font-bold">무료</span>
+                <span className="text-4xl font-bold text-primary-500">
+                  Free
+                </span>
               </div>
             </CardHeader>
             <Divider />
@@ -105,7 +112,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">최대 100명의 구독자</span>
+                  <span className="ml-2">Up to 100 subscribers</span>
                 </li>
                 <li className="flex items-center">
                   <svg
@@ -122,7 +129,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">기본 분석 도구</span>
+                  <span className="ml-2">Basic analytics tools</span>
                 </li>
                 <li className="flex items-center">
                   <svg
@@ -139,7 +146,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">이메일 템플릿</span>
+                  <span className="ml-2">Email templates</span>
                 </li>
                 <li className="flex items-center text-default-400">
                   <svg
@@ -156,7 +163,7 @@ export default function PricingPage() {
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
-                  <span className="ml-2">고급 분석</span>
+                  <span className="ml-2">Advanced analytics</span>
                 </li>
               </ul>
             </CardBody>
@@ -166,12 +173,12 @@ export default function PricingPage() {
                 color="primary"
                 variant="flat"
               >
-                시작하기
+                Get Started
               </Button>
             </CardFooter>
           </MotionCard>
 
-          {/* 프로 요금제 */}
+          {/* Pro Plan */}
           <MotionCard
             className="w-full border-2 border-primary"
             variants={cardVariants}
@@ -184,15 +191,15 @@ export default function PricingPage() {
           >
             <CardHeader className="flex flex-col gap-2 pb-6">
               <div className="w-fit rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary">
-                인기
+                Popular
               </div>
-              <h2 className="text-2xl font-bold">프로 플랜</h2>
-              <p className="text-default-500">
-                성장하는 비즈니스를 위한 요금제
-              </p>
+              <h2 className="text-2xl font-bold">Pro Plan</h2>
+              <p className="text-default-500">Plan for growing businesses</p>
               <div className="mt-3 flex items-baseline">
-                <span className="text-4xl font-bold">₩19,900</span>
-                <span className="ml-1 text-default-500">/월</span>
+                <span className="text-4xl font-bold text-primary-500">
+                  $19.90
+                </span>
+                <span className="ml-1 text-default-500">/month</span>
               </div>
             </CardHeader>
             <Divider />
@@ -213,7 +220,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">무제한 구독자</span>
+                  <span className="ml-2">Unlimited subscribers</span>
                 </li>
                 <li className="flex items-center">
                   <svg
@@ -230,7 +237,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">고급 분석 도구</span>
+                  <span className="ml-2">Advanced analytics tools</span>
                 </li>
                 <li className="flex items-center">
                   <svg
@@ -247,7 +254,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">커스텀 템플릿</span>
+                  <span className="ml-2">Custom templates</span>
                 </li>
                 <li className="flex items-center">
                   <svg
@@ -264,7 +271,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">우선 지원</span>
+                  <span className="ml-2">Priority support</span>
                 </li>
               </ul>
             </CardBody>
@@ -273,12 +280,12 @@ export default function PricingPage() {
                 className="w-full transition-all duration-200 hover:scale-[1.03]"
                 color="primary"
               >
-                지금 구독하기
+                Subscribe Now
               </Button>
             </CardFooter>
           </MotionCard>
 
-          {/* 엔터프라이즈 요금제 */}
+          {/* Enterprise Plan */}
           <MotionCard
             className={`w-full border-2 transition-colors duration-300 ${
               hoveredCard === 2 ? "border-default-300" : "border-transparent"
@@ -292,12 +299,17 @@ export default function PricingPage() {
             onMouseLeave={() => setHoveredCard(null)}
           >
             <CardHeader className="flex flex-col gap-2 pb-6">
-              <h2 className="text-2xl font-bold">엔터프라이즈</h2>
+              <div className="w-fit rounded-full bg-transparent px-3 py-1 text-xs font-medium text-transparent">
+                Placeholder
+              </div>
+              <h2 className="text-2xl font-bold">Enterprise</h2>
               <p className="text-default-500">
-                대규모 기업 및 기관을 위한 요금제
+                Plan for large companies and organizations
               </p>
               <div className="mt-3 flex items-baseline">
-                <span className="text-4xl font-bold">문의</span>
+                <span className="text-4xl font-bold text-primary-500">
+                  Contact Us
+                </span>
               </div>
             </CardHeader>
             <Divider />
@@ -318,7 +330,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">모든 프로 기능 포함</span>
+                  <span className="ml-2">All Pro features included</span>
                 </li>
                 <li className="flex items-center">
                   <svg
@@ -335,7 +347,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">전담 계정 관리자</span>
+                  <span className="ml-2">Dedicated account manager</span>
                 </li>
                 <li className="flex items-center">
                   <svg
@@ -352,7 +364,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">SSO 통합</span>
+                  <span className="ml-2">SSO integration</span>
                 </li>
                 <li className="flex items-center">
                   <svg
@@ -369,7 +381,7 @@ export default function PricingPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2">맞춤형 솔루션</span>
+                  <span className="ml-2">Custom solutions</span>
                 </li>
               </ul>
             </CardBody>
@@ -379,7 +391,7 @@ export default function PricingPage() {
                 color="primary"
                 variant="bordered"
               >
-                문의하기
+                Contact Us
               </Button>
             </CardFooter>
           </MotionCard>
@@ -391,16 +403,18 @@ export default function PricingPage() {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="mt-12 max-w-3xl text-center"
         >
-          <h2 className="mb-4 text-xl font-semibold">자주 묻는 질문</h2>
+          <h2 className="mb-4 text-xl font-semibold">
+            Frequently Asked Questions
+          </h2>
           <p className="mb-6 text-default-500">
-            더 궁금한 점이 있으시면 언제든지{" "}
+            If you have more questions, please feel free to contact our{" "}
             <a
               href="#"
               className="text-primary underline transition-colors hover:text-primary-600"
             >
-              고객 지원팀
+              customer support team
             </a>
-            에 문의해 주세요.
+            .
           </p>
         </motion.div>
       </motion.div>
