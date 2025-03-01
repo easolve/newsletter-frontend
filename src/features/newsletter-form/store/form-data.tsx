@@ -2,9 +2,7 @@
 
 import { create } from "zustand";
 
-interface NewsletterForm extends Newsletter.Base {
-  format: string[];
-}
+type NewsletterForm = Newsletter.Base;
 
 interface NewsletterFormActions {
   setName: (name: string) => void;
@@ -12,9 +10,9 @@ interface NewsletterFormActions {
   setFrequency: (frequency: string) => void;
   setTopics: (topics: string[]) => void;
   setSources: (sources: string[]) => void;
-  setFormat: (format: string[]) => void;
   setSendTime: (send_time: string) => void;
   setLanguage: (language: NewsletterForm["language"]) => void;
+  setCustomPrompt: (custom_prompt: string) => void;
   getData: () => Newsletter.Base;
 }
 
@@ -37,9 +35,6 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
     sources: [],
     setSources: (sources) => set({ sources }),
 
-    format: [],
-    setFormat: (format) => set({ format }),
-
     send_time: "",
     setSendTime: (send_time) => set({ send_time }),
 
@@ -47,7 +42,9 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
     setLanguage: (language) => set({ language }),
 
     is_active: true,
+
     custom_prompt: "",
+    setCustomPrompt: (custom_prompt) => set({ custom_prompt }),
 
     getData: () => {
       const {
@@ -56,7 +53,6 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
         send_frequency,
         topics,
         sources,
-        format,
         send_time,
         language,
         is_active,
@@ -68,7 +64,6 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
         send_frequency,
         topics,
         sources,
-        format,
         send_time,
         language,
         is_active,
