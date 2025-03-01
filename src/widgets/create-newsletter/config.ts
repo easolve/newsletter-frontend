@@ -55,3 +55,14 @@ export const STEPS: NewsletterStep[] = [
     nextButtonLabelGetter: (data) => "Save",
   },
 ];
+
+export const TABLE_FIELDS: (keyof Newsletter.Base)[] = [
+  "name",
+  "description",
+  "language",
+  "send_frequency",
+  "send_time",
+  "topics",
+  "sources",
+  "custom_prompt",
+];
