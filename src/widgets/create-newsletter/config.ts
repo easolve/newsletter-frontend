@@ -44,7 +44,7 @@ export const STEPS: NewsletterStep[] = [
   },
   {
     label: "Format",
-    description: "Select the format / style of the newsletter.",
+    description: "Enter the style and tone of your newsletter.",
     StepComponent: NewsletterFormat,
     nextButtonLabelGetter: (state) => (state.custom_prompt ? "Next" : "Skip"),
   },
