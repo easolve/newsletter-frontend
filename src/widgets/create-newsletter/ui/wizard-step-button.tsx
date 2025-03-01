@@ -1,16 +1,17 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
-import { saveNewsletter } from "../api/actions";
 import { STEPS } from "../config";
 import { useStepStore } from "../store/step";
 
-const WizardStepButton = () => {
-  const router = useRouter();
+interface Props {
+  onSave: () => Promise<boolean>;
+}
+
+const WizardStepButton = ({ onSave }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const { step, goPrev, goNext } = useStepStore();
   const isFilled = useNewsletterFormStore(
@@ -36,14 +37,10 @@ const WizardStepButton = () => {
 
   const save = useCallback(async () => {
     setIsLoading(true);
-    const data = useNewsletterFormStore.getState().getData();
-    const errorMessage = await saveNewsletter(data);
-    if (!errorMessage) {
-      router.push("/newsletters");
-      return;
+    const isSuccess = await onSave();
+    if (!isSuccess) {
+      setIsLoading(false);
     }
-    alert(errorMessage);
-    setIsLoading(false);
   }, []);
 
   return (
