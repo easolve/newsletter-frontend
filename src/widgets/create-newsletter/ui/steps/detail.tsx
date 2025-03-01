@@ -10,16 +10,18 @@ import {
   TableRow,
   Tabs,
 } from "@heroui/react";
+import { type TLanguageCode, languages } from "countries-list";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
-import { title } from "@/styles/primitives";
 import { capitalize } from "@/utils/capitalize";
-import { TABLE_FIELDS } from "@/widgets/create-newsletter/config";
+import { TABLE_FIELDS } from "../../config";
 import Example from "./example";
+import ExampleGenerator from "./example-generator";
 
 const NewsletterDetail = () => {
-  const formData = useNewsletterFormStore();
+  const formData = useNewsletterFormStore.getState();
   const details = {
     ...formData,
+    language: languages[formData.language as TLanguageCode].name,
     send_time: formData.send_time.slice(0, 5),
     topics: formData.topics.join(", "),
     sources: formData.sources.join(", "),
@@ -27,11 +29,10 @@ const NewsletterDetail = () => {
 
   return (
     <div className="container mt-4 flex h-full max-w-7xl flex-col">
+      <ExampleGenerator />
       <Tabs aria-label="Newsletter Detail">
         <Tab key="Newsletter-detail" title="Detail">
-          <h1 className={title({ size: "xs", fullWidth: true })}>
-            Newsletter Detail
-          </h1>
+          <h2 className="mt-4 text-2xl font-semibold">Newsletter Detail</h2>
 
           <div className="mt-4 flex justify-center">
             <Table aria-label="News detail Table" removeWrapper>
@@ -56,12 +57,7 @@ const NewsletterDetail = () => {
           </div>
         </Tab>
         <Tab key="Newsletter-example" title="Example" className="h-full">
-          <h1 className={title({ size: "xs", fullWidth: true })}>
-            Example Newsletter
-          </h1>
-          <div className="mt-4 flex h-full justify-center">
-            <Example />
-          </div>
+          <Example />
         </Tab>
       </Tabs>
     </div>
