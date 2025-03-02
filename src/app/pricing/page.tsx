@@ -61,8 +61,11 @@ export default function PricingPage() {
             Pricing
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-lg text-foreground-500">
-            We offer a variety of plans to meet your needs. Connect with more
-            readers using Generletter.
+            We offer a variety of plans to meet your needs.
+          </p>
+          <p className="mx-auto max-w-xl text-lg text-foreground-500">
+            Connect with more readers using
+            <strong className="ml-1">GenerLetter</strong>.
           </p>
         </motion.div>
 
