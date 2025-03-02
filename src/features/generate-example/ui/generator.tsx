@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { shallow } from "zustand/vanilla/shallow";
-import { useNewsletterFormStore } from "@/features/newsletter-form";
 import { createSampleNewsletter, getSampleNewsletter } from "../api/actions";
 import { useExampleStore } from "../store/example";
 
-const ExampleGenerator = () => {
+interface Props {
+  formData: Newsletter.ExampleData;
+}
+
+const ExampleGenerator = ({ formData }: Props) => {
   const { language, topics, sources, custom_prompt, save, setId, setExample } =
     useExampleStore.getState();
   const id = useExampleStore((state) => state.id);
-  const formData = useNewsletterFormStore.getState();
 
   useEffect(() => {
     if (
