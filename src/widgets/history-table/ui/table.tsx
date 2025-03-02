@@ -19,8 +19,9 @@ import {
 } from "@heroui/react";
 import React from "react";
 import { historyContext } from "@/entities/newsletter";
-import { ChevronDownIcon, PlusIcon, SearchIcon } from "@/shared/ui";
+import { ChevronDownIcon, SearchIcon } from "@/shared/ui";
 import { COLUMNS, STATUS_OPTION } from "../config";
+import Generate from "./generate";
 import { renderCell } from "./render-cell";
 
 const HistoryTable = () => {
@@ -134,9 +135,7 @@ const HistoryTable = () => {
               </DropdownMenu>
             </Dropdown>
 
-            <Button color="primary" endContent={<PlusIcon />}>
-              Generate
-            </Button>
+            <Generate />
           </div>
         </div>
 

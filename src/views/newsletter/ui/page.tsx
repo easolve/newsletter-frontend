@@ -4,9 +4,9 @@ import {
   NewsletterProvider,
   fetchHistory,
 } from "@/entities/newsletter";
-import HistoryTable from "@/features/history-table";
 import SubscriberTable from "@/features/subscriber-table";
 import { NewsletterStatus } from "@/shared/ui";
+import HistoryTable from "@/widgets/history-table";
 import { fetchNewsletter, fetchSubscribers } from "../api";
 import Header from "./header";
 import ItemLayout from "./item-layout";
