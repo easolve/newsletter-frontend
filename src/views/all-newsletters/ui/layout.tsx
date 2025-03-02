@@ -9,7 +9,7 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex w-full flex-col gap-5">
       <Breadcrumbs>
         <BreadcrumbItem
           startContent={<EnvelopeIcon height="1rem" width="1rem" />}
