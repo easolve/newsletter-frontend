@@ -11,11 +11,11 @@ import {
   Tabs,
 } from "@heroui/react";
 import { type TLanguageCode, languages } from "countries-list";
+import { ExampleGenerator } from "@/features/generate-example";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
 import { capitalize } from "@/utils/capitalize";
 import { TABLE_FIELDS } from "../../config";
 import Example from "./example";
-import ExampleGenerator from "./example-generator";
 
 const NewsletterDetail = () => {
   const formData = useNewsletterFormStore.getState();
