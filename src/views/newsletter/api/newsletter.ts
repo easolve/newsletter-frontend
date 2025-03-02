@@ -13,6 +13,7 @@ export const fetchNewsletter = async (
         send_frequency: "daily",
         is_active: false,
         language: "en",
+        topics: ["tech", "news"],
       };
     }
   }
