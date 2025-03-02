@@ -28,7 +28,7 @@ interface MenuItems {
 
 const menuItems: MenuItems[] = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "Pricing", href: "/pricing" },
   { label: "Create", href: "/create-newsletter" },
   // { label: "Showcase", href: "/showcase", disabled: true },
   // { label: "Pricing", href: "/pricing", disabled: true },
