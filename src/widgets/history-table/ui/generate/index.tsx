@@ -6,7 +6,10 @@ import {
   DrawerHeader,
   useDisclosure,
 } from "@heroui/react";
+import { useNewsletterStore } from "@/entities/newsletter";
+import { ExampleGenerator } from "@/features/generate-example";
 import { PlusIcon } from "@/shared/ui";
+import Editor from "../generate/editor";
 
 const Icon = () => (
   <svg
@@ -26,6 +29,8 @@ const Icon = () => (
 
 const Generate = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const exampleData = useNewsletterStore.getState();
+
   return (
     <>
       <Button color="primary" endContent={<PlusIcon />} onPress={onOpen}>
@@ -35,7 +40,7 @@ const Generate = () => {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         classNames={{
-          base: "data-[placement=right]:sm:m-2 data-[placement=left]:sm:m-2  rounded-medium",
+          base: "data-[placement=right]:md:m-2 data-[placement=left]:md:m-2 md:rounded-medium",
         }}
         placement="right"
         size="3xl"
@@ -45,7 +50,7 @@ const Generate = () => {
         <DrawerContent>
           {(onClose) => (
             <>
-              <DrawerHeader className="absolute inset-x-0 top-0 z-50 flex flex-row justify-between gap-2 border-b border-default-200/50 bg-content1/50 px-2 py-2 backdrop-blur-lg backdrop-saturate-150">
+              <DrawerHeader className="flex gap-2 border-b border-default-200/50 p-2">
                 <Button
                   isIconOnly
                   className="text-default-400"
@@ -55,8 +60,24 @@ const Generate = () => {
                 >
                   <Icon />
                 </Button>
+                <div className="flex w-full justify-between">
+                  <Button variant="flat" size="sm">
+                    Regenerate
+                  </Button>
+                  <span className="flex gap-2">
+                    <Button color="primary" variant="flat" size="sm">
+                      Send Now
+                    </Button>
+                    <Button color="primary" size="sm">
+                      Save
+                    </Button>
+                  </span>
+                </div>
               </DrawerHeader>
-              <DrawerBody></DrawerBody>
+              <DrawerBody className="p-4">
+                <ExampleGenerator formData={exampleData} />
+                <Editor />
+              </DrawerBody>
             </>
           )}
         </DrawerContent>

@@ -12,9 +12,12 @@ type State = Newsletter.ExampleData &
 
 interface Action {
   save: (metadata: Newsletter.ExampleData) => void;
+  regenerate: () => void;
 
   setId: (id: string | null) => void;
   setExample: (example: Example) => void;
+  setTitle: (title: string) => void;
+  setContent: (content: string) => void;
 }
 
 type Store = State & Action;
@@ -33,10 +36,13 @@ export const useExampleStore = create<Store>((set) => ({
     title: null,
     content: null,
   }),
+  regenerate: () => set({ id: null, title: null, content: null }),
 
   id: null,
   title: null,
   content: null,
   setId: (id) => set({ id }),
   setExample: ({ title, content }) => set({ title, content }),
+  setTitle: (title) => set({ title }),
+  setContent: (content) => set({ content }),
 }));
