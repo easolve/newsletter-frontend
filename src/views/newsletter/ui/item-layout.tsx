@@ -12,7 +12,7 @@ interface Props {
 }
 
 const wrapper = tv({
-  base: "p-1",
+  base: "p-1 shrink-0",
 });
 
 const ItemLayout = ({
