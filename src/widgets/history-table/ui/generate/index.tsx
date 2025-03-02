@@ -9,7 +9,8 @@ import {
 import { useNewsletterStore } from "@/entities/newsletter";
 import { ExampleGenerator } from "@/features/generate-example";
 import { PlusIcon } from "@/shared/ui";
-import Editor from "../generate/editor";
+import GenerateButtons from "./button";
+import Editor from "./editor";
 
 const Icon = () => (
   <svg
@@ -60,19 +61,7 @@ const Generate = () => {
                 >
                   <Icon />
                 </Button>
-                <div className="flex w-full justify-between">
-                  <Button variant="flat" size="sm">
-                    Regenerate
-                  </Button>
-                  <span className="flex gap-2">
-                    <Button color="primary" variant="flat" size="sm">
-                      Send Now
-                    </Button>
-                    <Button color="primary" size="sm">
-                      Save
-                    </Button>
-                  </span>
-                </div>
+                <GenerateButtons onClose={onClose} />
               </DrawerHeader>
               <DrawerBody className="p-4">
                 <ExampleGenerator formData={exampleData} />
