@@ -29,7 +29,7 @@ const NewsletterDetail = () => {
 
   return (
     <div className="container mt-4 flex h-full max-w-7xl flex-col">
-      <ExampleGenerator />
+      <ExampleGenerator formData={formData} />
       <Tabs aria-label="Newsletter Detail">
         <Tab key="Newsletter-detail" title="Detail">
           <h2 className="mt-4 text-2xl font-semibold">Newsletter Detail</h2>
