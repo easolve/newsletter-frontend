@@ -5,6 +5,12 @@ import { callAPI } from "@/shared/api";
 export const fetchHistory = async (
   id: Newsletter.Info["id"],
 ): Promise<null | Newsletter.History[]> => {
+  if (process.env.NODE_ENV === "development") {
+    if (id === "test") {
+      return [];
+    }
+  }
+
   return callAPI.serverSide
     .get(`/v1/news/history/${id}`)
     .then((res) => {
