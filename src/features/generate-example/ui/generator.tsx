@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { shallow } from "zustand/vanilla/shallow";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
-import { createSampleNewsletter, getSampleNewsletter } from "../../api/actions";
-import { useExampleStore } from "../../store/example";
+import { createSampleNewsletter, getSampleNewsletter } from "../api/actions";
+import { useExampleStore } from "../store/example";
 
 const ExampleGenerator = () => {
   const { language, topics, sources, custom_prompt, save, setId, setExample } =
@@ -43,8 +43,10 @@ const ExampleGenerator = () => {
     };
 
     const { content } = useExampleStore.getState();
-    if (id && !content && process.env.NODE_ENV !== "development") {
-      pollExample();
+    if (process.env.NODE_ENV === "production") {
+      if (id && !content) {
+        pollExample();
+      }
     }
 
     return () => {

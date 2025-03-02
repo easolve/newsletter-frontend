@@ -1,7 +1,7 @@
 "use client";
 
 import { Divider, Spinner } from "@heroui/react";
-import { useExampleStore } from "@/widgets/create-newsletter/store/example";
+import { useExampleStore } from "@/features/generate-example";
 
 const Example = () => {
   const title = useExampleStore((state) => state.title);
