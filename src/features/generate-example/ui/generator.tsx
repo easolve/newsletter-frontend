@@ -14,6 +14,7 @@ const ExampleGenerator = ({ formData }: Props) => {
 
   useEffect(() => {
     if (
+      !id ||
       !shallow(language, formData.language) ||
       !shallow(topics, formData.topics) ||
       !shallow(sources, formData.sources) ||
@@ -24,7 +25,7 @@ const ExampleGenerator = ({ formData }: Props) => {
         setId(id);
       });
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     let isCancelled = false;
@@ -46,7 +47,7 @@ const ExampleGenerator = ({ formData }: Props) => {
 
     const { content } = useExampleStore.getState();
     if (process.env.NODE_ENV === "production") {
-      if (id && !content) {
+      if (id && content === null) {
         pollExample();
       }
     }
