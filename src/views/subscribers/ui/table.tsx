@@ -15,7 +15,7 @@ import {
 } from "@heroui/react";
 import React from "react";
 import { SearchIcon } from "@/shared/ui/icons";
-import { SUBSCRIBER_COLUMNS } from "../config";
+import { SUBSCRIBER_COLUMNS } from "../config/table";
 import AddSubscriberModal from "./add-subscriber/modal";
 import { renderCell } from "./table-cell";
 

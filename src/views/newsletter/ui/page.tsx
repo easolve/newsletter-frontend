@@ -4,10 +4,9 @@ import {
   NewsletterProvider,
   fetchHistory,
 } from "@/entities/newsletter";
-import SubscriberTable from "@/features/subscriber-table";
 import { NewsletterStatus } from "@/shared/ui";
 import HistoryTable from "@/widgets/history-table";
-import { fetchNewsletter, fetchSubscribers } from "../api";
+import { fetchNewsletter } from "../api";
 import Header from "./header";
 import ItemLayout from "./item-layout";
 import ActionsDropdown from "./newsletter/actions-dropdown";
@@ -19,12 +18,12 @@ interface Props {
   params: Promise<{
     info_id: string;
   }>;
+  subscribers: React.ReactNode;
 }
 
-const NewsletterPage = async ({ params }: Props) => {
+const NewsletterPage = async ({ params, subscribers }: Props) => {
   const { info_id } = await params;
   const newsletter = await fetchNewsletter(info_id);
-  const subscribers = await fetchSubscribers(info_id);
   const history = await fetchHistory(info_id);
 
   if (!newsletter) {
@@ -64,9 +63,7 @@ const NewsletterPage = async ({ params }: Props) => {
             <HistoryTable />
           </HistoryProvider>
         </ItemLayout>
-        <ItemLayout headerTitle="Subscribers">
-          <SubscriberTable subscribers={subscribers} />
-        </ItemLayout>
+        <ItemLayout headerTitle="Subscribers">{subscribers}</ItemLayout>
       </article>
     </NewsletterProvider>
   );

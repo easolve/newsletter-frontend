@@ -12,8 +12,8 @@ import {
 } from "@heroui/react";
 import { useCallback, useState } from "react";
 import { useNewsletterStore } from "@/entities/newsletter";
-import { addSubscribers } from "@/features/subscriber-table/api/add-subscribers";
 import { PlusIcon } from "@/shared/ui/icons";
+import { addSubscribers } from "../../api/add";
 import { useAddSubscriberStore } from "../../store/add";
 import AddManually from "./add-manually";
 
