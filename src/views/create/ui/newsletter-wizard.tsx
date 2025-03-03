@@ -39,10 +39,10 @@ const NewsletterWizard = () => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex size-full justify-center self-center md:h-[90%]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+        className="flex h-[75%] min-h-[40rem] w-full shrink-0 justify-center self-center pb-4 sm:pb-7"
       >
         <Card
           className="h-full w-full max-w-2xl sm:p-2 xl:max-w-3xl"

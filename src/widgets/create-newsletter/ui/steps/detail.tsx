@@ -32,7 +32,7 @@ const NewsletterDetail = () => {
       <ExampleGenerator formData={formData} />
       <Tabs aria-label="Newsletter Detail">
         <Tab key="Newsletter-detail" title="Detail">
-          <h2 className="mt-4 text-2xl font-semibold">Newsletter Detail</h2>
+          <h3 className="mt-4 text-2xl font-semibold">Newsletter Detail</h3>
 
           <div className="mt-4 flex justify-center">
             <Table aria-label="News detail Table" removeWrapper>

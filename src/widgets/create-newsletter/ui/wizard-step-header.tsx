@@ -10,13 +10,13 @@ const WizardStepHeader = () => {
 
   return (
     <>
-      <h1
+      <h2
         className={title({
           size: "sm",
         })}
       >
         {label}
-      </h1>
+      </h2>
       <Progress
         aria-label="Progress bar"
         value={progressValue}
