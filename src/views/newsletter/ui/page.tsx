@@ -13,7 +13,7 @@ import Header from "./header";
 import ItemLayout from "./item-layout";
 import Preference from "./preference";
 import Prompt from "./prompt";
-import TopicChip from "./topic-chip";
+import Topics from "./topics";
 
 interface Props {
   params: Promise<{
@@ -44,11 +44,7 @@ const NewsletterPage = async ({ params, subscribers }: Props) => {
             <ActionsDropdown />
           </div>
           <p className="mt-1 text-2xl font-light">{newsletter.description}</p>
-          <div className="mt-2 flex gap-2">
-            {newsletter.topics.map((item) => (
-              <TopicChip key={item}>{item}</TopicChip>
-            ))}
-          </div>
+          <Topics topics={newsletter.topics} />
         </section>
         <section className="grid gap-5 lg:grid-cols-[auto,1fr]">
           <div className="flex flex-col gap-5">
