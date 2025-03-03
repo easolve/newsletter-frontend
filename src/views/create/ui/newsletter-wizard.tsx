@@ -2,26 +2,14 @@
 
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { useNewsletterFormStore } from "@/features/newsletter-form";
 import {
   CreateWizardBody,
   CreateWizardButton,
   CreateWizardHeader,
 } from "@/widgets/create-newsletter";
-import { saveNewsletter } from "../api/save";
 
 const NewsletterWizard = () => {
-  const router = useRouter();
-
   const handleSave = async () => {
-    const data = useNewsletterFormStore.getState().getData();
-    const errorMessage = await saveNewsletter(data);
-    if (!errorMessage) {
-      router.push("/newsletters");
-      return true;
-    }
-    alert(errorMessage);
     return false;
   };
 

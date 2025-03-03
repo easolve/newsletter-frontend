@@ -15,8 +15,8 @@ import {
 import React, { type ChangeEvent } from "react";
 import { SearchIcon } from "@/shared/ui/icons";
 import { COLUMNS, INITIAL_VISIBLE_COLUMNS } from "../config/table";
-import AddNewsletter from "./add-newsletter";
 import { renderCell } from "./render-cell";
+import AddNewsletter from "./table-top/add-newsletter";
 import ColumnsDropdown from "./table-top/columns-dropdown";
 
 interface Props {

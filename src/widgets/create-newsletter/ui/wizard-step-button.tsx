@@ -1,18 +1,18 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
 import { STEPS } from "../config";
 import { useStepStore } from "../store/step";
 
 interface Props {
-  onSave: () => Promise<boolean>;
+  onSave: () => void;
+  isLoading?: boolean;
 }
 
-const WizardStepButton = ({ onSave }: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
+const WizardStepButton = ({ onSave, isLoading }: Props) => {
   const { step, goPrev, goNext } = useStepStore();
   const isFilled = useNewsletterFormStore(
     useShallow((state) => ({
@@ -35,19 +35,11 @@ const WizardStepButton = ({ onSave }: Props) => {
     return labelGetter ? labelGetter(isFilled) : "Next";
   }, [step, isFilled.custom_prompt]);
 
-  const save = useCallback(async () => {
-    setIsLoading(true);
-    const isSuccess = await onSave();
-    if (!isSuccess) {
-      setIsLoading(false);
-    }
-  }, []);
-
   return (
     <>
       {step > 0 ? <Button onPress={goPrev}>Prev</Button> : <div />}
       <Button
-        onPress={step === STEPS.length - 1 ? save : goNext}
+        onPress={step === STEPS.length - 1 ? onSave : goNext}
         color="primary"
         variant="solid"
         isDisabled={!canProceed}

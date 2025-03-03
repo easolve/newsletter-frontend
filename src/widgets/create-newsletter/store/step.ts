@@ -7,6 +7,7 @@ interface State {
 interface Action {
   goPrev: () => void;
   goNext: () => void;
+  reset: () => void;
 }
 
 type Store = State & Action;
@@ -15,4 +16,5 @@ export const useStepStore = create<Store>((set) => ({
   step: 0,
   goPrev: () => set((state) => ({ step: state.step - 1 })),
   goNext: () => set((state) => ({ step: state.step + 1 })),
+  reset: () => set({ step: 0 }),
 }));

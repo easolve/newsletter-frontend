@@ -14,6 +14,7 @@ interface NewsletterFormActions {
   setLanguage: (language: NewsletterForm["language"]) => void;
   setCustomPrompt: (custom_prompt: string) => void;
   getData: () => Newsletter.Base;
+  reset: () => void;
 }
 
 type NewsletterFormStore = NewsletterForm & NewsletterFormActions;
@@ -70,5 +71,18 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
         custom_prompt,
       };
     },
+
+    reset: () =>
+      set({
+        name: "",
+        description: "",
+        language: null,
+        send_frequency: "",
+        send_time: "",
+        topics: [],
+        sources: [],
+        custom_prompt: "",
+        is_active: true,
+      }),
   }),
 );
