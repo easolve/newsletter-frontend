@@ -5,6 +5,7 @@ import {
   fetchHistory,
 } from "@/entities/newsletter";
 import { NewsletterStatus } from "@/shared/ui";
+import Sources from "@/views/newsletter/ui/sources";
 import HistoryTable from "@/widgets/history-table";
 import { fetchNewsletter } from "../api";
 import Header from "./header";
@@ -52,7 +53,9 @@ const NewsletterPage = async ({ params, subscribers }: Props) => {
         <section className="grid gap-5 lg:grid-cols-[auto,1fr]">
           <div className="flex flex-col gap-5">
             <Preference info={newsletter} />
-            <ItemLayout headerTitle="Sources"></ItemLayout>
+            <ItemLayout headerTitle="Sources">
+              <Sources sources={newsletter.sources} />
+            </ItemLayout>
           </div>
           <ItemLayout headerTitle="Prompt">
             <Prompt custom_prompt={newsletter.custom_prompt} />
