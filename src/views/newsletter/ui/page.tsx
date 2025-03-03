@@ -4,6 +4,7 @@ import {
   NewsletterProvider,
   fetchHistory,
 } from "@/entities/newsletter";
+import { NAME } from "@/shared/config";
 import { NewsletterStatus } from "@/shared/ui";
 import Sources from "@/views/newsletter/ui/sources";
 import HistoryTable from "@/widgets/history-table";
@@ -21,6 +22,15 @@ interface Props {
   }>;
   subscribers: React.ReactNode;
 }
+
+export const generateMetadata = async ({ params }: Props) => {
+  const { info_id } = await params;
+  const newsletter = await fetchNewsletter(info_id);
+
+  return {
+    title: `Dashboard - ${newsletter?.name} | ${NAME}`,
+  };
+};
 
 const NewsletterPage = async ({ params, subscribers }: Props) => {
   const { info_id } = await params;

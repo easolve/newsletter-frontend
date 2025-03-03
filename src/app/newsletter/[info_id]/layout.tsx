@@ -1,1 +1,1 @@
-export { default } from "@/views/newsletter";
+export { default, generateMetadata } from "@/views/newsletter";
