@@ -55,7 +55,7 @@ const NewsletterPage = async ({ params, subscribers }: Props) => {
             <ItemLayout headerTitle="Sources"></ItemLayout>
           </div>
           <ItemLayout headerTitle="Prompt">
-            <Prompt>{newsletter.custom_prompt}</Prompt>
+            <Prompt custom_prompt={newsletter.custom_prompt} />
           </ItemLayout>
         </section>
         <ItemLayout headerTitle="Archive">
