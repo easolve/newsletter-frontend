@@ -8,12 +8,12 @@ import { NewsletterStatus } from "@/shared/ui";
 import Sources from "@/views/newsletter/ui/sources";
 import HistoryTable from "@/widgets/history-table";
 import { fetchNewsletter } from "../api";
+import ActionsDropdown from "./actions-dropdown";
 import Header from "./header";
 import ItemLayout from "./item-layout";
-import ActionsDropdown from "./newsletter/actions-dropdown";
-import Preference from "./newsletter/preference";
-import Prompt from "./newsletter/prompt";
-import TopicChip from "./newsletter/topic-chip";
+import Preference from "./preference";
+import Prompt from "./prompt";
+import TopicChip from "./topic-chip";
 
 interface Props {
   params: Promise<{
