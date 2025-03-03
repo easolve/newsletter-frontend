@@ -88,54 +88,58 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
   return (
     <Tabs aria-label="Options" variant="underlined">
       <Tab key="sign-in" title="Sign In">
-        <div className="flex flex-col gap-3">
-          <Input
-            radius="sm"
-            label="Email"
-            placeholder="Enter your email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            radius="sm"
-            label="Password"
-            placeholder="Enter your password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <div className="flex h-64 flex-col justify-between">
+          <span className="flex flex-col gap-3">
+            <Input
+              radius="sm"
+              label="Email"
+              placeholder="Enter your email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              radius="sm"
+              label="Password"
+              placeholder="Enter your password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </span>
           <Button radius="sm" color="primary" size="md" onPress={handleSignIn}>
             Sign In
           </Button>
         </div>
       </Tab>
       <Tab key="sign-up" title="Sign Up">
-        <div className="flex flex-col gap-3">
-          <Input
-            radius="sm"
-            label="Email"
-            placeholder="Enter your email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            radius="sm"
-            label="Password"
-            placeholder="Enter your password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Input
-            radius="sm"
-            label="Confirm Password"
-            placeholder="Enter your password to confirm"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+        <div className="flex h-64 flex-col justify-between">
+          <span className="flex flex-col gap-3">
+            <Input
+              radius="sm"
+              label="Email"
+              placeholder="Enter your email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              radius="sm"
+              label="Password"
+              placeholder="Enter your password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Input
+              radius="sm"
+              label="Confirm Password"
+              placeholder="Enter your password to confirm"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </span>
           <Button radius="sm" color="primary" size="md" onPress={handleSignUp}>
             Sign Up
           </Button>
