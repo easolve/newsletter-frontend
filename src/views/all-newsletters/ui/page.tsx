@@ -1,6 +1,6 @@
-import NewsletterTable from "@/features/newsletter-table";
 import { fetchNewsletters } from "../api/newsletters";
 import Header from "./header";
+import NewsletterTable from "./table";
 
 export default async function ProfilePage() {
   const newsletters = await fetchNewsletters();

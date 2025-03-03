@@ -1,5 +1,13 @@
 import type { ChipProps } from "@heroui/react";
 
+type UID = keyof Newsletter.Info | "actions";
+
+interface Column {
+  name: string;
+  uid: UID;
+  sortable?: boolean;
+}
+
 export const COLUMNS: Column[] = [
   { name: "NEWSLETTER", uid: "name", sortable: true },
   { name: "STATUS", uid: "is_active", sortable: true },

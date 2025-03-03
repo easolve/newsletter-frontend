@@ -4,7 +4,7 @@ import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { PlusIcon } from "@/shared/ui/icons";
 
-const AddButton = () => {
+const AddNewsletter = () => {
   const router = useRouter();
 
   return (
@@ -18,4 +18,4 @@ const AddButton = () => {
   );
 };
 
-export default AddButton;
+export default AddNewsletter;

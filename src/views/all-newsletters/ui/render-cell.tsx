@@ -1,10 +1,10 @@
 import { Chip } from "@heroui/react";
 import { languages } from "countries-list";
 import React from "react";
-import { COLOR_MAP } from "@/features/newsletter-table/config";
 import { NewsletterStatus, SentStatusChip, UsersIcon } from "@/shared/ui";
 import { capitalize } from "@/utils/capitalize";
-import ActionsDropdown from "./cell/actions-dropdown";
+import { COLOR_MAP } from "../config/table";
+import ActionsDropdown from "./table-cell/actions-dropdown";
 
 const transformValue = (info: Newsletter.Info, key: keyof Newsletter.Info) => {
   const value = info[key];
