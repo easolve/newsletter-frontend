@@ -2,7 +2,6 @@ import { HeroUIProvider } from "@heroui/system";
 import NavBar from "@/features/navbar";
 import NextThemesProvider from "@/providers/next-themes-provider";
 import { DESCRIPTION, NAME, TITLE, URL } from "@/shared/config";
-import { fetchUserEmail } from "./actions";
 import "./globals.css";
 
 export const metadata = {
@@ -36,13 +35,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const email = await fetchUserEmail();
   return (
     <html lang="en">
       <body className={`antialiased`}>
         <HeroUIProvider className="grid h-screen w-screen grid-rows-[auto,1fr]">
           <NextThemesProvider>
-            <NavBar email={email} />
+            <NavBar />
             <main className="flex min-h-full w-full max-w-7xl justify-self-center overflow-y-auto overflow-x-hidden p-4 !pt-2 scrollbar-hide sm:p-6">
               {children}
             </main>
