@@ -47,7 +47,7 @@ const Preference = ({ info }: Props) => {
       {keys.map((key) => (
         <Card key={key} shadow="sm" className="w-fit p-1 max-lg:grow">
           <CardBody className="flex flex-row items-center gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-small bg-default-100 text-foreground-500 transition-background">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-small bg-default-100 text-foreground-500 transition-background max-sm:hidden">
               {metaData[key].icon}
             </div>
             <div className="flex flex-col">
