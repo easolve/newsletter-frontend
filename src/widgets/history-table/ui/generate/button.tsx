@@ -1,4 +1,5 @@
 import { Button } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useNewsletterStore } from "@/entities/newsletter";
 import { useExampleStore } from "@/features/generate-example";
@@ -14,6 +15,7 @@ const GenerateButtons = ({ onClose }: Props) => {
   const noContent = useExampleStore((state) => !state.content || !state.title);
   const [isSaving, setIsSaving] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const router = useRouter();
 
   const onSave = useCallback(async () => {
     setIsSaving(true);
@@ -23,6 +25,7 @@ const GenerateButtons = ({ onClose }: Props) => {
     if (response) {
       alert("Newsletter saved successfully");
       onClose();
+      router.refresh(); // TODO: rendering optimization
     } else {
       alert("Failed to save newsletter");
       setIsSaving(false);
@@ -37,6 +40,7 @@ const GenerateButtons = ({ onClose }: Props) => {
     if (isSuccess) {
       alert("Newsletter sent successfully");
       onClose();
+      router.refresh(); // TODO: rendering optimization
     } else {
       alert("Failed to send newsletter");
       setIsSending(false);

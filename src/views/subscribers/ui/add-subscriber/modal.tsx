@@ -10,6 +10,7 @@ import {
   Tabs,
   useDisclosure,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useNewsletterStore } from "@/entities/newsletter";
 import { PlusIcon } from "@/shared/ui/icons";
@@ -20,6 +21,7 @@ import AddManually from "./add-manually";
 const AddSubscriberModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleCilckClose = useCallback(() => {
     onClose();
@@ -37,6 +39,7 @@ const AddSubscriberModal = () => {
     if (!errorMessage) {
       setIsLoading(false);
       handleCilckClose();
+      router.refresh(); // TODO: rendering optimization
       return;
     }
     alert(errorMessage);
