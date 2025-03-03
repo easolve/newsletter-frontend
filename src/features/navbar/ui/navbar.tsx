@@ -16,7 +16,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import Profile from "@/features/profile";
 import { ThemeSwitch } from "@/features/theme-switch";
-import { NAME } from "@/shared/config";
+import { NAME, ROUTES } from "@/shared/config";
 import { clsx } from "@/utils/clsx";
 
 interface MenuItems {
@@ -26,9 +26,9 @@ interface MenuItems {
 }
 
 const menuItems: MenuItems[] = [
-  { label: "Home", href: "/" },
-  { label: "Product", href: "/create-newsletter" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "Home", href: ROUTES.home },
+  { label: "Product", href: ROUTES.product },
+  { label: "Pricing", href: ROUTES.pricing },
   // { label: "Showcase", href: "/showcase", disabled: true },
   // { label: "Pricing", href: "/pricing", disabled: true },
 ];

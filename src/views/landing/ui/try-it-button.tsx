@@ -3,6 +3,7 @@
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { tv } from "tailwind-variants";
+import { ROUTES } from "@/shared/config";
 import { ArrowRightIcon } from "@/shared/ui";
 
 interface Props {
@@ -23,7 +24,7 @@ const TryItButton = ({ className }: Props) => {
       color="primary"
       className={style({ class: className })}
       radius="full"
-      onPress={() => router.push("/create-newsletter")}
+      onPress={() => router.push(ROUTES.product)}
       endContent={<ArrowRightIcon />}
     >
       Try AI-Generating Now
