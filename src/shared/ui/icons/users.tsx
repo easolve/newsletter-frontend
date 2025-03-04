@@ -1,5 +1,3 @@
-import type { IconSvgProps } from "@/types/icons";
-
 export const UsersIcon = ({ size = 24, ...props }: IconSvgProps) => {
   return (
     <svg

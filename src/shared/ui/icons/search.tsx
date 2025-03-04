@@ -1,5 +1,3 @@
-import type { IconSvgProps } from "@/types/icons";
-
 export const SearchIcon = (props: IconSvgProps) => {
   return (
     <svg

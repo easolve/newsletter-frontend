@@ -1,5 +1,3 @@
-import { IconSvgProps } from "@/types/icons";
-
 export const SettingsIcon = ({
   size = 24,
   strokeWidth = 1.5,

@@ -1,5 +1,3 @@
-import type { IconSvgProps } from "@/types/icons";
-
 export const EnvelopeIcon = ({ size = 24, height, width }: IconSvgProps) => {
   return (
     <svg

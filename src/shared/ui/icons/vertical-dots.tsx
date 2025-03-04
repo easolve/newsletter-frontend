@@ -1,5 +1,3 @@
-import type { IconSvgProps } from "@/types/icons";
-
 export const VerticalDotsIcon = ({
   size = 24,
   width,

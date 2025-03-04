@@ -1,5 +1,3 @@
-import { IconSvgProps } from "@/types/icons";
-
 export const SunFilledIcon = ({
   size = 24,
   width,
