@@ -10,7 +10,7 @@ import {
 } from "@heroui/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { title } from "@/styles/primitives";
+import { title } from "@/shared/ui";
 
 // Extend Card component with motion
 const MotionCard = motion(Card);

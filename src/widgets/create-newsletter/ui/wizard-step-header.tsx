@@ -1,5 +1,5 @@
 import { Progress } from "@heroui/react";
-import { subtitle, title } from "@/styles/primitives";
+import { subtitle, title } from "@/shared/ui";
 import { STEPS } from "@/widgets/create-newsletter/config";
 import { useStepStore } from "@/widgets/create-newsletter/store/step";
 
