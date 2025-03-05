@@ -1,7 +1,7 @@
 "use server";
 
 import { callAPI } from "@/shared/api";
-import { transformNewsletter } from "@/utils/newsletter";
+import { transformNewsletter } from "@/shared/lib";
 
 interface ResData {
   info: Newsletter.Primitive[];

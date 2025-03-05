@@ -13,7 +13,7 @@ import {
 import { type TLanguageCode, languages } from "countries-list";
 import { ExampleGenerator } from "@/features/generate-example";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "@/shared/lib";
 import { TABLE_FIELDS } from "../../config";
 import Example from "./example";
 

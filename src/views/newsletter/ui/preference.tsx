@@ -2,8 +2,8 @@
 
 import { Card, CardBody } from "@heroui/react";
 import { type TLanguageCode, languages } from "countries-list";
+import { capitalize } from "@/shared/lib";
 import { ArrowClockwiseIcon, ClockIcon, LanguageIcon } from "@/shared/ui";
-import { capitalize } from "@/utils/capitalize";
 
 const keys = [
   "send_frequency",

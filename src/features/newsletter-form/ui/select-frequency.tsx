@@ -1,7 +1,7 @@
 import { Select, SelectItem, type SelectProps } from "@heroui/react";
 import { type ChangeEvent } from "react";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "@/shared/lib";
 
 const FREQUENCIES: Frequency[] = ["daily", "weekly", "bi-weekly", "monthly"];
 

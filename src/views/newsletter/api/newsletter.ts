@@ -1,5 +1,5 @@
 import { callAPI } from "@/shared/api";
-import { transformNewsletter } from "@/utils/newsletter";
+import { transformNewsletter } from "@/shared/lib";
 
 export const fetchNewsletter = async (
   info_id: string,

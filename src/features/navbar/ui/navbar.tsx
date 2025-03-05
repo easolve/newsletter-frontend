@@ -17,7 +17,7 @@ import { FC, useEffect, useState } from "react";
 import Profile from "@/features/profile";
 import { ThemeSwitch } from "@/features/theme-switch";
 import { NAME, ROUTES } from "@/shared/config";
-import { clsx } from "@/utils/clsx";
+import { clsx } from "@/shared/lib";
 
 interface MenuItems {
   label: string;

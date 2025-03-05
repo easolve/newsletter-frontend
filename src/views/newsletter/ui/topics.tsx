@@ -1,7 +1,7 @@
 "use client";
 
 import { Chip } from "@heroui/react";
-import { capitalize } from "@/utils/capitalize";
+import { capitalize } from "@/shared/lib";
 
 interface Props {
   topics: string[];

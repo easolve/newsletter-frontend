@@ -1,5 +1,3 @@
-import { isArray } from "@/utils/assertion";
-
 /**
  * A utility function to extract a string from mixed arguments.
  * @param mix Mixed arguments of strings, objects, or arrays.
@@ -14,7 +12,7 @@ function toVal(mix: any) {
   if (typeof mix === "string" || typeof mix === "number") {
     str += mix;
   } else if (typeof mix === "object") {
-    if (isArray(mix)) {
+    if (Array.isArray(mix)) {
       for (k = 0; k < mix.length; k++) {
         if (mix[k]) {
           if ((y = toVal(mix[k]))) {
