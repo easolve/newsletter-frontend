@@ -32,7 +32,7 @@ const GenerateButtons = ({ onClose }: Props) => {
     }
   }, []);
 
-  const send = async () => {
+  const onSend = async () => {
     setIsSending(true);
     const id = useNewsletterStore.getState().id;
     const data = useExampleStore.getState();
@@ -64,6 +64,7 @@ const GenerateButtons = ({ onClose }: Props) => {
           size="sm"
           isDisabled={isGenerating || noContent || isSaving}
           isLoading={isSending}
+          onPress={onSend}
         >
           Send Now
         </Button>
