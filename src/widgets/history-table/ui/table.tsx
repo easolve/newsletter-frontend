@@ -50,7 +50,7 @@ const HistoryTable = () => {
       Array.from(statusFilter).length !== STATUS_OPTION.length
     ) {
       filteredRecords = filteredRecords.filter((record) =>
-        Array.from(statusFilter).includes(record.send_status),
+        Array.from(statusFilter).includes(record.sent_status),
       );
     }
 
@@ -210,7 +210,7 @@ const HistoryTable = () => {
         items={items}
       >
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item.title}>
             {(columnKey) => (
               <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}

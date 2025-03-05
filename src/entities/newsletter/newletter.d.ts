@@ -33,7 +33,7 @@ namespace Newsletter {
   interface History {
     id: string;
     title: string;
-    send_status: SentStatus;
+    sent_status: SentStatus;
     sent_at: string;
     created_at: string;
     updated_at: string;

@@ -8,8 +8,8 @@ export const renderCell = (history: Newsletter.History, key: Key) => {
   switch (key) {
     case "actions":
       return <HistoryActionsDropdown history={history} />;
-    case "sent_at":
-      return <SentStatusChip status={history.send_status} />;
+    case "sent_status":
+      return <SentStatusChip status={history.sent_status} />;
     default:
       return cellValue;
   }

@@ -5,7 +5,7 @@ interface Column {
 
 export const COLUMNS: Column[] = [
   { name: "TITLE", uid: "title" },
-  { name: "STATUS", uid: "send_status" },
+  { name: "STATUS", uid: "sent_status" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
