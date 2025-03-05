@@ -7,7 +7,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { useNewsletterStore } from "@/entities/newsletter";
-import { ExampleGenerator } from "@/features/generate-example";
+import { ExampleGenerator, useExampleStore } from "@/features/generate-example";
 import { PlusIcon } from "@/shared/ui";
 import GenerateButtons from "./button";
 import Editor from "./editor";
@@ -31,10 +31,16 @@ const Icon = () => (
 const Generate = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const exampleData = useNewsletterStore.getState();
+  const { reset } = useExampleStore.getState();
+
+  const handleOpen = () => {
+    reset();
+    onOpen();
+  };
 
   return (
     <>
-      <Button color="primary" endContent={<PlusIcon />} onPress={onOpen}>
+      <Button color="primary" endContent={<PlusIcon />} onPress={handleOpen}>
         Generate
       </Button>
       <Drawer

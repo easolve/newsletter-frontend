@@ -13,6 +13,7 @@ type State = Newsletter.ExampleData &
 interface Action {
   save: (metadata: Newsletter.ExampleData) => void;
   regenerate: () => void;
+  reset: () => void;
 
   setId: (id: string | null) => void;
   setExample: (example: Example) => void;
@@ -36,6 +37,16 @@ export const useExampleStore = create<Store>((set) => ({
     content: null,
   }),
   regenerate: () => set({ id: null, title: null, content: null }),
+  reset: () =>
+    set({
+      language: null,
+      topics: [],
+      sources: [],
+      custom_prompt: "",
+      id: null,
+      title: null,
+      content: null,
+    }),
 
   id: null,
   title: null,
