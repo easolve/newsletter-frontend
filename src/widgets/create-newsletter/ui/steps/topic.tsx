@@ -1,14 +1,23 @@
 "use client";
 
 import { Checkbox, CheckboxGroup, Chip, Input } from "@heroui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
+import { capitalize } from "@/shared/lib";
+import { getRecommendedTopics } from "@/widgets/create-newsletter/api/topic";
 
 interface NewsletterTopicProps {}
 
 const NewsletterTopic: React.FC<NewsletterTopicProps> = () => {
   const [inputValue, setInputValue] = useState("");
   const { topics, setTopics } = useNewsletterFormStore();
+  const [recommendedTopics, setRecommendedTopics] = useState<string[]>([]);
+
+  useEffect(() => {
+    getRecommendedTopics().then((recommended) =>
+      setRecommendedTopics(recommended),
+    );
+  }, []);
 
   const handleChange = (topic: string[]) => {
     setTopics(topic);
@@ -17,6 +26,10 @@ const NewsletterTopic: React.FC<NewsletterTopicProps> = () => {
   const handleClose = (topic: string) => {
     setTopics(topics.filter((t) => t !== topic));
   };
+
+  if (recommendedTopics.length === 0) {
+    return null;
+  }
 
   return (
     <div className="container flex max-w-7xl flex-grow flex-col gap-4">
@@ -32,11 +45,11 @@ const NewsletterTopic: React.FC<NewsletterTopicProps> = () => {
         value={topics}
         onValueChange={handleChange}
       >
-        <Checkbox value="economy">💰 Economy</Checkbox>
-        <Checkbox value="science">🔬 Science</Checkbox>
-        <Checkbox value="health">🏥 Health</Checkbox>
-        <Checkbox value="environment">🌍 Environment</Checkbox>
-        <Checkbox value="celebrity">📺 Celebrity</Checkbox>
+        {recommendedTopics.map((topic, index) => (
+          <Checkbox key={index} value={topic}>
+            {capitalize(topic)}
+          </Checkbox>
+        ))}
       </CheckboxGroup>
       <Input
         className="max-w-xs"
