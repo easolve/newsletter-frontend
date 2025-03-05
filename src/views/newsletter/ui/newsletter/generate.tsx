@@ -165,7 +165,10 @@ const Generate = ({ infoId }: GenerateProps) => {
                         content,
                       });
                       setHistoryId(ret.history_id);
-                      sendArchive({ history_id: historyId, info_id: infoId });
+                      sendArchive({
+                        history_id: ret.history_id,
+                        info_id: infoId,
+                      });
                     }}
                   >
                     Send
