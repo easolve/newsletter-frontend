@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import { shallow } from "zustand/vanilla/shallow";
 import { createSampleNewsletter, getSampleNewsletter } from "../api/actions";
@@ -14,12 +16,18 @@ const ExampleGenerator = ({ formData }: Props) => {
 
   useEffect(() => {
     if (
-      !id ||
-      !shallow(language, formData.language) ||
-      !shallow(topics, formData.topics) ||
-      !shallow(sources, formData.sources) ||
-      !shallow(custom_prompt, formData.custom_prompt)
+      id !== null &&
+      (!shallow(language, formData.language) ||
+        !shallow(topics, formData.topics) ||
+        !shallow(sources, formData.sources) ||
+        !shallow(custom_prompt, formData.custom_prompt))
     ) {
+      setId(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (id === null) {
       save(formData);
       createSampleNewsletter(formData).then((id) => {
         setId(id);

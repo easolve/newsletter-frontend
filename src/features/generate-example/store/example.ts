@@ -32,7 +32,6 @@ export const useExampleStore = create<Store>((set) => ({
     topics,
     sources,
     custom_prompt,
-    id: null,
     title: null,
     content: null,
   }),
