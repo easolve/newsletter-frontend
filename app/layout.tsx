@@ -5,6 +5,9 @@ export { default } from "@/app/layouts/root";
 export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
+  icons: {
+    icon: "/images/logo.svg",
+  },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
