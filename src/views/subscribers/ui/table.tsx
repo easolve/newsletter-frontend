@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { SearchIcon } from "@/shared/ui/icons";
 import { SUBSCRIBER_COLUMNS } from "../config/table";
 import AddSubscriberModal from "./add-subscriber/modal";
@@ -24,6 +24,12 @@ interface Props {
 }
 
 export default function SubscriberTable({ subscribers }: Props) {
+  const [mounted, setMounted] = React.useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
     new Set([]),
@@ -164,6 +170,10 @@ export default function SubscriberTable({ subscribers }: Props) {
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <Table
