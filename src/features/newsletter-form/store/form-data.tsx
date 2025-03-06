@@ -9,6 +9,8 @@ interface NewsletterFormActions {
   setDescription: (description: string) => void;
   setFrequency: (frequency: string) => void;
   setTopics: (topics: string[]) => void;
+  addTopic: (topic: string) => void;
+  deleteTopic: (topic: string) => void;
   setSources: (sources: string[]) => void;
   setSendTime: (send_time: string) => void;
   setLanguage: (language: NewsletterForm["language"]) => void;
@@ -32,6 +34,9 @@ export const useNewsletterFormStore = create<NewsletterFormStore>(
 
     topics: [],
     setTopics: (topics) => set({ topics }),
+    addTopic: (topic) => set((state) => ({ topics: [...state.topics, topic] })),
+    deleteTopic: (topic) =>
+      set((state) => ({ topics: state.topics.filter((t) => t !== topic) })),
 
     sources: [],
     setSources: (sources) => set({ sources }),
