@@ -34,7 +34,7 @@ namespace Newsletter {
     id: string;
     title: string;
     sent_status: SentStatus;
-    sent_at: string;
+    sent_at: string | null;
     created_at: string;
     updated_at: string;
   }

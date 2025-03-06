@@ -9,7 +9,7 @@ export const renderCell = (history: Newsletter.History, key: Key) => {
   switch (key) {
     case "created_at":
     case "updated_at":
-      return getTime(cellValue);
+      return getTime(cellValue as string);
     case "sent_at":
       return <DateTime date={cellValue} />;
     case "actions":
