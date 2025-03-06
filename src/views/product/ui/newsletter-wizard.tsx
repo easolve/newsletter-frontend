@@ -13,6 +13,7 @@ import {
 } from "@heroui/react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useExampleStore } from "@/features/generate-example";
 import LoginTabs from "@/features/login";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
 import {
@@ -29,6 +30,7 @@ const NewsletterWizard = () => {
   useEffect(() => {
     useNewsletterFormStore.getState().reset();
     useStepStore.getState().reset();
+    useExampleStore.getState().reset();
     setInitialized(true);
   }, []);
 
