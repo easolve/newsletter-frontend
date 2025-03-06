@@ -13,7 +13,7 @@ const Archive = async ({ params }: Props) => {
   const history = await fetchHistory(info_id);
 
   return (
-    <HistoryProvider history={history}>
+    <HistoryProvider history={history} id={info_id}>
       <HistoryTable />
     </HistoryProvider>
   );
