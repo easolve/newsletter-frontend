@@ -5,33 +5,15 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@heroui/react";
+import { DateTime } from "@/shared/ui";
 import { VerticalDotsIcon } from "@/shared/ui/icons";
 
 export const renderCell = (subscriber: Subscriber, columnKey: React.Key) => {
   const cellValue = subscriber[columnKey as keyof Subscriber];
 
   switch (columnKey) {
-    case "created_at": {
-      const date = new Date(cellValue);
-      return (
-        <div className="flex gap-2">
-          <div>
-            {date.toLocaleDateString("en-EN", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })}
-          </div>
-          <div>
-            {date.toLocaleTimeString("en-EN", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </div>
-        </div>
-      );
-    }
-
+    case "created_at":
+      return <DateTime date={subscriber.created_at} />;
     case "actions":
       return (
         <div className="relative flex items-center justify-end gap-2">
