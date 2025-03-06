@@ -1,5 +1,5 @@
 import { type Key } from "react";
-import { getTime } from "@/shared/lib";
+import { getDate } from "@/shared/lib";
 import { DateTime, SentStatusChip } from "@/shared/ui";
 import HistoryActionsDropdown from "./actions-dropdown";
 
@@ -9,7 +9,7 @@ export const renderCell = (history: Newsletter.History, key: Key) => {
   switch (key) {
     case "created_at":
     case "updated_at":
-      return getTime(cellValue as string);
+      return getDate(cellValue as string);
     case "sent_at":
       return <DateTime date={cellValue} />;
     case "actions":
