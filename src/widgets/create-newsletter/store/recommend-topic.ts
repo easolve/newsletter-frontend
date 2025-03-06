@@ -6,6 +6,7 @@ type State = {
 
 type Actions = {
   setRecommendedTopics: (recommendedTopics: string[]) => void;
+  reset: () => void;
 };
 
 type Store = State & Actions;
@@ -13,4 +14,5 @@ type Store = State & Actions;
 export const useRecommendedTopicsStore = create<Store>((set) => ({
   recommendedTopics: [],
   setRecommendedTopics: (recommendedTopics) => set({ recommendedTopics }),
+  reset: () => set({ recommendedTopics: [] }),
 }));

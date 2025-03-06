@@ -3,13 +3,12 @@
 import { DrawerBody, DrawerFooter } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useExampleStore } from "@/features/generate-example";
 import { useNewsletterFormStore } from "@/features/newsletter-form";
 import {
   CreateWizardBody,
   CreateWizardButton,
   CreateWizardHeader,
-  useStepStore,
+  reset,
 } from "@/widgets/create-newsletter";
 import { saveNewsletter } from "../../api/save";
 
@@ -23,9 +22,7 @@ const AddNewsletterBody = ({ onClose }: Props) => {
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    useNewsletterFormStore.getState().reset();
-    useStepStore.getState().reset();
-    useExampleStore.getState().reset();
+    reset();
     setInitialized(true);
   }, []);
 
