@@ -1,7 +1,7 @@
 import { Spinner } from "@heroui/react";
 import { useExampleStore } from "@/features/generate-example";
-import InputContent from "@/widgets/history-table/ui/generate/input-content";
-import InputTitle from "@/widgets/history-table/ui/generate/input-title";
+import InputContent from "./input-content";
+import InputTitle from "./input-title";
 
 const Editor = () => {
   const hasContent = useExampleStore((state) => state.content !== null);

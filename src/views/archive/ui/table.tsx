@@ -18,9 +18,9 @@ import {
   TableRow,
 } from "@heroui/react";
 import React from "react";
-import { historyContext } from "@/entities/newsletter";
 import { ChevronDownIcon, SearchIcon } from "@/shared/ui";
 import { COLUMNS, STATUS_OPTION } from "../config";
+import { historyContext } from "../store/history";
 import Generate from "./generate";
 import { renderCell } from "./render-cell";
 

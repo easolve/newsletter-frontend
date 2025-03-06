@@ -1,19 +1,14 @@
 import { redirect } from "next/navigation";
-import {
-  HistoryProvider,
-  NewsletterProvider,
-  fetchHistory,
-} from "@/entities/newsletter";
+import { NewsletterProvider } from "@/entities/newsletter";
 import { NAME } from "@/shared/config";
 import { NewsletterStatus } from "@/shared/ui";
-import Sources from "@/views/newsletter/ui/sources";
-import HistoryTable from "@/widgets/history-table";
 import { fetchNewsletter } from "../api";
 import ActionsDropdown from "./actions-dropdown";
 import Header from "./header";
 import ItemLayout from "./item-layout";
 import Preference from "./preference";
 import Prompt from "./prompt";
+import Sources from "./sources";
 import Topics from "./topics";
 
 interface Props {
@@ -21,6 +16,7 @@ interface Props {
     info_id: string;
   }>;
   subscribers: React.ReactNode;
+  archive: React.ReactNode;
 }
 
 export const generateMetadata = async ({ params }: Props) => {
@@ -32,10 +28,9 @@ export const generateMetadata = async ({ params }: Props) => {
   };
 };
 
-const NewsletterPage = async ({ params, subscribers }: Props) => {
+const NewsletterPage = async ({ params, subscribers, archive }: Props) => {
   const { info_id } = await params;
   const newsletter = await fetchNewsletter(info_id);
-  const history = await fetchHistory(info_id);
 
   if (!newsletter) {
     redirect("/newsletter");
@@ -67,11 +62,7 @@ const NewsletterPage = async ({ params, subscribers }: Props) => {
             <Prompt custom_prompt={newsletter.custom_prompt} />
           </ItemLayout>
         </section>
-        <ItemLayout headerTitle="Archive">
-          <HistoryProvider history={history}>
-            <HistoryTable />
-          </HistoryProvider>
-        </ItemLayout>
+        <ItemLayout headerTitle="Archive">{archive}</ItemLayout>
         <ItemLayout headerTitle="Subscribers">{subscribers}</ItemLayout>
       </article>
     </NewsletterProvider>

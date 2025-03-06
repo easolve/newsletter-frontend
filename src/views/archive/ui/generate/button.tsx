@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useNewsletterStore } from "@/entities/newsletter";
 import { useExampleStore } from "@/features/generate-example";
-import { saveArchive, sendArchive } from "@/widgets/history-table/api/generate";
+import { saveArchive, sendArchive } from "../../api/generate";
 
 interface Props {
   onClose: () => void;
