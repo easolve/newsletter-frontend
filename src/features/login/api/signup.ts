@@ -22,10 +22,13 @@ export const signUp = async (
     })
     .then(() => "")
     .catch((err) => {
+      if (err.response?.status === 422) {
+        return "Email is already in use.";
+      }
+
       if (process.env.NODE_ENV === "development") {
         console.error(err.response?.data);
       }
-      // TODO: handle duplicate email error
 
       return "Failed to sign up.";
     });
