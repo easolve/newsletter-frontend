@@ -3,6 +3,7 @@
 import { Button, Input, Tab, Tabs } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { signUp } from "../api/signup";
 
 interface LoginTabsProps {}
 
@@ -52,37 +53,13 @@ const LoginTabs: React.FC<LoginTabsProps> = () => {
   };
 
   const handleSignUp = async () => {
-    if (!email || !password || !confirmPassword) {
-      console.error("Email, password, and confirm password are required.");
-      alert("Email, password, and confirm password are required.");
+    const errorMessage = await signUp(email, password, confirmPassword);
+    if (!errorMessage) {
+      alert("Successfully signed up.");
+      router.refresh();
       return;
     }
-
-    if (password !== confirmPassword) {
-      console.error("Passwords do not match.");
-      alert("Passwords do not match.");
-      return;
-    }
-
-    const url = new URL(
-      "/v1/user/register",
-      process.env.NEXT_PUBLIC_BACKEND_API_URL,
-    );
-    try {
-      const response: Response = await fetch(url.toString(), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, password }),
-      });
-      if (!response.ok) {
-        // TODO: handle error
-        // e.g., 401 if invalid token
-        return;
-      }
-    } catch (error) {
-      console.error("Error signing up:", error);
-      alert("Error signing up.");
-    }
+    alert(errorMessage);
   };
 
   return (
