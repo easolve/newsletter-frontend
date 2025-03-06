@@ -12,8 +12,7 @@ interface Props {
 }
 
 const HistoryActionsDropdown = ({ history }: Props) => {
-  const disabledKeys =
-    history.sent_status === "STANDBY" ? [] : ["edit", "delete"];
+  const disabledKeys = ["view", "edit", "delete"];
 
   return (
     <Dropdown>
